@@ -1,35 +1,64 @@
 {
-  "name": "final-summer-internship-2020-car-app-frontend",
-  "version": "1.0.0",
-  "main": "app.js",
-  "repository": "https://gitlab.com/codeengine-interns/final-summer-internship-2020-car-app-frontend.git",
-  "author": "Hau Nguyen Tran <nguyentranhau98@gmail.com>",
-  "license": "MIT",
+  "name": "final-intership-2020-cap-app-frontend",
+  "version": "0.1.0",
+  "private": true,
   "dependencies": {
+    "@babel/preset-env": "^7.10.4",
+    "@babel/preset-react": "^7.10.4",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "babel-loader": "^8.1.0",
     "dotenv": "^8.2.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "^3.4.1"
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "3.4.1",
+    "redux": "^4.0.5",
+    "styled-components": "^5.1.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "lint": "eslint --fix --ext .js ."
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   },
   "devDependencies": {
-    "@babel/cli": "^7.10.5",
     "@babel/core": "^7.10.5",
-    "@babel/plugin-proposal-class-properties": "^7.10.4",
-    "@babel/plugin-syntax-dynamic-import": "^7.8.3",
-    "@babel/plugin-transform-async-to-generator": "^7.10.4",
-    "@babel/plugin-transform-runtime": "^7.10.5",
-    "@babel/preset-env": "^7.10.4",
-    "@babel/preset-react": "^7.10.4",
-    "@babel/runtime": "^7.10.5",
-    "babel-eslint": "^10.1.0",
-    "babel-loader": "^8.1.0",
-    "eslint": "^7.5.0",
-    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint": "^6.6.0",
+    "eslint-config-airbnb": "^18.2.0",
+    "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-import": "^2.22.0",
-    "html-webpack-plugin": "^4.3.0",
-    "nodemon": "^2.0.4",
-    "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.12",
-    "webpack-dev-server": "^3.11.0"
+    "eslint-plugin-jsx-a11y": "^6.3.1",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-react": "^7.20.3",
+    "eslint-plugin-react-hooks": "^4.0.8",
+    "eslint-plugin-sort-imports-es6-autofix": "^0.5.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "husky": "^4.2.5",
+    "prettier": "^2.0.5",
+    "prettier-eslint": "^11.0.0",
+    "prettier-eslint-cli": "^5.0.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn lint"
+    }
   }
 }
