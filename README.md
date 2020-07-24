@@ -1,71 +1,68 @@
-# Project Name
-> Final Summer Internship 2020 - Car App
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Table of contents
-* [General info](#general-info)
-* [CODE ENGINE STUDIO](#code-engine-studio)
-* [Technologies](#technologies)
-* [Setup](#setup)
-* [Features](#features)
-* [Status](#status)
-* [Contact](#contact)
+## Available Scripts
 
-## General info
-This project contains React App Project for the Final Summer Internship 2020 - Car App
+In the project directory, you can run:
 
-## CODE ENGINE STUDIO
-![CODE ENGINE Studio](http://codeenginestudio.com/img/logos/code-engine-studio-white-sm.bc15.png)
+### `yarn start`
 
-## Technologies
-* Nodejs - v12.16.3
-* React - v16.13.1
+Runs the app in the development mode.<br />
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-## Setup
-To run this project, install it locally using yarn:
+The page will reload if you make edits.<br />
+You will also see any lint errors in the console.
 
-```
-$ cd final-summer-internship-2020-car-app-frontend
-$ yarn
-$ yarn start
-```
+### `yarn test`
 
-## Features
-List of features ready and TODOs for future development
-* 
+Launches the test runner in the interactive watch mode.<br />
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-To-do list:
-* 
+### `yarn build`
 
-## Status
-_Project is in progress_
+Builds the app for production to the `build` folder.<br />
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-## Contact
-Created by [Final Thesis Intern](https://www.facebook.com/Loc.3i) - feel free to contact us!
+The build is minified and the filenames include the hashes.<br />
+Your app is ready to be deployed!
 
-# Git Convention
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-## Table of contents
-* [Commits](#commits)
-* [Branches](#branches)
+### `yarn eject`
 
-## Commits
+**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-### Commits names
-* Usually start with a verb
-### Commits messages
-* Commit messages should be clear and concise in describing the content of the commit
-* Commit messages may not include emojis
+If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-## Branches
-* Each branch represent a task
-* Must follow this formula: (type)/(action) (e.g. feature/login)
-* Type must be one of these: 
-  * hotfix
-  * feature
-  * setup
-  * refactor
-  * fix
-* Always use dashes to split words
-* Remember to squash commits when submitting merge request
-* Must not delete branches after merging
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
+You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+
+## Learn More
+
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+
+To learn React, check out the [React documentation](https://reactjs.org/).
+
+### Code Splitting
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+
+### Analyzing the Bundle Size
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+
+### Making a Progressive Web App
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+
+### Advanced Configuration
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+
+### Deployment
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+
+### `yarn build` fails to minify
+
+This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
