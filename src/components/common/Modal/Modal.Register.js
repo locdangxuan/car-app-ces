@@ -44,36 +44,42 @@ const RegisterForm = (props) => {
                         type="text"
                         placeholder="Username"
                         onChange={onChangeHandler}
+                        value={username}
                     />
                     <Input
                         id="displayname"
                         type="text"
                         placeholder="Display Name"
                         onChange={onChangeHandler}
+                        value={displayname}
                     />
                     <Input
                         id="email"
                         type="email"
                         placeholder="Email"
                         onChange={onChangeHandler}
+                        value={email}
                     />
                     <Input
                         id="phonenumber"
                         type="text"
                         placeholder="Contact No."
                         onChange={onChangeHandler}
+                        value={phonenumber}
                     />
                     <Input
                         id="password"
                         type="password"
                         placeholder="Password"
                         onChange={onChangeHandler}
+                        value={password}
                     />
                     <Input
                         id="verification"
                         type="password"
                         placeholder="Type your password again"
                         onChange={onChangeHandler}
+                        value={verification}
                     />
                 </Body>
                 <ModalSpan isValid={registerDone}>{message}</ModalSpan>
