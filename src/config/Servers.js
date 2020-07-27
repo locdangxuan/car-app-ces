@@ -1,7 +1,6 @@
 import 'dotenv/config';
 
-const server = process.env.API_SERVER || 'http://localhost:3000/api/';
-
+const server = process.env.REACT_APP_API_SERVER || 'http://localhost:3000/api/';
 const api = {
     user: {
         register: `${server}users/register`,
