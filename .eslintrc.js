@@ -29,7 +29,8 @@ module.exports = {
     "jsx-a11y",
     "react",
     "react-hooks",
-    "promise"
+    "promise",
+    "import"
   ],
   rules: {
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
@@ -42,9 +43,14 @@ module.exports = {
     "default-case": 0,
     "class-methods-use-this": 0,
     "space-before-blocks": 1,
-    "prettier/prettier": "error",
+    "prettier/prettier":"error",
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
-    "promise/prefer-await-to-then": "error"
+    "promise/prefer-await-to-then": "error",
+    "import/no-unresolved": [0, {commonjs: true, amd: true}],
+    "import/named": 0,
+    "import/namespace": 2,
+    "import/default": 2,
+    "import/export": 2,
   },
 };
