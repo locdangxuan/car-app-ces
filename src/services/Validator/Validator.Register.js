@@ -25,18 +25,20 @@ const phonenumberValidator = (value) => {
 };
 
 const emailValidator = (value) => {
-    const expression = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+    const expression = new RegExp(
+        /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
+    );
     return expression.test(value);
 };
 
 const checkBlankFields = (payload) => {
     return (
-        payload.username !== null &&
-        payload.diplayname !== null &&
-        payload.phonenumber !== null &&
-        payload.password !== null &&
-        payload.email !== null &&
-        payload.passwordVerification !== null
+        payload.username !== '' &&
+        payload.diplayname !== '' &&
+        payload.phonenumber !== '' &&
+        payload.password !== '' &&
+        payload.email !== '' &&
+        payload.passwordVerification !== ''
     );
 };
 
