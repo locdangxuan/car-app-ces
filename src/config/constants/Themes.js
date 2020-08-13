@@ -7,6 +7,7 @@ const button = {
     height: '30px',
     border_radius: '4px',
 };
+
 const input = {
     noBorder: 'true',
     inputWidth: '100%',
