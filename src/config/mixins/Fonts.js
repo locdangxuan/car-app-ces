@@ -7,9 +7,16 @@ const fontHeader = css`
     font-weight: ${fontWeight.bold};
 `;
 
-const font = css`
+const fontMain = css`
     font-family: ${fontFamilies.ssfLucida};
     font-weight: ${fontWeight.normal};
+    font-size: ${fontSize.fontMedium};
 `;
 
-export { fontHeader, font };
+const fontSmall = css`
+    font-family: ${fontFamilies.ssfLucida};
+    font-weight: ${fontWeight.normal};
+    font-size: ${fontSize.fontSmall};
+`;
+
+export { fontHeader, fontMain, fontSmall };
