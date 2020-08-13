@@ -30,7 +30,8 @@ module.exports = {
     "react",
     "react-hooks",
     "promise",
-    "import"
+    "import",
+    "regex",
   ],
   rules: {
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
@@ -52,5 +53,7 @@ module.exports = {
     "import/namespace": 2,
     "import/default": 2,
     "import/export": 2,
+    "no-invalid-regexp": "error",
+    "no-regex-spaces": "error",
   },
 };

@@ -7,12 +7,12 @@ import {
 import validator from 'services/Validator/Validator.Register';
 
 const initState = {
-    username: null,
-    password: null,
-    displayname: null,
-    phonenumber: null,
-    email: null,
-    verification: null,
+    username: '',
+    password: '',
+    displayname: '',
+    phonenumber: '',
+    email: '',
+    verification: '',
 };
 
 const authReducer = (state = initState, action) => {
