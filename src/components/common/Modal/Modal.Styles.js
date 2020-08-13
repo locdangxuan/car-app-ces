@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { white, black } from 'config/constants/Colors';
 import { fontHeader } from 'config/mixins/Fonts';
 
 const Body = styled.section`
@@ -8,8 +7,8 @@ const Body = styled.section`
 const Wrapper = styled.div`
     width: 100%;
     height: 100%;
-    background-color: ${black};
-    opacity: 0.6;
+    background-color: ${(props) => props.theme.color.black};
+    opacity: 0.87;
     position: absolute;
     justify-content: center;
     align-items: center;
@@ -25,15 +24,15 @@ const Wrapper = styled.div`
         }
     }
 `;
-const Header = styled.head`
+const Header = styled.section`
     ${fontHeader};
     display: flex;
     align-items: center;
     justify-content: center;
-    color: ${black};
+    color: ${(props) => props.theme.color.black};
     margin-top: 20px;
 `;
-const Footer = styled.footer`
+const Footer = styled.section`
     display: flex;
     bottom: 0;
     width: 84%;
@@ -47,7 +46,7 @@ const Content = styled.section`
     align-items: center;
     width: 260px;
     text-transform: uppercase;
-    background-color: ${white};
+    background-color: ${(props) => props.theme.color.white};
     flex-direction: column;
     animation: popup linear 0.2s;
 

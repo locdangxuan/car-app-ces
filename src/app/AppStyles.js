@@ -1,5 +1,12 @@
-import { css } from 'styled-components';
+import styled from 'styled-components';
+import Background from 'assets/images/App.Background.jpg';
 
-const AppStyles = css``;
+const StyledApp = styled.div`
+    background-image: url(${Background});
+    width: 100%;
+    height: 100vh;
+    background-size: cover;
+    opacity: 0.95;
+`;
 
-export default AppStyles;
+export default StyledApp;

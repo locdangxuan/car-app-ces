@@ -3,8 +3,8 @@ export const fontFamilies = {
     ssfLucida: `'Lucida Sans Unicode', 'Lucida Grande', sans-serif`,
 };
 export const fontSize = {
-    fontSmall: '14px',
-    fontMedium: '20px',
+    fontSmall: '11px',
+    fontMedium: '16px',
     fontLarge: '26px',
 };
 export const fontWeight = {

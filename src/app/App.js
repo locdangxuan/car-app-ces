@@ -1,11 +1,14 @@
 import React from 'react';
-import Modal from 'components/uncommon/Modal/index';
+import { Modal } from 'components/common';
 import { ThemeProvider } from 'styled-components';
 import globalTheme from 'config/constants/Themes';
+import StyledApp from './AppStyles';
 
 const App = () => (
     <ThemeProvider theme={globalTheme}>
-        <Modal type="REGISTER" />
+        <StyledApp>
+            <Modal type="REGISTER" />
+        </StyledApp>
     </ThemeProvider>
 );
 

@@ -1,35 +1,19 @@
-import styled, { css } from 'styled-components';
-import { fontSize } from 'config/constants/Fonts';
-import { black, darkGrey, success } from 'config/constants/Colors';
-import { font } from 'config/mixins/Fonts';
-
-const textInput = css`
-    border: ${(props) => (props.theme.noBorder ? '0' : '1px')};
-    width: ${(props) => props.theme.inputWidth};
-    font-size: ${(props) => props.theme.fontSize};
-    color: ${(props) => props.theme.fontColor};
-    background-color: ${(props) => props.theme.backgroundColor};
-`;
+import styled from 'styled-components';
 
 const Input = styled.input`
-    ${textInput};
-    ${font};
-    margin: 9px 0;
-    outline: none;
-    border-radius: 0;
-    border-bottom: 0.5px solid ${darkGrey};
+    ${(props) => props.theme.font};
+    border: ${(props) => (props.theme.input.noBorder ? '0' : '1px')};
+    width: ${(props) => props.theme.input.inputWidth};
+    font-size: ${(props) => props.theme.input.fontSize};
+    color: ${(props) => props.theme.input.fontColor};
+    background-color: ${(props) => props.theme.input.backgroundColor};
+    margin: ${(props) => props.theme.input.margin};
+    outline: ${(props) => props.theme.input.outline};
+    border-radius: ${(props) => props.theme.input.border_radius};
+    border-bottom: 0.5px solid ${(props) => props.theme.color.darkGrey};
     &:focus {
-        border-bottom: 0.5px solid ${success};
+        border-bottom: 0.5px solid ${(props) => props.theme.color.success};
     }
 `;
-
-Input.defaultProps = {
-    them: {
-        noBorder: false,
-        fontSize: fontSize.fontSmall,
-        inputWidth: '100%',
-        color: black,
-    },
-};
 
 export default Input;
