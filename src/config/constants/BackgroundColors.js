@@ -3,5 +3,5 @@ const backgroundFooter = '#ffff00';
 
 export default {
     backgroundHeader,
-    backgroundFooter
-}
+    backgroundFooter,
+};

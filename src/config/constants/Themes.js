@@ -31,8 +31,8 @@ const image = {
 
 const header = {
     backgroundColor: backgroundColor.backgroundHeader,
-    color: color.white
-}
+    color: color.white,
+};
 
 const globalTheme = {
     button,
