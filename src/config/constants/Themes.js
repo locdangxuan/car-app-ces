@@ -23,10 +23,16 @@ const span = {
     text_align: 'center',
 };
 
+const image = {
+    width: '100%',
+    height: '100%',
+};
+
 const globalTheme = {
     button,
     input,
     span,
+    image,
     color: {
         ...color,
     },

@@ -7,7 +7,7 @@ const Button = styled.button`
     border: 1.3px solid ${(props) => props.theme.button.borderColor};
     width: ${(props) => props.theme.button.width};
     height: ${(props) => props.theme.button.height};
-    color: ${(props) => props.theme.color.black};
+    color: ${(props) => props.theme.color.white};
     border-radius: ${(props) => props.theme.button.border_radius};
     background-color: ${(props) => props.theme.color.transparent};
     &:focus {
@@ -22,6 +22,7 @@ const Button = styled.button`
         border: 1px solid var(--onActiveBorderColor);
         box-shadow: 0 2px ${(props) => props.theme.color.darkGrey};
     }
+    margin-left: 10px;
 `;
 
 export default Button;
