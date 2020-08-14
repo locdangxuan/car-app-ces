@@ -1,4 +1,5 @@
 import color from 'config/constants/Colors';
+import backgroundColor from 'config/constants/BackgroundColors';
 import { fontMain } from 'config/mixins/Fonts';
 
 const button = {
@@ -28,10 +29,16 @@ const image = {
     height: '100%',
 };
 
+const header = {
+    backgroundColor: backgroundColor.backgroundHeader,
+    color: color.white
+}
+
 const globalTheme = {
     button,
     input,
     span,
+    header,
     image,
     color: {
         ...color,

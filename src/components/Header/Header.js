@@ -2,8 +2,8 @@ import styled from 'styled-components';
 import { Grid } from '@material-ui/core';
 
 const HeaderWrapper = styled.div`
-    background-color: #1a1a1a;
-    color: #fff;
+    background-color: ${(props) => props.theme.header.backgroundColor};
+    color:  ${(props) => props.theme.header.color};
 `;
 
 const GridHeader = styled(Grid)`
