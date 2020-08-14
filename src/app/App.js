@@ -9,6 +9,9 @@ const App = () => (
         <StyledApp>
             <Modal type="REGISTER" />
         </StyledApp>
+        <StyledApp>
+            <Modal type="LOGIN" />
+        </StyledApp>
     </ThemeProvider>
 );
 
