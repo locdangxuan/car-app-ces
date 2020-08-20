@@ -1,5 +1,4 @@
 import color from 'config/constants/Colors';
-import backgroundColor from 'config/constants/BackgroundColors';
 import { fontMain } from 'config/mixins/Fonts';
 
 const button = {
@@ -30,7 +29,7 @@ const image = {
 };
 
 const header = {
-    backgroundColor: backgroundColor.backgroundHeader,
+    backgroundColor: color.backgroundHeader,
     color: color.white,
 };
 

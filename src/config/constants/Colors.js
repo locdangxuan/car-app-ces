@@ -6,6 +6,9 @@ const warning = '#fae00b';
 const success = '#18de47';
 const danger = '#de1818';
 const transparent = 'transparent';
+const backgroundHeader = '#1a1a1a';
+const backgroundFooter = '#ffff00';
+
 export default {
     white,
     black,
@@ -15,4 +18,6 @@ export default {
     success,
     danger,
     transparent,
+    backgroundHeader,
+    backgroundFooter,
 };

@@ -1,8 +1,8 @@
 import React from 'react';
 import Images from 'config/constants/Images';
 import { Image, Button, Icon } from 'components/common';
-
 import Categories from 'components/common/Categories';
+import dataHeaderDefault from 'config/sampleData/header';
 import { HeaderWrapper, GridHeader } from './Header';
 
 const Header = () => {
@@ -10,18 +10,39 @@ const Header = () => {
         <HeaderWrapper>
             <GridHeader container spacing={2}>
                 <GridHeader item xs={2}>
-                    <Image src={Images.LogoHeader} alt="logo-header" />
+                    <Image
+                        src={
+                            Images.LogoHeader
+                                ? Images.LogoHeader
+                                : dataHeaderDefault.LogoHeader
+                        }
+                        alt="logo-header"
+                    />
                 </GridHeader>
                 <GridHeader item xs={7}>
                     <Categories />
                 </GridHeader>
                 <GridHeader item xs={3}>
                     <Button>
-                        <Icon src={Images.LoginIcon} alt="login-icon" />
+                        <Icon
+                            src={
+                                Images.LoginIcon
+                                    ? Images.LoginIcon
+                                    : dataHeaderDefault.LoginIcon
+                            }
+                            alt="login-icon"
+                        />
                         Login
                     </Button>
                     <Button>
-                        <Icon src={Images.SignupIcon} alt="signup-icon" />
+                        <Icon
+                            src={
+                                Images.SignupIcon
+                                    ? Images.SignupIcon
+                                    : dataHeaderDefault.SignupIcon
+                            }
+                            alt="signup-icon"
+                        />
                         Signup
                     </Button>
                 </GridHeader>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import IconDownImg from 'assets/images/icon-down.svg';
+import Images from 'config/constants/Images';
 import { ModelCategories, ModelCategoryButton, IconDown } from './Categories';
 
 const Categories = () => {
@@ -19,7 +19,7 @@ const Categories = () => {
                 <ModelCategoryButton type="button">
                     {category}
                     <span>
-                        <IconDown src={IconDownImg} alt="icon-down" />
+                        <IconDown src={Images.IconDownImg} alt="icon-down" />
                     </span>
                 </ModelCategoryButton>
             ))}
