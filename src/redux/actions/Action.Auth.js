@@ -60,8 +60,8 @@ const authPending = () => {
 
 const register = (fields) => {
     return async (dispatch) => {
+        dispatch(authPending);
         try {
-            dispatch(authPending);
             validator.registerValidator(fields);
             const payload = await authService.register(fields);
             dispatch(registerSuccess(payload));
@@ -73,8 +73,8 @@ const register = (fields) => {
 
 const login = (fields) => {
     return async (dispatch) => {
+        dispatch(authPending);
         try {
-            dispatch(authPending);
             validator.loginValidator(fields);
             const payload = await authService.login(fields);
             dispatch(loginSuccess(payload));

@@ -1,9 +1,9 @@
 const initState = {
     name: '',
-    model: '',
+    models: [],
     yearOfPublish: '',
     fuelType: '',
-    distanceTraveled: '',
+    distanceTraveled: 0,
     images: [],
 };
 
@@ -11,9 +11,6 @@ const postReducer = (state = initState, action) => {
     switch (action.type) {
         case 'UPDATE_FIELD_POST':
             return { ...state, [action.key]: action.value };
-        case 'UPLOAD_IMAGES_POST': {
-            return { ...state };
-        }
         default:
             return { ...state };
     }

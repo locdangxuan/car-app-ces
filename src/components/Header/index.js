@@ -1,13 +1,11 @@
 import React from 'react';
 import Images from 'config/constants/Images';
-import {
-    Image,
-    UnAuthenticated,
-    //  Authenticated
-} from 'components/common';
+import { Image, UnAuthenticated, Authenticated } from 'components/common';
 import Categories from 'components/common/Categories';
 import dataHeaderDefault from 'config/sampleData/header';
 import { makeStyles, Box } from '@material-ui/core';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { HeaderWrapper, GridHeader } from './Header';
 
 const src = {
@@ -29,8 +27,9 @@ const useStyles = makeStyles({
     },
 });
 
-const Header = () => {
+const Header = (props) => {
     const classes = useStyles();
+    const { isLogginSucceed } = props;
     return (
         <Box component="div">
             <HeaderWrapper>
@@ -46,8 +45,11 @@ const Header = () => {
                         <Categories />
                     </GridHeader>
                     <GridHeader item xs={3}>
-                        <UnAuthenticated />
-                        {/* <Authenticated /> */}
+                        {isLogginSucceed === true ? (
+                            <Authenticated />
+                        ) : (
+                            <UnAuthenticated />
+                        )}
                     </GridHeader>
                 </GridHeader>
             </HeaderWrapper>
@@ -55,4 +57,13 @@ const Header = () => {
     );
 };
 
-export default Header;
+Header.propTypes = {
+    isLogginSucceed: PropTypes.bool,
+};
+Header.defaultProps = {
+    isLogginSucceed: false,
+};
+
+const mapStateToProps = (state) => ({ ...state.authReducer });
+
+export default connect(mapStateToProps)(Header);
