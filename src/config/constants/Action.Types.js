@@ -1,5 +1,11 @@
-export const REGISTER = 'REGISTER';
-export const LOGIN = 'LOGIN';
+export const REGISTER = {
+    REQUEST: 'REGISTER',
+    SUCCESS: 'SUCCESSFULLY REGISTERED',
+    ERROR: 'FAILED TO REGISTERED',
+};
+export const LOGIN = {
+    REQUEST: 'LOGIN',
+    SUCCESS: 'SUCCESSFULLY LOGGED IN',
+    ERROR: 'FAILED TO LOGIN',
+};
 export const UPDATE_FIELD_AUTH = 'UPDATE_FIELD_AUTH';
-export const MODAL_ON = 'SHOW THE MODAL';
-export const MODAL_OFF = 'HIDE THE MODAL';

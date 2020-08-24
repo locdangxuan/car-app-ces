@@ -1,12 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Input, Button, ModalSpan } from 'components/common';
-import {
-    UPDATE_FIELD_AUTH,
-    REGISTER,
-    MODAL_OFF,
-} from 'config/constants/Action.Types';
+import { Input, Button, ModalSpan, Loader } from 'components/common';
 import PropTypes from 'prop-types';
+import authAction from 'redux/actions/Action.Auth';
 import { Wrapper, Content, Header, Footer, Body } from './Modal.Styles';
 
 const RegisterForm = (props) => {
@@ -15,14 +11,23 @@ const RegisterForm = (props) => {
     };
     const onSubmitRegisterHandler = (
         username,
+        phone,
+        displayName,
         email,
         password,
         verification
     ) => () => {
-        const payload = { username, email, password, verification };
+        const payload = {
+            username: username.toLowerCase(),
+            phone,
+            displayName,
+            email,
+            password,
+            verification,
+        };
         return props.onSubmitRegister(payload);
     };
-    const onCancelHandler = () => props.onCancelRegister();
+    const onCancelHandler = () => props.handlerToggle();
 
     const {
         username,
@@ -33,6 +38,7 @@ const RegisterForm = (props) => {
         verification,
         message,
         registerDone,
+        pending,
     } = props;
     return (
         <Wrapper>
@@ -77,19 +83,20 @@ const RegisterForm = (props) => {
                     <Input
                         id="verification"
                         type="password"
-                        placeholder="Type your password again"
+                        placeholder="Confirm password"
                         onChange={onChangeHandler}
                         value={verification}
                     />
                 </Body>
+                {pending && <Loader />}
                 <ModalSpan isValid={registerDone}>{message}</ModalSpan>
                 <Footer>
                     <Button
                         onClick={onSubmitRegisterHandler(
                             username,
+                            phonenumber,
                             displayname,
                             email,
-                            phonenumber,
                             password,
                             verification
                         )}
@@ -112,13 +119,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => {
     return {
         onInputChange: (payload) =>
-            dispatch({
-                type: UPDATE_FIELD_AUTH,
-                key: payload.id,
-                value: payload.value,
-            }),
-        onSubmitRegister: (payload) => dispatch({ type: REGISTER, payload }),
-        onCancelRegister: () => dispatch({ type: MODAL_OFF }),
+            dispatch(authAction.updateFieldAuth(payload)),
+        onSubmitRegister: (payload) => dispatch(authAction.register(payload)),
     };
 };
 
@@ -132,8 +134,9 @@ RegisterForm.propTypes = {
     message: PropTypes.string,
     onInputChange: PropTypes.func,
     onSubmitRegister: PropTypes.func,
-    onCancelRegister: PropTypes.func,
     registerDone: PropTypes.bool,
+    handlerToggle: PropTypes.func,
+    pending: PropTypes.bool,
 };
 
 RegisterForm.defaultProps = {
@@ -146,8 +149,9 @@ RegisterForm.defaultProps = {
     message: '',
     onInputChange: {},
     onSubmitRegister: {},
-    onCancelRegister: {},
     registerDone: false,
+    handlerToggle: {},
+    pending: false,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RegisterForm);

@@ -1,10 +1,8 @@
 import {
+    UPDATE_FIELD_AUTH,
     REGISTER,
     LOGIN,
-    UPDATE_FIELD_AUTH,
-    MODAL_OFF,
 } from 'config/constants/Action.Types';
-import validator from 'services/Validator/Validator.Register';
 
 const initState = {
     username: '',
@@ -13,35 +11,40 @@ const initState = {
     phonenumber: '',
     email: '',
     verification: '',
+    pending: false,
 };
 
 const authReducer = (state = initState, action) => {
     switch (action.type) {
         case UPDATE_FIELD_AUTH:
             return { ...state, [action.key]: action.value };
-        case LOGIN:
-            return { ...state };
-        case REGISTER: {
-            const valid = validator(state);
+        case LOGIN.SUCCESS: {
+            return { ...state, ...initState, isModalOn: false };
+        }
+        case LOGIN.ERROR: {
+            const { message } = action;
+            return { ...state, message };
+        }
+        case REGISTER.REQUEST: {
+            return { ...state, pending: true };
+        }
+        case REGISTER.SUCCESS: {
             const { username, password } = state;
-            if (valid.result === true) {
-                return {
-                    ...state,
-                    ...initState,
-                    username,
-                    password,
-                    message: valid.message,
-                    registerDone: valid.result,
-                };
-            }
             return {
                 ...state,
-                message: valid.message,
-                registerDone: valid.result,
+                ...initState,
+                username,
+                password,
+                registerDone: true,
+                message: REGISTER.SUCCESS,
             };
         }
-        case MODAL_OFF:
-            return { ...state, ...initState };
+        case REGISTER.ERROR:
+            return {
+                ...state,
+                pending: false,
+                message: action.message,
+            };
         default:
             return state;
     }
