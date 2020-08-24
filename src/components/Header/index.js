@@ -5,44 +5,35 @@ import Categories from 'components/common/Categories';
 import dataHeaderDefault from 'config/sampleData/header';
 import { HeaderWrapper, GridHeader } from './Header';
 
+const src = {
+    LogoHeader: Images.LogoHeader
+        ? Images.LogoHeader
+        : dataHeaderDefault.LogoHeader,
+    LoginIcon: Images.LoginIcon
+        ? Images.LoginIcon
+        : dataHeaderDefault.LoginIcon,
+    SignUpIcon: Images.SignupIcon
+        ? Images.SignupIcon
+        : dataHeaderDefault.SignupIcon,
+};
+
 const Header = () => {
     return (
         <HeaderWrapper>
             <GridHeader container spacing={2}>
                 <GridHeader item xs={2}>
-                    <Image
-                        src={
-                            Images.LogoHeader
-                                ? Images.LogoHeader
-                                : dataHeaderDefault.LogoHeader
-                        }
-                        alt="logo-header"
-                    />
+                    <Image src={src.LogoHeader} alt="logo-header" />
                 </GridHeader>
                 <GridHeader item xs={7}>
                     <Categories />
                 </GridHeader>
                 <GridHeader item xs={3}>
                     <Button>
-                        <Icon
-                            src={
-                                Images.LoginIcon
-                                    ? Images.LoginIcon
-                                    : dataHeaderDefault.LoginIcon
-                            }
-                            alt="login-icon"
-                        />
+                        <Icon src={src.LoginIcon} alt="login-icon" />
                         Login
                     </Button>
                     <Button>
-                        <Icon
-                            src={
-                                Images.SignupIcon
-                                    ? Images.SignupIcon
-                                    : dataHeaderDefault.SignupIcon
-                            }
-                            alt="signup-icon"
-                        />
+                        <Icon src={src.SignUpIcon} alt="signup-icon" />
                         Signup
                     </Button>
                 </GridHeader>
