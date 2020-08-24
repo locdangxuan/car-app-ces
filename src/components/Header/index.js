@@ -18,7 +18,6 @@ const src = {
 };
 
 const Header = () => {
-    /* Example of using modal */
     const [loginF, setLoginF] = useState(false);
     const [registerF, setRegisterF] = useState(false);
     const toggleLogin = () => {
