@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { fontHeader } from 'config/mixins/Fonts';
 
 const Body = styled.section`
-    margin: 20px;
+    margin: 30px;
 `;
 
 const Wrapper = styled.div`
@@ -11,6 +11,8 @@ const Wrapper = styled.div`
     background-color: ${(props) => props.theme.color.black};
     opacity: 0.87;
     position: absolute;
+    top: 0;
+    left: 0;
     justify-content: center;
     align-items: center;
     display: flex;
@@ -45,7 +47,7 @@ const Content = styled.section`
     position: relative;
     display: flex;
     align-items: center;
-    width: 260px;
+    width: 350px;
     text-transform: uppercase;
     background-color: ${(props) => props.theme.color.white};
     flex-direction: column;

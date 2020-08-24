@@ -6,10 +6,10 @@ import RegisterForm from './Modal.Register';
 
 const Modal = (props) => {
     switch (props.type) {
-        case REGISTER:
-            return <RegisterForm />;
-        case LOGIN:
-            return <LoginForm />;
+        case REGISTER.REQUEST:
+            return <RegisterForm handlerToggle={props.handlerToggle} />;
+        case LOGIN.REQUEST:
+            return <LoginForm handlerToggle={props.handlerToggle} />;
         default:
             return <div />;
     }
@@ -17,10 +17,12 @@ const Modal = (props) => {
 
 Modal.propTypes = {
     type: PropTypes.string,
+    handlerToggle: PropTypes.func,
 };
 
 Modal.defaultProps = {
     type: REGISTER,
+    handlerToggle: {},
 };
 
 export default Modal;

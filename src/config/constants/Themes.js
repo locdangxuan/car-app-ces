@@ -1,9 +1,10 @@
 import color from 'config/constants/Colors';
 import { fontMain } from 'config/mixins/Fonts';
+import { fontSize } from 'config/constants/Fonts';
 
 const button = {
     borderColor: color.darkGrey,
-    width: '100px',
+    width: '140px',
     height: '30px',
     borderRadius: '4px',
     margin: '0 0 0 10px',
@@ -33,6 +34,10 @@ const image = {
 const header = {
     backgroundColor: color.backgroundHeader,
     color: color.white,
+}
+
+const loader = {
+    fontSize: fontSize.fontSmall,
 };
 
 const globalTheme = {
@@ -41,6 +46,7 @@ const globalTheme = {
     span,
     header,
     image,
+    loader,
     color: {
         ...color,
     },

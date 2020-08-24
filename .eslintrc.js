@@ -55,5 +55,6 @@ module.exports = {
     "import/export": 2,
     "no-invalid-regexp": "error",
     "no-regex-spaces": "error",
+    "no-throw-literal": 2
   },
 };
