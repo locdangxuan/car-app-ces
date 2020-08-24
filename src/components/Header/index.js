@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Images from 'config/constants/Images';
-import { Image, Button, Icon } from 'components/common';
+import { Modal, Image, Button, Icon } from 'components/common';
 import Categories from 'components/common/Categories';
 import dataHeaderDefault from 'config/sampleData/header';
 import { HeaderWrapper, GridHeader } from './Header';
@@ -18,6 +18,15 @@ const src = {
 };
 
 const Header = () => {
+    /* Example of using modal */
+    const [loginF, setLoginF] = useState(false);
+    const [registerF, setRegisterF] = useState(false);
+    const toggleLogin = () => {
+        setLoginF(!loginF);
+    };
+    const toggleRegister = () => {
+        setRegisterF(!registerF);
+    };
     return (
         <HeaderWrapper>
             <GridHeader container spacing={2}>
@@ -28,14 +37,20 @@ const Header = () => {
                     <Categories />
                 </GridHeader>
                 <GridHeader item xs={3}>
-                    <Button>
+                    <Button onClick={toggleLogin}>
                         <Icon src={src.LoginIcon} alt="login-icon" />
                         Login
                     </Button>
-                    <Button>
+                    <Button onClick={toggleRegister}>
                         <Icon src={src.SignUpIcon} alt="signup-icon" />
                         Signup
                     </Button>
+                    {registerF === true && (
+                        <Modal type="REGISTER" handlerToggle={toggleRegister} />
+                    )}
+                    {loginF === true && (
+                        <Modal type="LOGIN" handlerToggle={toggleLogin} />
+                    )}
                 </GridHeader>
             </GridHeader>
         </HeaderWrapper>
