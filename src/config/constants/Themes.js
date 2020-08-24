@@ -5,7 +5,8 @@ const button = {
     borderColor: color.darkGrey,
     width: '100px',
     height: '30px',
-    border_radius: '4px',
+    borderRadius: '4px',
+    margin: '0 0 0 10px',
 };
 
 const input = {
@@ -14,7 +15,7 @@ const input = {
     backgroundColor: color.transparent,
     margin: '9px 0',
     outline: 'none',
-    border_radius: '0',
+    borderRadius: '0',
 };
 
 const span = {
@@ -26,6 +27,7 @@ const span = {
 const image = {
     width: '100%',
     height: '100%',
+    margin: '0 0 0 5px',
 };
 
 const header = {
