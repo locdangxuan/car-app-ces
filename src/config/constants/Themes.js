@@ -34,7 +34,7 @@ const image = {
 const header = {
     backgroundColor: color.backgroundHeader,
     color: color.white,
-}
+};
 
 const loader = {
     fontSize: fontSize.fontSmall,
