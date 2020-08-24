@@ -1,22 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Input, Button, Span } from 'components/common';
+import { Input, Button, ModalSpan, Loader } from 'components/common';
 import PropTypes from 'prop-types';
-import {
-    UPDATE_FIELD_AUTH,
-    LOGIN,
-    MODAL_OFF,
-} from 'config/constants/Action.Types';
+import authActions from 'redux/actions/Action.Auth';
 import { Wrapper, Content, Header, Footer, Body } from './Modal.Styles';
 
 const LoginForm = (props) => {
     const onChangeHandler = (event) => props.onChangeHandler(event.target);
     const onSubmitHandler = (username, password) => () => {
-        props.onSubmitLogin(username, password);
+        props.onSubmitLogin({ username, password });
     };
-    const onCancelHandler = () => props.onCancelLogin();
+    const onCancelHandler = () => props.handlerToggle();
 
-    const { username, password, valid, message } = props;
+    const { username, password, message, valid, pending } = props;
     return (
         <Wrapper>
             <Content>
@@ -27,15 +23,18 @@ const LoginForm = (props) => {
                         type="text"
                         placeholder="Username"
                         onChange={onChangeHandler}
+                        value={username}
                     />
                     <Input
                         id="password"
                         type="password"
                         placeholder="Password"
                         onChange={onChangeHandler}
+                        value={password}
                     />
                 </Body>
-                <Span isValid={valid}>{message}</Span>
+                {pending && <Loader />}
+                <ModalSpan isValid={valid}>{message}</ModalSpan>
                 <Footer>
                     <Button
                         onClick={onSubmitHandler(username, password)}
@@ -55,16 +54,8 @@ const mapStateToProps = (state) => ({ ...state.authReducer });
 
 const mapDispatchToProps = (dispatch) => ({
     onChangeHandler: (payload) =>
-        dispatch({
-            type: UPDATE_FIELD_AUTH,
-            key: payload.id,
-            value: payload.value,
-        }),
-    onSubmitLogin: (username, password) => {
-        const payload = { username, password };
-        dispatch({ type: LOGIN, payload });
-    },
-    onCancelLogin: () => dispatch({ type: MODAL_OFF }),
+        dispatch(authActions.updateFieldAuth(payload)),
+    onSubmitLogin: (payload) => dispatch(authActions.login(payload)),
 });
 
 LoginForm.propTypes = {
@@ -74,7 +65,8 @@ LoginForm.propTypes = {
     message: PropTypes.string,
     onChangeHandler: PropTypes.func,
     onSubmitLogin: PropTypes.func,
-    onCancelLogin: PropTypes.func,
+    handlerToggle: PropTypes.func,
+    pending: PropTypes.bool,
 };
 
 LoginForm.defaultProps = {
@@ -84,7 +76,8 @@ LoginForm.defaultProps = {
     message: '',
     onChangeHandler: {},
     onSubmitLogin: {},
-    onCancelLogin: {},
+    handlerToggle: {},
+    pending: false,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);

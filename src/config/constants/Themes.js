@@ -1,9 +1,10 @@
 import color from 'config/constants/Colors';
 import { fontMain } from 'config/mixins/Fonts';
+import { fontSize } from 'config/constants/Fonts';
 
 const button = {
     borderColor: color.darkGrey,
-    width: '100px',
+    width: '140px',
     height: '30px',
     border_radius: '4px',
 };
@@ -22,10 +23,15 @@ const span = {
     text_align: 'center',
 };
 
+const loader = {
+    fontSize: fontSize.fontSmall,
+};
+
 const globalTheme = {
     button,
     input,
     span,
+    loader,
     color: {
         ...color,
     },
