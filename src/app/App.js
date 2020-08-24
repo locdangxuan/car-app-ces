@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Modal, Button } from 'components/common';
-import { ThemeProvider } from 'styled-components';
 import globalTheme from 'config/constants/Themes';
+import { ThemeProvider } from 'styled-components';
 import StyledApp from './AppStyles';
 
 const App = () => {
