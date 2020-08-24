@@ -9,7 +9,7 @@ const Input = styled.input`
     background-color: ${(props) => props.theme.input.backgroundColor};
     margin: ${(props) => props.theme.input.margin};
     outline: ${(props) => props.theme.input.outline};
-    border-radius: ${(props) => props.theme.input.border_radius};
+    border-radius: ${(props) => props.theme.input.borderRadius};
     border-bottom: 0.5px solid ${(props) => props.theme.color.darkGrey};
     &:focus {
         border-bottom: 0.5px solid ${(props) => props.theme.color.success};

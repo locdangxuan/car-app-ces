@@ -4,6 +4,7 @@ import { fontHeader } from 'config/mixins/Fonts';
 const Body = styled.section`
     margin: 30px;
 `;
+
 const Wrapper = styled.div`
     width: 100%;
     height: 100%;
