@@ -7,6 +7,7 @@ const StyledApp = styled.div`
     height: 100vh;
     background-size: cover;
     opacity: 0.95;
+    position: relative;
 `;
 
 export default StyledApp;
