@@ -6,7 +6,7 @@ const Contents = (state = initProduct, action) => {
         case actionType.FETCH_DATA_TO_PRODUCT:
             return [...action.products];
         case actionType.FETCH_DATA_TO_PRODUCT_FAILURE:
-            return [...action.message]
+            return [...action.message];
         default:
             return [...state];
     }
