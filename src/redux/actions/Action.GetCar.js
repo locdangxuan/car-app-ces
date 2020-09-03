@@ -7,20 +7,19 @@ export const actFetchToProducts = (products) => {
         products,
     };
 };
-export const fetchProductsFailure = (message) =>{
+export const fetchProductsFailure = (message) => {
     return {
         type: actionType.FETCH_DATA_TO_PRODUCT_FAILURE,
-        message
-    }
-}
+        message,
+    };
+};
 export const actRequestProducts = () => {
     return async (dispatch) => {
         try {
             const data = await GetDetailCar();
             return dispatch(actFetchToProducts(data.data.data.list));
         } catch (error) {
-            dispatch(fetchProductsFailure(error))
+            dispatch(fetchProductsFailure(error));
         }
-        
     };
 };
