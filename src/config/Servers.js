@@ -1,6 +1,8 @@
 import 'dotenv/config';
 
-const server = process.env.REACT_APP_API_SERVER || 'http://localhost:3000/api/';
+const server =
+    process.env.REACT_APP_API_SERVER || 'https://car-app-ces.tk/api/';
+
 const api = {
     user: {
         register: `${server}users/register`,

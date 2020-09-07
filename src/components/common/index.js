@@ -7,6 +7,8 @@ import Icon from './Icon';
 import Loader from './Loader';
 import RangeSlider from './RangeSlider';
 import SelectBox from './SelectBox';
+import UnAuthenticated from './UnAuthenticated';
+import Authenticated from './Authenticated';
 
 export {
     Input,
@@ -19,4 +21,6 @@ export {
     Icon,
     RangeSlider,
     SelectBox,
+    UnAuthenticated,
+    Authenticated,
 };

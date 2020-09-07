@@ -37,7 +37,7 @@ const RegisterForm = (props) => {
         password,
         verification,
         message,
-        registerDone,
+        isValid,
         pending,
     } = props;
     return (
@@ -88,8 +88,8 @@ const RegisterForm = (props) => {
                         value={verification}
                     />
                 </Body>
-                {pending && <Loader />}
-                <ModalSpan isValid={registerDone}>{message}</ModalSpan>
+                {pending && <Loader type="SPAN-STYLE" />}
+                <ModalSpan isValid={isValid}>{message}</ModalSpan>
                 <Footer>
                     <Button
                         onClick={onSubmitRegisterHandler(
@@ -134,7 +134,7 @@ RegisterForm.propTypes = {
     message: PropTypes.string,
     onInputChange: PropTypes.func,
     onSubmitRegister: PropTypes.func,
-    registerDone: PropTypes.bool,
+    isValid: PropTypes.bool,
     handlerToggle: PropTypes.func,
     pending: PropTypes.bool,
 };
@@ -149,7 +149,7 @@ RegisterForm.defaultProps = {
     message: '',
     onInputChange: {},
     onSubmitRegister: {},
-    registerDone: false,
+    isValid: false,
     handlerToggle: {},
     pending: false,
 };

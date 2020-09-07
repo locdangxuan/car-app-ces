@@ -11,8 +11,7 @@ const LoginForm = (props) => {
         props.onSubmitLogin({ username, password });
     };
     const onCancelHandler = () => props.handlerToggle();
-
-    const { username, password, message, valid, pending } = props;
+    const { username, password, message, isValid, pending } = props;
     return (
         <Wrapper>
             <Content>
@@ -33,8 +32,8 @@ const LoginForm = (props) => {
                         value={password}
                     />
                 </Body>
-                {pending && <Loader />}
-                <ModalSpan isValid={valid}>{message}</ModalSpan>
+                {pending && <Loader type="SPAN-STYLE" />}
+                <ModalSpan isValid={isValid}>{message}</ModalSpan>
                 <Footer>
                     <Button
                         onClick={onSubmitHandler(username, password)}
@@ -61,7 +60,7 @@ const mapDispatchToProps = (dispatch) => ({
 LoginForm.propTypes = {
     username: PropTypes.string,
     password: PropTypes.string,
-    valid: PropTypes.bool,
+    isValid: PropTypes.bool,
     message: PropTypes.string,
     onChangeHandler: PropTypes.func,
     onSubmitLogin: PropTypes.func,
@@ -72,7 +71,7 @@ LoginForm.propTypes = {
 LoginForm.defaultProps = {
     username: '',
     password: '',
-    valid: false,
+    isValid: false,
     message: '',
     onChangeHandler: {},
     onSubmitLogin: {},

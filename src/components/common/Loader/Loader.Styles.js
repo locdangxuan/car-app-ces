@@ -6,10 +6,27 @@ const Wrapper = styled.div`
     justify-content: center;
 `;
 
+const FullpageWrapper = styled.section`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    z-index: 500;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: white;
+    opacity: 0.6;
+`;
+
 const Circle = styled.div`
     --size: ${(props) => props.theme.loader.fontSize};
-    width: 20px;
-    height: 20px;
+    width: ${(props) =>
+        props.theme.loader.width ? props.theme.loader.width : '20px'};
+    height: ${(props) =>
+        props.theme.loader.height ? props.theme.loader.height : '20px'};
     margin: 0 auto;
     position: relative;
 `;
@@ -63,8 +80,8 @@ const MiniCircle = styled.div`
     --rotateDegree: ${(props) => props.rotateDegree};
     --delayDuration: ${(props) => props.delayDuration};
     -webkit-transform: rotate(var(--rotateDegree));
-        -ms-transform: rotate(var(--rotateDegree));
-            transform: rotate(var(--rotateDegree));
+    -ms-transform: rotate(var(--rotateDegree));
+    transform: rotate(var(--rotateDegree));
 
     &:before {
         -webkit-animation-delay: var(--delayDuration);
@@ -72,4 +89,4 @@ const MiniCircle = styled.div`
     }
 `;
 
-export { Wrapper, Circle, MiniCircle };
+export { Wrapper, Circle, MiniCircle, FullpageWrapper };

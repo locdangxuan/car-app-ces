@@ -1,8 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Images from 'config/constants/Images';
-import { Modal, Image, Button, Icon } from 'components/common';
+import {
+    Image,
+    UnAuthenticated,
+    //  Authenticated
+} from 'components/common';
 import Categories from 'components/common/Categories';
 import dataHeaderDefault from 'config/sampleData/header';
+import { makeStyles, Box } from '@material-ui/core';
 import { HeaderWrapper, GridHeader } from './Header';
 
 const src = {
@@ -17,42 +22,36 @@ const src = {
         : dataHeaderDefault.SignupIcon,
 };
 
+const useStyles = makeStyles({
+    headerContainer: {
+        margin: '0',
+        width: '100%',
+    },
+});
+
 const Header = () => {
-    const [loginF, setLoginF] = useState(false);
-    const [registerF, setRegisterF] = useState(false);
-    const toggleLogin = () => {
-        setLoginF(!loginF);
-    };
-    const toggleRegister = () => {
-        setRegisterF(!registerF);
-    };
+    const classes = useStyles();
     return (
-        <HeaderWrapper>
-            <GridHeader container spacing={2}>
-                <GridHeader item xs={2}>
-                    <Image src={src.LogoHeader} alt="logo-header" />
+        <Box component="div">
+            <HeaderWrapper>
+                <GridHeader
+                    container
+                    className={classes.headerContainer}
+                    spacing={2}
+                >
+                    <GridHeader item xs={2}>
+                        <Image src={src.LogoHeader} alt="logo-header" />
+                    </GridHeader>
+                    <GridHeader item xs={7}>
+                        <Categories />
+                    </GridHeader>
+                    <GridHeader item xs={3}>
+                        <UnAuthenticated />
+                        {/* <Authenticated /> */}
+                    </GridHeader>
                 </GridHeader>
-                <GridHeader item xs={7}>
-                    <Categories />
-                </GridHeader>
-                <GridHeader item xs={3}>
-                    <Button onClick={toggleLogin}>
-                        <Icon src={src.LoginIcon} alt="login-icon" />
-                        Login
-                    </Button>
-                    <Button onClick={toggleRegister}>
-                        <Icon src={src.SignUpIcon} alt="signup-icon" />
-                        Signup
-                    </Button>
-                    {registerF === true && (
-                        <Modal type="REGISTER" handlerToggle={toggleRegister} />
-                    )}
-                    {loginF === true && (
-                        <Modal type="LOGIN" handlerToggle={toggleLogin} />
-                    )}
-                </GridHeader>
-            </GridHeader>
-        </HeaderWrapper>
+            </HeaderWrapper>
+        </Box>
     );
 };
 

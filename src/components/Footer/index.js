@@ -21,7 +21,10 @@ const useStyles = makeStyles(() => ({
     },
     socialIcons: {
         display: 'flex',
-        justifyContent: 'end',
+        justifyContent: 'center',
+    },
+    styleSocialIcon: {
+        marginRight: '10px',
     },
 }));
 
@@ -35,17 +38,17 @@ const Footer = () => {
     return (
         <FooterWrapper>
             <Grid container spacing={3} className={classes.wrapper}>
-                <Grid item xs={6}>
+                <Grid item xs={9}>
                     <ThemeProvider theme={theme}>
                         <Span>
                             Code Engine Studio, Final Thesis Summer Internship
                         </Span>
                     </ThemeProvider>
                 </Grid>
-                <Grid item xs={6} className={classes.socialIcons}>
-                    <Twitter />
-                    <Facebook />
-                    <YouTube />
+                <Grid item xs={3} className={classes.socialIcons}>
+                    <Twitter className={classes.styleSocialIcon} />
+                    <Facebook className={classes.styleSocialIcon} />
+                    <YouTube className={classes.styleSocialIcon} />
                 </Grid>
             </Grid>
         </FooterWrapper>

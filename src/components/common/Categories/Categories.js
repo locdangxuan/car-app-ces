@@ -5,16 +5,14 @@ const ModelCategories = styled.div`
     display: flex;
     height: auto;
     justify-content: center;
-    opacity: 0.75;
-    padding-top: 10px;
 `;
 
 const ModelCategoryButton = styled.button`
     display: inline-flex;
     border: none;
-    background: transparent;
-    color: #fff;
-    margin-left: 10px;
+    background: ${(props) => props.theme.modelCategoryButton.background};
+    color: ${(props) => props.theme.modelCategoryButton.color};
+    margin: ${(props) => props.theme.modelCategoryButton.margin};
 `;
 
 const IconDown = Image;
