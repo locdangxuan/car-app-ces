@@ -19,11 +19,15 @@ const authReducer = (state = initState, action) => {
         case UPDATE_FIELD_AUTH:
             return { ...state, [action.key]: action.value };
         case LOGIN.SUCCESS: {
-            return { ...state, ...initState, isModalOn: false };
+            return {
+                ...state,
+                ...initState,
+                isLogginSucceed: true,
+            };
         }
         case LOGIN.ERROR: {
             const { message } = action;
-            return { ...state, message };
+            return { ...state, message, isValid: false, pending: false };
         }
         case REGISTER.REQUEST: {
             return { ...state, pending: true };
@@ -35,13 +39,14 @@ const authReducer = (state = initState, action) => {
                 ...initState,
                 username,
                 password,
-                registerDone: true,
+                isValid: true,
                 message: REGISTER.SUCCESS,
             };
         }
         case REGISTER.ERROR:
             return {
                 ...state,
+                isValid: false,
                 pending: false,
                 message: action.message,
             };

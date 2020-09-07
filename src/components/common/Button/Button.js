@@ -17,7 +17,6 @@ const Button = styled.button`
                 return props.theme.color.white;
         }
     }};
-
     ${(props) => props.theme.font};
     &:focus {
         outline: none;
@@ -31,6 +30,8 @@ const Button = styled.button`
         border: 1px solid var(--onActiveBorderColor);
         box-shadow: 0 2px ${(props) => props.theme.color.darkGrey};
     }
+    font-size: ${(props) =>
+        props.theme.button.fontSize ? props.theme.button.fontSize : ''};
     margin: ${(props) => props.theme.button.margin};
     display: ${(props) => props.theme.color.display};
 `;

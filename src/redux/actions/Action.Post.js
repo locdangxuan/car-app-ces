@@ -21,25 +21,16 @@ const onUpdateModelFailure = (error) => ({
     message: error.message,
 });
 
-const upload = () => {};
-const updateFieldPost = (payload) => {
-    return (dispatch, getState) => {
-        dispatch({
-            type: 'UPDATE_FIELD_POST',
-            key: payload.id,
-            value: payload.value,
-        });
-    };
-};
+const onUploadImageRequest = () => ({});
 
-const uploadImagesPost = (payload) => {
-    return async (dispatch, getState) => {
-        const image = await utils.base64Converter(payload.files[0]);
-        dispatch({
-            type: 'UPLOAD_IMAGES_POST',
-            file: image,
-        });
-    };
+const onUploadImageSuccess = (payload) => ({
+    type: 'UPDATE_FIELD_POST',
+    key: payload.id,
+    value: payload.value,
+});
+
+const upload = (payload) => {
+    return async (dispatch, getState) => {};
 };
 
 const updateBranch = (payload) => {
@@ -57,4 +48,4 @@ const updateBranch = (payload) => {
     };
 };
 
-export default { updateFieldPost, uploadImagesPost, updateBranch };
+export default { upload, updateBranch };
