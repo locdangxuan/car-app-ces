@@ -11,19 +11,26 @@ import {
     Grid,
     withStyles,
 } from '@material-ui/core';
-import {
-    DirectionsCar,
-    DirectionsBike,
-    DateRange,
-    Label,
-} from '@material-ui/icons';
+import { DirectionsCar, Speed, DateRange, Label } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import HANDLE_ERROR from 'config/messages/Content.Message';
 import styles from './styles';
 
 const ContentCard = (props) => {
     const { classes, data } = props;
-    const { root, media, menuItem, nameContent } = classes;
+    const {
+        root,
+        media,
+        menuItem,
+        textCenter,
+        price,
+        viewDetails,
+        btnView,
+        icon,
+        left,
+        right,
+        cardActionsWrapper,
+    } = classes;
     if (Object.values(data).length === 0) {
         return HANDLE_ERROR;
     }
@@ -35,40 +42,48 @@ const ContentCard = (props) => {
                     image={data.thumbnail}
                     title="Contemplative Reptile"
                 />
-                <CardContent className={nameContent}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                        {data.brand}
+                <CardContent>
+                    <Typography
+                        gutterBottom
+                        className={textCenter}
+                        variant="h6"
+                        component="h2"
+                    >
+                        {data.name}
                     </Typography>
-                    <Grid container spacing={4}>
+                    <Grid container>
                         <Grid item xs={6}>
-                            <MenuItem className={menuItem}>
-                                <Label fontSize="small" />
+                            <MenuItem className={(menuItem, left)}>
+                                <Label fontSize="small" className={icon} />
                                 <Typography variant="inherit">
                                     {data.fuelType}
                                 </Typography>
                             </MenuItem>
                         </Grid>
                         <Grid item xs={6}>
-                            <MenuItem className={menuItem}>
-                                <DirectionsCar fontSize="small" />
+                            <MenuItem className={(menuItem, right)}>
+                                <DirectionsCar
+                                    fontSize="small"
+                                    className={icon}
+                                />
                                 <Typography variant="inherit">
-                                    {data.name}
+                                    {data.brand}
                                 </Typography>
                             </MenuItem>
                         </Grid>
                     </Grid>
-                    <Grid container spacing={4}>
+                    <Grid container>
                         <Grid item xs={6}>
-                            <MenuItem className={menuItem}>
-                                <DateRange fontSize="small" />
+                            <MenuItem className={(menuItem, left)}>
+                                <DateRange fontSize="small" className={icon} />
                                 <Typography variant="inherit">
                                     {data.year}
                                 </Typography>
                             </MenuItem>
                         </Grid>
                         <Grid item xs={6}>
-                            <MenuItem className={menuItem}>
-                                <DirectionsBike fontSize="small" />
+                            <MenuItem className={(menuItem, right)}>
+                                <Speed fontSize="small" className={icon} />
                                 <Typography variant="inherit">
                                     {data.distanceTraveled} Km
                                 </Typography>
@@ -77,15 +92,17 @@ const ContentCard = (props) => {
                     </Grid>
                 </CardContent>
             </CardActionArea>
-            <CardActions>
-                <Grid container spacing={6}>
-                    <Grid item xs={6}>
+            <CardActions className={cardActionsWrapper}>
+                <Grid container>
+                    <Grid item xs={6} className={price}>
                         <Typography variant="inherit">
                             {data.price} USD
                         </Typography>
                     </Grid>
-                    <Grid item xs={6}>
-                        <Button size="small">View Listing</Button>
+                    <Grid item xs={6} className={viewDetails}>
+                        <Button color="primary" className={btnView}>
+                            View Details
+                        </Button>
                     </Grid>
                 </Grid>
             </CardActions>

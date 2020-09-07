@@ -1,8 +1,9 @@
 import React from 'react';
+import { NativeSelect } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import MenuItem from '@material-ui/core/MenuItem';
+import PropTypes from 'prop-types';
+import Color from 'config/constants/Colors';
 import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
 import { Span } from 'components/common';
 
 const useStyles = makeStyles(() => ({
@@ -14,39 +15,59 @@ const useStyles = makeStyles(() => ({
     },
     selectEmpty: {
         padding: 0,
-        height: '20px',
-        margin: '0 0 0 10px',
+        height: '25px',
+        margin: '0 0 0 15px',
         width: '100%',
+        border: '1px solid #fff',
+        color: Color.white,
+        background: Color.backgroundInput,
+    },
+    option: {
+        color: Color.black,
     },
 }));
 
-export default function SimpleSelect() {
+const SimpleSelect = (props) => {
     const classes = useStyles();
     const [age, setAge] = React.useState('');
-
+    const { name } = props;
     const handleChange = (event) => {
         setAge(event.target.value);
     };
 
     return (
         <FormControl variant="outlined" className={classes.formControl}>
-            <Span>Category</Span>
-            <Select
-                className={classes.selectEmpty}
-                labelId="demo-simple-select-outlined-label"
-                id="demo-simple-select-outlined"
+            <Span>{name}</Span>
+            <NativeSelect
                 value={age}
                 onChange={handleChange}
-                label="Age"
-                fontS
+                name="age"
+                className={classes.selectEmpty}
+                inputProps={{ 'aria-label': 'age' }}
             >
-                <MenuItem value="">
-                    <em>None</em>
-                </MenuItem>
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
-            </Select>
+                <option className={classes.option} value="">
+                    None
+                </option>
+                <option className={classes.option} value={10}>
+                    Ten
+                </option>
+                <option className={classes.option} value={20}>
+                    Twenty
+                </option>
+                <option className={classes.option} value={30}>
+                    Thirty
+                </option>
+            </NativeSelect>
         </FormControl>
     );
-}
+};
+
+export default SimpleSelect;
+
+SimpleSelect.propTypes = {
+    name: PropTypes.string,
+};
+
+SimpleSelect.defaultProps = {
+    name: '',
+};

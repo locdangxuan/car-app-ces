@@ -6,16 +6,17 @@ const Body = styled.section`
 `;
 
 const Wrapper = styled.div`
+    display: flex;
+    position: fixed;
     width: 100%;
     height: 100%;
+    top: 0px;
+    left: 0px;
+    z-index: 500;
     background-color: ${(props) => props.theme.color.black};
-    opacity: 0.87;
-    position: absolute;
-    top: 0;
-    left: 0;
+    opacity: 0.9;
     justify-content: center;
     align-items: center;
-    display: flex;
     animation: modal-mount linear 0.2s;
 
     @keyframes modal-mount {
@@ -43,8 +44,9 @@ const Footer = styled.section`
     margin-bottom: 20px;
 `;
 const Content = styled.section`
+    z-index: 1000;
+    opacity: 1;
     border-radius: 10px;
-    position: relative;
     display: flex;
     align-items: center;
     width: 350px;

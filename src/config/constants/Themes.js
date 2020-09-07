@@ -8,11 +8,13 @@ const button = {
     height: '30px',
     borderRadius: '4px',
     margin: '0 0 0 10px',
+    backgroundColor: color.transparent,
+    color: color.black,
 };
 
 const input = {
     noBorder: 'true',
-    inputWidth: '100%',
+    width: '100%',
     backgroundColor: color.transparent,
     margin: '9px 0',
     outline: 'none',

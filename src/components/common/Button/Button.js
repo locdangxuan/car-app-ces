@@ -1,15 +1,24 @@
 import styled from 'styled-components';
 
 const Button = styled.button`
-    --onActiveBorderColor: ${(props) =>
-        props.isSuccess ? props.theme.color.success : props.theme.color.danger};
-    ${(props) => props.theme.font};
     border: 1.3px solid ${(props) => props.theme.button.borderColor};
     width: ${(props) => props.theme.button.width};
     height: ${(props) => props.theme.button.height};
-    color: ${(props) => props.theme.color.white};
     border-radius: ${(props) => props.theme.button.borderRadius};
-    background-color: ${(props) => props.theme.color.transparent};
+    color: ${(props) => props.theme.button.color};
+    background-color: ${(props) => props.theme.button.backgroundColor};
+    --onActiveBorderColor: ${(props) => {
+        switch (props.isSuccess) {
+            case true:
+                return props.theme.color.success;
+            case false:
+                return props.theme.color.danger;
+            default:
+                return props.theme.color.white;
+        }
+    }};
+
+    ${(props) => props.theme.font};
     &:focus {
         outline: none;
     }

@@ -8,6 +8,8 @@ const danger = '#de1818';
 const transparent = 'transparent';
 const backgroundHeader = '#1a1a1a';
 const backgroundFooter = '#ffff00';
+const backgroundDetails = 'rgba(0, 0, 0, 0.7)';
+const backgroundInput = 'rgba(255, 255, 255, 0.2)';
 
 export default {
     white,
@@ -20,4 +22,6 @@ export default {
     transparent,
     backgroundHeader,
     backgroundFooter,
+    backgroundDetails,
+    backgroundInput,
 };
