@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Color from 'config/constants/Colors';
+import theme from 'config/constants/Themes';
 import Background from 'assets/images/cars.webp';
 
 const Body = styled.div`
@@ -12,7 +12,7 @@ const Body = styled.div`
     padding-top: 100px;
     background-repeat: no-repeat;
     opacity: 0.95;
-    color: ${Color.white};
+    color: ${theme.body.color};
 `;
 
 export default Body;
