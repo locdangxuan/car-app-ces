@@ -62,6 +62,24 @@ const loginValidator = (payload) => {
             );
         }
     }
+    // else {
+    //     if (usernameValidator(payload.username.toLowerCase()) === false) {
+    //         throw new Error(
+    //             JSON.stringify({
+    //                 status: statusCode.BAD_REQUEST,
+    //                 message: MESSAGE_ERROR.INVALID_USERNAME,
+    //             })
+    //         );
+    //     }
+    //     if (charactersValidator(payload.password) === false) {
+    //         throw new Error(
+    //             JSON.stringify({
+    //                 status: statusCode.BAD_REQUEST,
+    //                 message: MESSAGE_ERROR.INVALID_PASSWORD,
+    //             })
+    //         );
+    //     }
+    // }
     return {
         status: statusCode.OK,
         message: MESSAGE_SUCCESS.VALIDFIELD,
