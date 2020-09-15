@@ -14,6 +14,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import DraftsIcon from '@material-ui/icons/Drafts';
 import PersonIcon from '@material-ui/icons/Person';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import utils from 'utils/utils';
 
 const useStyles = makeStyles({
     authenticated: {
@@ -70,6 +71,7 @@ const StyledMenuItem = withStyles((theme) => ({
 
 const Authenticated = () => {
     const [anchorEl, setAnchorEl] = React.useState(null);
+    const { displayName } = utils.getProfile();
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -84,7 +86,7 @@ const Authenticated = () => {
     return (
         <Box component="div" className={classes.authenticated}>
             <Box component="div" className={classes.name}>
-                Master Phat
+                {displayName}
             </Box>
             <Button
                 aria-controls="customized-menu"

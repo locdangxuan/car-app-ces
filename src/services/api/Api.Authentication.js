@@ -1,6 +1,7 @@
 import api from 'config/Servers';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
+import * as utilsConstants from 'config/constants/Utils';
 
 const register = async (fields) => {
     try {
@@ -19,11 +20,11 @@ const login = async (fields) => {
         const { data, status } = response;
         const { displayName, email, id, phone, token, message } = data.data;
         localStorage.setItem(
-            'Profile',
+            utilsConstants.profile,
             JSON.stringify({ id, phone, email, displayName })
         );
         const cookies = new Cookies();
-        cookies.set('token', token, { path: '/' });
+        cookies.set(utilsConstants.token, token, { path: '/' });
         return { status, message };
     } catch (error) {
         const { status, data } = error.response;

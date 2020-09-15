@@ -1,4 +1,4 @@
-import { MESSAGE_ERROR, MESSAGE_SUCCESS } from 'config/messages/Auth.Messages';
+import { MESSAGE_ERROR, MESSAGE_SUCCESS } from 'config/messages/Messages.Auth';
 import * as statusCode from 'config/constants/StatusCode';
 
 const passwordVerification = (password, verification) => {
@@ -32,7 +32,7 @@ const emailValidator = (value) => {
 const checkBlankFields = (payload) => {
     let result = true;
     Object.values(payload).forEach((value) => {
-        if (value === '') result = false;
+        if (!value) result = false;
     });
     return result;
 };
@@ -127,4 +127,19 @@ const registerValidator = (payload) => {
     );
 };
 
-export default { registerValidator, loginValidator };
+const postValidator = (payload) => {
+    if (checkBlankFields(payload) === false) {
+        throw new Error(
+            JSON.stringify({
+                status: statusCode.BAD_REQUEST,
+                message: MESSAGE_ERROR.BLANK_FIELD,
+            })
+        );
+    }
+    return {
+        status: statusCode.OK,
+        message: MESSAGE_SUCCESS.VALID_FIELD,
+    };
+};
+
+export default { registerValidator, loginValidator, postValidator };

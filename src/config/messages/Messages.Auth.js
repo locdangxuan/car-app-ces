@@ -8,6 +8,7 @@ const MESSAGE_ERROR = {
     INVALID_PHONENUMBER: 'Your phone number is invalid',
     BLANK_FIELD: 'Please fill in all the fields above',
     SERVER_DOWN: 'The Server is not working right now, please try again later',
+    UNAUTHORIZED: 'You have not loged in, please login and try again',
 };
 
 const MESSAGE_SUCCESS = {

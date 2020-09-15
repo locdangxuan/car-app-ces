@@ -7,7 +7,7 @@ import Delete from 'assets/images/trash.svg';
 import Wrapper from './ImageCard.Styles';
 
 const ImageCard = (props) => {
-    const { imgSrc, removeImage } = props;
+    const { imgSrc, removeImage, index } = props;
     const theme = {
         button: {
             width: '15%',
@@ -19,7 +19,7 @@ const ImageCard = (props) => {
         },
     };
     const onClickHandler = () => {
-        removeImage();
+        removeImage(index);
     };
     return (
         <ThemeProvider theme={theme}>
@@ -34,10 +34,12 @@ const ImageCard = (props) => {
 ImageCard.propTypes = {
     imgSrc: PropTypes.string,
     removeImage: PropTypes.func,
+    index: PropTypes.number,
 };
 ImageCard.defaultProps = {
     imgSrc: '',
     removeImage: {},
+    index: '0',
 };
 
 export default ImageCard;

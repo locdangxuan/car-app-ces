@@ -5,15 +5,13 @@ import {
     UPDATE_FIELD_AUTH,
 } from 'config/constants/Action.Types';
 import * as statusCode from 'config/constants/StatusCode';
-import { MESSAGE_ERROR } from 'config/messages/Auth.Messages';
+import { MESSAGE_ERROR } from 'config/messages/Messages.Auth';
 import validator from 'services/validator/FieldsValidator';
+import utils from 'utils/utils';
 
-const loginSuccess = (payload) => {
-    const { profile, token } = payload;
+const loginSuccess = () => {
     return {
         type: LOGIN.SUCCESS,
-        profile: JSON.stringify(profile),
-        token,
     };
 };
 
@@ -84,6 +82,19 @@ const login = (fields) => {
     };
 };
 
+const verifyAuthenticationStatus = () => {
+    return (dispatch) => {
+        try {
+            const token = utils.getToken();
+            if (token) {
+                dispatch(loginSuccess());
+            }
+        } catch (error) {
+            dispatch(loginFailure);
+        }
+    };
+};
+
 const updateFieldAuth = (fields) => {
     return (dispatch) => {
         dispatch({
@@ -93,4 +104,4 @@ const updateFieldAuth = (fields) => {
         });
     };
 };
-export default { register, login, updateFieldAuth };
+export default { register, login, updateFieldAuth, verifyAuthenticationStatus };
