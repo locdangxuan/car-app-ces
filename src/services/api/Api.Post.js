@@ -40,7 +40,6 @@ const create = async (payload, token) => {
         });
         return result.data;
     } catch (error) {
-        console.log(error.response);
         const { status, data } = error.response;
         const { message } = data;
         throw new Error(JSON.stringify({ status, message }));
