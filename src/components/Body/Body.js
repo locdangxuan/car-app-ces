@@ -8,8 +8,8 @@ const Body = styled.div`
     background-size: cover;
     background-attachment: fixed;
     padding-top: 100px;
+    background-repeat: no-repeat;
     opacity: 0.95;
-    position: relative;
 `;
 
 export default Body;

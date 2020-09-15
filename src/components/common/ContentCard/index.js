@@ -13,7 +13,7 @@ import {
 } from '@material-ui/core';
 import { DirectionsCar, Speed, DateRange, Label } from '@material-ui/icons';
 import PropTypes from 'prop-types';
-import HANDLE_ERROR from 'config/messages/Content.Message';
+import HANDLE_ERROR from 'config/messages/Messages.Content';
 import styles from './styles';
 
 const ContentCard = (props) => {

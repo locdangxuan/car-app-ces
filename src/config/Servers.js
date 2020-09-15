@@ -10,8 +10,20 @@ const api = {
     },
     post: {
         get: `${server}posts/`,
-        create: `${server}posts/create`,
-        update: `${server}posts/update`,
+        create: {
+            url: `${server}posts/`,
+            method: 'POST',
+        },
+        update: {
+            url: `${server}posts/update`,
+            method: 'PUT',
+        },
+    },
+    branch: {
+        get: `${server}brands/`,
+    },
+    model: {
+        get: `${server}models/`,
     },
 };
 

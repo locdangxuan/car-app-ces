@@ -14,9 +14,9 @@ const Input = styled.input`
     margin: ${(props) => props.theme.input.margin};
     outline: ${(props) => props.theme.input.outline};
     border-radius: ${(props) => props.theme.input.borderRadius};
-    border-bottom: 0.5px solid ${(props) => props.theme.color.darkGrey};
+    border-bottom: 1px solid ${(props) => props.theme.color.darkGrey};
     &:focus {
-        border-bottom: 0.5px solid ${(props) => props.theme.color.success};
+        border-bottom: 1px solid ${(props) => props.theme.color.success};
     }
     border: ${(props) => props.theme.input.border};
 `;

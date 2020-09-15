@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Images from 'config/constants/Images';
 import { Image, UnAuthenticated, Authenticated } from 'components/common';
 import Categories from 'components/common/Categories';
@@ -6,6 +6,7 @@ import dataHeaderDefault from 'config/sampleData/header';
 import { makeStyles, Box } from '@material-ui/core';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import action from 'redux/actions/Action.Auth';
 import { HeaderWrapper, GridHeader } from './Header';
 
 const src = {
@@ -29,7 +30,11 @@ const useStyles = makeStyles({
 
 const Header = (props) => {
     const classes = useStyles();
-    const { isLogginSucceed } = props;
+    const { isLogginSucceed, verifyAuthenticationStatus } = props;
+    useEffect(() => {
+        verifyAuthenticationStatus();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
     return (
         <Box component="div">
             <HeaderWrapper>
@@ -59,11 +64,17 @@ const Header = (props) => {
 
 Header.propTypes = {
     isLogginSucceed: PropTypes.bool,
+    verifyAuthenticationStatus: PropTypes.func,
 };
 Header.defaultProps = {
     isLogginSucceed: false,
+    verifyAuthenticationStatus: {},
 };
 
 const mapStateToProps = (state) => ({ ...state.authReducer });
+const mapDispatchToProps = (dispatch) => ({
+    verifyAuthenticationStatus: () =>
+        dispatch(action.verifyAuthenticationStatus()),
+});
 
-export default connect(mapStateToProps)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
