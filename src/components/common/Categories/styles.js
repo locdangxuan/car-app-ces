@@ -89,6 +89,12 @@ const categoryTheme = () => ({
     brand: {
         color: Color.white,
     },
+    dropdownContent: {
+        color: Color.white,
+    },
+    brand: {
+        color: Color.white,
+    },
 });
 
 export {
