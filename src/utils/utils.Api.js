@@ -10,6 +10,12 @@ const getFormDataForPost = (payload) => {
     Object.values(payload.images).forEach((value) => {
         data.append('images', value);
     });
+    if (payload.oldImageMap) {
+        data.append('oldImagesMap', payload.oldImageMap);
+    }
+    if (payload.imgUrls) {
+        data.append('imgUrls', JSON.stringify(payload.imgUrls));
+    }
     return data;
 };
 

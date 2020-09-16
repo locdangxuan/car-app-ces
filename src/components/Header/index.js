@@ -20,7 +20,6 @@ const src = {
         ? Images.SignupIcon
         : dataHeaderDefault.SignupIcon,
 };
-
 const useStyles = makeStyles({
     headerContainer: {
         margin: '0',

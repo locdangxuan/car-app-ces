@@ -11,10 +11,10 @@ const FullpageWrapper = styled.section`
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     z-index: 500;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     background: white;
