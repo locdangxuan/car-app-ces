@@ -8,19 +8,19 @@ const useStyles = makeStyles({
         fontFamily: fontFamilies.ssfLucida,
         color: Color.white,
     },
+    carousel: {
+        marginTop: '20px',
+        padding: '10px',
+    },
     column: {
-        padding: '30px 50px',
+        padding: '30px 0',
     },
-    carInfo: {
+    wrapper: {
         background: Color.backgroundDetails,
-    },
-    titleWrapper: {
-        background: Color.backgroundDetails,
-        textAlign: 'center',
     },
     info: {
         display: 'flex',
-        padding: '0 40px',
+        padding: '0 50px',
     },
     boxInfo: {
         margin: '20px',
@@ -39,10 +39,20 @@ const useStyles = makeStyles({
     left: {
         marginLeft: '20px',
     },
-    specification: {
+    specifications: {
+        padding: '0 50px',
+    },
+    specificationTitle: {
+        marginTop: '20px',
         display: 'flex',
         justifyContent: 'center',
     },
+    specificationContent: {
+        display: 'flex',
+    },
+    specificationValue: {
+        marginLeft: '10px',
+    }
 });
 
 export default useStyles;

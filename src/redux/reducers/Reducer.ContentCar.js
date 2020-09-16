@@ -5,7 +5,7 @@
 import * as actionType from 'config/constants/Action.Types';
 
 const initProduct = [[], {}];
-const Contents = (state = initProduct, action) => {
+const contentCarReducer = (state = initProduct, action) => {
     switch (action.type) {
         case actionType.FETCH_DATA_TO_PRODUCT:
             return [action.products, {}];
@@ -17,4 +17,4 @@ const Contents = (state = initProduct, action) => {
             return [...state];
     }
 };
-export default Contents;
+export default contentCarReducer;

@@ -38,7 +38,7 @@ const Authenticated = (props) => {
             <Box component="div" className={classes.name}>
                 {displayName}
             </Box>
-            <Link to="/post/new" className={classes.link}>
+            <Link to="/posts/new" className={classes.link}>
                 <Button
                     variant="contained"
                     color={Color.primary}

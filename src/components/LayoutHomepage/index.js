@@ -43,14 +43,14 @@ LayoutHomepage.defaultProps = {
 };
 const mapStateToProp = (state) => {
     return {
-        Contents: state.contentCar,
+        Contents: state.contentCarReducer,
     };
 };
-const MapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch) => {
     return {
         actRequestProducts: () => {
             dispatch(action.actRequestProducts());
         },
     };
 };
-export default connect(mapStateToProp, MapDispatchToProps)(LayoutHomepage);
+export default connect(mapStateToProp, mapDispatchToProps)(LayoutHomepage);
