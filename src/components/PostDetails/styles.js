@@ -13,7 +13,7 @@ const useStyles = makeStyles({
         padding: '10px',
     },
     column: {
-        padding: '30px 0',
+        padding: '0 15%',
     },
     wrapper: {
         background: Color.backgroundDetails,
@@ -52,7 +52,7 @@ const useStyles = makeStyles({
     },
     specificationValue: {
         marginLeft: '10px',
-    }
+    },
 });
 
 export default useStyles;

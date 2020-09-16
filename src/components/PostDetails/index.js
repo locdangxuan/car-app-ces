@@ -29,11 +29,7 @@ const PostDetails = (props) => {
         ]);
         return (
             <Grid container className={classes.globalContent}>
-                <Grid
-                    item
-                    xs={9}
-                    className={`${classes.column} ${classes.wrapper}`}
-                >
+                <Grid item xs={12} className={`${classes.column}`}>
                     <Box
                         component="div"
                         className={`${classes.wrapper} ${classes.textCenter}`}
@@ -111,9 +107,6 @@ const PostDetails = (props) => {
                             })}
                         </Box>
                     </Box>
-                </Grid>
-                <Grid item xs={3} className={classes.column}>
-                    <Box component="div">Sidebar right</Box>
                 </Grid>
             </Grid>
         );
