@@ -1,6 +1,7 @@
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable react/require-default-props */
 /* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-shadow */
 import React, { useState, useEffect } from 'react';
 import {
@@ -19,7 +20,8 @@ import utils from 'utils/utils';
 import { connect } from 'react-redux';
 import { Select, MenuItem, Grid } from '@material-ui/core';
 import * as utilsConstants from 'config/constants/Utils';
-import { Wrapper, Submit, theme, useStyle } from './Form.Styles';
+import { makeStyles } from '@material-ui/core/styles';
+import { Wrapper, Submit, useStyle, theme } from './styles';
 
 const formConstant = utilsConstants.formUtilConstant;
 const { imageFormat } = utilsConstants;

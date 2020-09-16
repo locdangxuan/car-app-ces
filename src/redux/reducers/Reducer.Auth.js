@@ -2,6 +2,7 @@ import {
     UPDATE_FIELD_AUTH,
     REGISTER,
     LOGIN,
+    LOGOUT,
 } from 'config/constants/Action.Types';
 
 const initState = {
@@ -49,6 +50,11 @@ const authReducer = (state = initState, action) => {
                 isValid: false,
                 pending: false,
                 message: action.message,
+            };
+        case LOGOUT.SUCCESS:
+            return {
+                ...initState,
+                isLogginSucceed: false,
             };
         default:
             return state;

@@ -1,41 +1,43 @@
-import color from 'config/constants/Colors';
+import Color from 'config/constants/Colors';
 import { fontMain } from 'config/mixins/Fonts';
 import { fontSize } from 'config/constants/Fonts';
 
 const button = {
-    borderColor: color.darkGrey,
+    borderColor: Color.darkGrey,
     width: '140px',
     height: '30px',
     borderRadius: '4px',
-    margin: '0 0 0 10px',
-    backgroundColor: color.transparent,
-    color: color.black,
+    marginLeft: '10px',
+    backgroundColor: Color.transparent,
+    color: Color.black,
+};
+
+const body = {
+    color: Color.white,
 };
 
 const input = {
     noBorder: 'true',
     width: '100%',
-    backgroundColor: color.transparent,
+    backgroundColor: Color.transparent,
     margin: '9px 0',
     outline: 'none',
     borderRadius: '0',
 };
 
 const span = {
-    display: 'flex',
-    margin: '0 13px 17px',
     text_align: 'center',
 };
 
 const image = {
     width: '100%',
     height: '100%',
-    margin: '0 0 0 5px',
+    marginLeft: '5px',
 };
 
 const header = {
-    backgroundColor: color.backgroundHeader,
-    color: color.white,
+    backgroundColor: Color.backgroundHeader,
+    color: Color.white,
 };
 
 const loader = {
@@ -48,9 +50,10 @@ const globalTheme = {
     span,
     header,
     image,
+    body,
     loader,
     color: {
-        ...color,
+        ...Color,
     },
     font: fontMain,
 };

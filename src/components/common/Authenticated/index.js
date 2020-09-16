@@ -1,77 +1,27 @@
-/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable react/prop-types */
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom';
+import { Box, Button, ListItemIcon, ListItemText } from '@material-ui/core';
+import { connect } from 'react-redux';
+import authActions from 'redux/actions/Action.Auth';
 import {
-    Box,
-    Button,
-    Menu,
-    MenuItem,
-    ListItemIcon,
-    ListItemText,
-    makeStyles,
-} from '@material-ui/core';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import DraftsIcon from '@material-ui/icons/Drafts';
-import PersonIcon from '@material-ui/icons/Person';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+    ExitToApp,
+    Drafts,
+    Person,
+    Settings,
+    AddCircle,
+} from '@material-ui/icons';
 import utils from 'utils/utils';
+import Color from 'config/constants/Colors';
+import { useStyles, StyledMenu, StyledMenuItem } from './styles';
 
-const useStyles = makeStyles({
-    authenticated: {
-        width: '100%',
-        display: 'flex',
-        justifyContent: 'space-between',
-        paddingRight: '10%',
-    },
-    navbarButton: {
-        padding: 0,
-        borderRadius: '50%',
-        minWidth: '20px',
-        background: 'white',
-    },
-    name: {
-        display: 'flex',
-        alignItems: 'center',
-        marginLeft: '20%',
-        fontSize: '20px',
-        fontWeight: 'bold',
-    },
-});
-
-const StyledMenu = withStyles({
-    paper: {
-        border: '1px solid #d3d4d5',
-    },
-})((props) => (
-    <Menu
-        elevation={0}
-        getContentAnchorEl={null}
-        anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'right',
-        }}
-        transformOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
-        }}
-        {...props}
-    />
-));
-
-const StyledMenuItem = withStyles((theme) => ({
-    root: {
-        '&:focus': {
-            backgroundColor: theme.palette.primary.main,
-            '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
-                color: theme.palette.common.white,
-            },
-        },
-    },
-}))(MenuItem);
-
-const Authenticated = () => {
+const Authenticated = (props) => {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const { displayName } = utils.getProfile();
+
+    const onSubmitLogout = () => {
+        props.onSubmitLogout();
+    };
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -88,6 +38,15 @@ const Authenticated = () => {
             <Box component="div" className={classes.name}>
                 {displayName}
             </Box>
+            <Link to="/post/new" className={classes.link}>
+                <Button
+                    variant="contained"
+                    color={Color.primary}
+                    startIcon={<AddCircle />}
+                >
+                    Sell my car
+                </Button>
+            </Link>
             <Button
                 aria-controls="customized-menu"
                 aria-haspopup="true"
@@ -96,8 +55,9 @@ const Authenticated = () => {
                 onClick={handleClick}
                 className={classes.navbarButton}
             >
-                <ArrowDropDownIcon />
+                <Settings />
             </Button>
+
             <StyledMenu
                 id="customized-menu"
                 anchorEl={anchorEl}
@@ -106,26 +66,33 @@ const Authenticated = () => {
                 onClose={handleClose}
             >
                 <StyledMenuItem>
-                    <ListItemIcon>
-                        <PersonIcon fontSize="medium" />
+                    <ListItemIcon className={classes.designIcon}>
+                        <Person />
                     </ListItemIcon>
-                    <ListItemText primary="View Profile" />
+                    <ListItemText primary="My Profile" />
                 </StyledMenuItem>
                 <StyledMenuItem>
-                    <ListItemIcon>
-                        <DraftsIcon fontSize="medium" />
+                    <ListItemIcon className={classes.designIcon}>
+                        <Drafts />
                     </ListItemIcon>
-                    <ListItemText primary="View post" />
+                    <ListItemText primary="My post" />
                 </StyledMenuItem>
-                <StyledMenuItem>
-                    <ListItemIcon>
-                        <ExitToAppIcon fontSize="medium" />
-                    </ListItemIcon>
-                    <ListItemText primary="Log out" />
-                </StyledMenuItem>
+
+                <Link to="/" className={classes.link}>
+                    <StyledMenuItem onClick={onSubmitLogout}>
+                        <ListItemIcon className={classes.designIcon}>
+                            <ExitToApp />
+                        </ListItemIcon>
+                        <ListItemText primary="Log out" />
+                    </StyledMenuItem>
+                </Link>
             </StyledMenu>
         </Box>
     );
 };
 
-export default Authenticated;
+const mapDispatchToProps = (dispatch) => ({
+    onSubmitLogout: () => dispatch(authActions.logout()),
+});
+
+export default connect(null, mapDispatchToProps)(Authenticated);

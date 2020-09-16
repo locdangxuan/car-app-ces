@@ -1,46 +1,10 @@
 import React, { useState } from 'react';
-import Color from 'config/constants/Colors';
-import { Modal, Button, Icon } from 'components/common';
-import Images from 'config/constants/Images';
-import dataHeaderDefault from 'config/sampleData/header';
-import { makeStyles, Typography, Box } from '@material-ui/core';
+import { Modal, Button } from 'components/common';
+import { Typography, Box } from '@material-ui/core';
 import { ThemeProvider } from 'styled-components';
-
-const theme = {
-    button: {
-        borderColor: Color.darkGrey,
-        width: '120px',
-        height: '30px',
-        borderRadius: '4px',
-        margin: '0 0 0 10px',
-        backgroundColor: Color.transparent,
-        color: Color.white,
-    },
-};
-
-const src = {
-    LoginIcon: Images.LoginIcon
-        ? Images.LoginIcon
-        : dataHeaderDefault.LoginIcon,
-    SignUpIcon: Images.SignupIcon
-        ? Images.SignupIcon
-        : dataHeaderDefault.SignupIcon,
-};
-
-const useStyles = makeStyles({
-    headerContainer: {
-        margin: '0',
-        width: '100%',
-    },
-    styleAuthButton: {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    unAuthenticated: {
-        display: 'flex',
-    },
-});
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import PersonIcon from '@material-ui/icons/Person';
+import { theme, useStyles } from './styles';
 
 const UnAuthenticated = () => {
     const [loginF, setLoginF] = useState(false);
@@ -53,22 +17,26 @@ const UnAuthenticated = () => {
     };
     const classes = useStyles();
     return (
-        <Box component="div">
+        <Box component="div" className={classes.unAuthenticatedWrapper}>
             <ThemeProvider theme={theme}>
                 <Box component="div" className={classes.unAuthenticated}>
                     <Button
                         className={classes.styleAuthButton}
                         onClick={toggleLogin}
                     >
-                        <Icon src={src.LoginIcon} alt="login-icon" />
-                        <Typography component="caption">Login</Typography>
+                        <PersonIcon />
+                        <Typography className={classes.styleText}>
+                            Login
+                        </Typography>
                     </Button>
                     <Button
                         className={classes.styleAuthButton}
                         onClick={toggleRegister}
                     >
-                        <Icon src={src.SignUpIcon} alt="signup-icon" />
-                        <Typography component="caption">Signup</Typography>
+                        <PersonAddIcon />
+                        <Typography className={classes.styleText}>
+                            Signup
+                        </Typography>
                     </Button>
                 </Box>
             </ThemeProvider>

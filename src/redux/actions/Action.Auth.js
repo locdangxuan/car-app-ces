@@ -3,6 +3,7 @@ import {
     REGISTER,
     LOGIN,
     UPDATE_FIELD_AUTH,
+    LOGOUT,
 } from 'config/constants/Action.Types';
 import * as statusCode from 'config/constants/StatusCode';
 import { MESSAGE_ERROR } from 'config/messages/Messages.Auth';
@@ -12,6 +13,12 @@ import utils from 'utils/utils';
 const loginSuccess = () => {
     return {
         type: LOGIN.SUCCESS,
+    };
+};
+
+const logoutSuccess = () => {
+    return {
+        type: LOGOUT.SUCCESS,
     };
 };
 
@@ -82,6 +89,13 @@ const login = (fields) => {
     };
 };
 
+const logout = () => {
+    return (dispatch) => {
+        authService.logout();
+        dispatch(logoutSuccess());
+    };
+};
+
 const verifyAuthenticationStatus = () => {
     return (dispatch) => {
         try {
@@ -104,4 +118,10 @@ const updateFieldAuth = (fields) => {
         });
     };
 };
-export default { register, login, updateFieldAuth, verifyAuthenticationStatus };
+export default {
+    register,
+    login,
+    updateFieldAuth,
+    verifyAuthenticationStatus,
+    logout,
+};

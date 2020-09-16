@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import { Grid } from '@material-ui/core';
+import { Grid, makeStyles } from '@material-ui/core';
+import { fontFamilies } from 'config/constants/Fonts';
 
 const HeaderWrapper = styled.div`
     background-color: ${(props) => props.theme.header.backgroundColor};
@@ -16,4 +17,12 @@ const GridHeader = styled(Grid)`
     width: 100%;
 `;
 
-export { HeaderWrapper, GridHeader };
+const useStyles = makeStyles({
+    headerContainer: {
+        margin: '0',
+        width: '100%',
+        fontFamily: fontFamilies.ssfLucida,
+    },
+});
+
+export { HeaderWrapper, GridHeader, useStyles };

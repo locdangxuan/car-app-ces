@@ -9,15 +9,16 @@ import {
     Typography,
     MenuItem,
     Grid,
-    withStyles,
 } from '@material-ui/core';
 import { DirectionsCar, Speed, DateRange, Label } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import HANDLE_ERROR from 'config/messages/Messages.Content';
-import styles from './styles';
+import Color from 'config/constants/Colors';
+import useStyles from './styles';
 
 const ContentCard = (props) => {
-    const { classes, data } = props;
+    const { data } = props;
+    const classes = useStyles();
     const {
         root,
         media,
@@ -100,7 +101,7 @@ const ContentCard = (props) => {
                         </Typography>
                     </Grid>
                     <Grid item xs={6} className={viewDetails}>
-                        <Button color="primary" className={btnView}>
+                        <Button color={Color.primary} className={btnView}>
                             View Details
                         </Button>
                     </Grid>
@@ -110,12 +111,10 @@ const ContentCard = (props) => {
     );
 };
 ContentCard.propTypes = {
-    classes: PropTypes.arrayOf(PropTypes.object),
     data: PropTypes.objectOf(PropTypes.object),
 };
 ContentCard.defaultProps = {
-    classes: [],
     data: {},
 };
 
-export default withStyles(styles)(ContentCard);
+export default ContentCard;

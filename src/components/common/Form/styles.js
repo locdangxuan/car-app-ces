@@ -28,7 +28,7 @@ const useStyle = makeStyles(() => ({
         justifyContent: 'space-between',
     },
     selector: {
-        margin: '0 7% 0 0',
+        marginRight: '7%',
         width: '44%',
         height: '40px',
     },
