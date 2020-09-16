@@ -1,4 +1,6 @@
-/* eslint-disable no-unused-vars */
+/* eslint-disable react/forbid-prop-types */
+/* eslint-disable react/require-default-props */
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-shadow */
 import React, { useState, useEffect } from 'react';
 import {
@@ -8,46 +10,35 @@ import {
     Input,
     ImageCard,
     Textarea,
+    Loader,
 } from 'components/common';
 import PropTypes from 'prop-types';
-import color from 'config/constants/Colors';
 import { ThemeProvider } from 'styled-components';
-import globalTheme from 'config/constants/Themes';
 import action from 'redux/actions/Action.Post';
 import utils from 'utils/utils';
 import { connect } from 'react-redux';
 import { Select, MenuItem, Grid } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import { Wrapper, Submit } from './Form.Styles';
-import Loader from '../Loader';
+import * as utilsConstants from 'config/constants/Utils';
+import { Wrapper, Submit, theme, useStyle } from './Form.Styles';
 
-const useStyle = makeStyles(() => ({
-    dualLine: {
-        display: 'flex',
-        justifyContent: 'space-between',
-    },
-    selector: {
-        margin: '0 7% 0 0',
-        width: '44%',
-        height: '40px',
-    },
-}));
+const formConstant = utilsConstants.formUtilConstant;
+const { imageFormat } = utilsConstants;
 
 const Form = (props) => {
     const formState = {
         name: '',
-        year: '',
-        fuelType: '',
+        year: '2020',
+        fuelType: 'Gasoline',
         distanceTraveled: 0,
         images: [],
         previews: [],
         model: '',
         otherFeatures: '',
         brand: '',
+        count: 0,
         price: 0,
+        oldImages: [],
     };
-    const [state, setState] = useState(formState);
-    const classes = useStyle();
     const {
         onSubmit,
         onCancel,
@@ -58,65 +49,13 @@ const Form = (props) => {
         pending,
         isSuccess,
         message,
+        type,
+        fetchPostData,
+        data,
+        id,
     } = props;
-    const fuelTypes = ['Gasoline', 'Oil', 'Electricity'];
-    const theme = {
-        span: {
-            margin: '11px 4px 0 0',
-            width: '30%',
-            color: color.black,
-        },
-        input: {
-            ...globalTheme.input,
-            inputWidth: '100%',
-            fontColor: color.black,
-            margin: '11px 0 0',
-            height: '30px',
-        },
-        field: {
-            width: '600px',
-            margin: '16px 0 0',
-        },
-        imageCard: {
-            width: '200px',
-            height: '100px',
-        },
-    };
-    const onChangeHandler = async (event) => {
-        if (event.target.name === 'imageUrl') {
-            const { images, previews } = state;
-            const imageFile = event.target.files[0];
-            const preview = await utils.base64Converter(imageFile);
-            previews.push(preview);
-            images.push(imageFile);
-            setState({
-                ...state,
-                images,
-                previews,
-            });
-        } else if (event.target.name === 'brand') {
-            onBrandChange({ brands, value: event.target.value });
-            setState({
-                ...state,
-                brand: event.target.value,
-            });
-        } else {
-            setState({
-                ...state,
-                [event.target.name]: event.target.value,
-            });
-        }
-    };
-    const removeImage = (index) => {
-        const { images, previews } = state;
-        images.splice(index, 1);
-        previews.splice(index, 1);
-        setState({
-            ...state,
-            images,
-            previews,
-        });
-    };
+    const [state, setState] = useState(formState);
+    const [oldImageMap, setOldImageMap] = useState('');
     const {
         name,
         brand,
@@ -128,24 +67,146 @@ const Form = (props) => {
         previews,
         price,
         distanceTraveled,
+        oldImages,
     } = state;
-    const onSubmitHandler = async () => {
-        onSubmit({
-            name,
-            brand,
-            model,
-            year,
-            fuelType,
-            price,
-            distanceTraveled,
-            information: otherFeatures,
+    const fuelTypes = ['Gasoline', 'Oil', 'Electricity'];
+    const classes = useStyle();
+    const onImageChangeHandler = async (target) => {
+        const { images, previews } = state;
+        const imageFile = target.files[0];
+        const preview = await utils.base64Converter(imageFile);
+        previews.push(preview);
+        images.push(imageFile);
+        setState({
+            ...state,
             images,
+            previews,
         });
+    };
+    const onBrandChangeHandler = (target) => {
+        onBrandChange({ brands, value: target.value });
+        setState({
+            ...state,
+            brand: target.value,
+        });
+    };
+    const onChangeHandler = (target) => {
+        setState({
+            ...state,
+            [target.name]: target.value,
+        });
+    };
+    const removeImage = (index) => {
+        const { images, previews } = state;
+        images.splice(index, 1);
+        const deletedImage = previews.splice(index, 1);
+        if (
+            type === formConstant.type.update &&
+            deletedImage[0].startsWith(formConstant.oldImageURL)
+        ) {
+            let newImageMap = oldImageMap;
+            Object.entries(oldImages).forEach((entry) => {
+                const [key, value] = entry;
+                if (deletedImage[0] === value) {
+                    newImageMap += `,${key.replace('image_', '')}`;
+                }
+            });
+            setOldImageMap(newImageMap);
+        }
+        setState({
+            ...state,
+            images,
+            previews,
+        });
+    };
+    const onSubmitHandler = async () => {
+        switch (props.type) {
+            case formConstant.type.update:
+                onSubmit({
+                    name,
+                    brand,
+                    model,
+                    year,
+                    fuelType,
+                    price,
+                    distanceTraveled,
+                    information: otherFeatures,
+                    images,
+                    oldImageMap: oldImageMap.substring(1),
+                    imgUrls: oldImages,
+                });
+                break;
+            default:
+                onSubmit({
+                    name,
+                    brand,
+                    model,
+                    year,
+                    fuelType,
+                    price,
+                    distanceTraveled,
+                    information: otherFeatures,
+                    images,
+                });
+                break;
+        }
+    };
+    const onChange = async (event) => {
+        if (event.target.name === formConstant.imageUrl) {
+            onImageChangeHandler(event.target);
+        } else if (event.target.name === formConstant.brand) {
+            onBrandChangeHandler(event.target);
+        } else {
+            onChangeHandler(event.target);
+        }
     };
     useEffect(() => {
         getBrands();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        if (type === formConstant.type.update) {
+            fetchPostData(id);
+        }
     }, []);
+    useEffect(() => {
+        if (data && state.count === 0) {
+            const {
+                name,
+                brand,
+                model,
+                year,
+                fuelType,
+                price,
+                distanceTraveled,
+                information,
+                images,
+            } = data;
+            let otherFeatures = '';
+            Object.values(information[formConstant.otherFeatures]).forEach(
+                (value) => {
+                    otherFeatures += `${value},`;
+                }
+            );
+            const newPreviews = [];
+            const oldImages = images;
+            Object.values(images).forEach((value) => {
+                newPreviews.push(value);
+            });
+            setState({
+                ...state,
+                name,
+                brand,
+                model,
+                year,
+                fuelType,
+                price: parseInt(price.replace(',', ''), 10),
+                distanceTraveled,
+                otherFeatures,
+                previews: newPreviews,
+                count: 1,
+                oldImages,
+            });
+            onBrandChange({ brands, value: brand });
+        }
+    });
     return (
         <ThemeProvider theme={theme}>
             <Wrapper>
@@ -156,14 +217,18 @@ const Form = (props) => {
                             <Select
                                 name="brand"
                                 className={classes.selector}
-                                onChange={onChangeHandler}
+                                onChange={onChange}
                                 value={brand}
                             >
-                                {brands.map((brand) => (
-                                    <MenuItem key={brand.id} value={brand.name}>
-                                        {brand.name}
-                                    </MenuItem>
-                                ))}
+                                {brands &&
+                                    brands.map((brand) => (
+                                        <MenuItem
+                                            key={brand.id}
+                                            value={brand.name}
+                                        >
+                                            {brand.name}
+                                        </MenuItem>
+                                    ))}
                             </Select>
                         </Grid>
                         <Grid item xs={6} className={classes.dualLine}>
@@ -173,14 +238,18 @@ const Form = (props) => {
                             <Select
                                 name="model"
                                 className={classes.selector}
-                                onChange={onChangeHandler}
+                                onChange={onChange}
                                 value={model}
                             >
-                                {models.map((model) => (
-                                    <MenuItem key={model.id} value={model.name}>
-                                        {model.name}
-                                    </MenuItem>
-                                ))}
+                                {models &&
+                                    models.map((model) => (
+                                        <MenuItem
+                                            key={model.id}
+                                            value={model.name}
+                                        >
+                                            {model.name}
+                                        </MenuItem>
+                                    ))}
                             </Select>
                         </Grid>
                     </Grid>
@@ -190,7 +259,7 @@ const Form = (props) => {
                     <Input
                         name="name"
                         type="text"
-                        onChange={onChangeHandler}
+                        onChange={onChange}
                         value={name}
                     />
                 </Field>
@@ -201,9 +270,8 @@ const Form = (props) => {
                             <Select
                                 name="year"
                                 className={classes.selector}
-                                onChange={onChangeHandler}
+                                onChange={onChange}
                                 value={year}
-                                defaultValue="2020"
                             >
                                 {utils.getYears().map((year) => (
                                     <MenuItem key={`year ${year}`} value={year}>
@@ -219,9 +287,8 @@ const Form = (props) => {
                             <Select
                                 name="fuelType"
                                 className={classes.selector}
-                                onChange={onChangeHandler}
+                                onChange={onChange}
                                 value={fuelType}
-                                defaultValue="Gasoline"
                             >
                                 {fuelTypes.map((type) => (
                                     <MenuItem key={`type ${type}`} value={type}>
@@ -237,7 +304,7 @@ const Form = (props) => {
                     <Input
                         name="price"
                         type="number"
-                        onChange={onChangeHandler}
+                        onChange={onChange}
                         min="1"
                         value={price}
                     />
@@ -247,7 +314,7 @@ const Form = (props) => {
                     <Input
                         name="distanceTraveled"
                         type="number"
-                        onChange={onChangeHandler}
+                        onChange={onChange}
                         min="1"
                         value={distanceTraveled}
                     />
@@ -258,7 +325,7 @@ const Form = (props) => {
                         name="otherFeatures"
                         rows="6"
                         cols="70"
-                        onChange={onChangeHandler}
+                        onChange={onChange}
                         value={otherFeatures}
                         placeholder="Feature1,Feature2,Feature3,..."
                     />
@@ -268,24 +335,25 @@ const Form = (props) => {
                     <Input
                         name="imageUrl"
                         type="file"
-                        onChange={onChangeHandler}
-                        accept="image/gif, image/jpeg, image/png"
+                        onChange={onChange}
+                        accept={imageFormat}
                     />
                 </Field>
                 <Field>
                     <Span>Images</Span>
                     <Grid container spacing={3}>
-                        {previews.map((image, index) => {
-                            return (
-                                <ImageCard
-                                    xs={4}
-                                    key={`key${image}`}
-                                    index={index}
-                                    imgSrc={image}
-                                    removeImage={removeImage}
-                                />
-                            );
-                        })}
+                        {previews &&
+                            previews.map((image, index) => {
+                                return (
+                                    <ImageCard
+                                        xs={4}
+                                        key={`key${image}`}
+                                        index={index}
+                                        imgSrc={image}
+                                        removeImage={removeImage}
+                                    />
+                                );
+                            })}
                     </Grid>
                 </Field>
                 {message.length > 1 && (
@@ -306,15 +374,19 @@ const Form = (props) => {
 };
 
 Form.propTypes = {
-    models: PropTypes.arrayOf(PropTypes.string),
+    models: PropTypes.arrayOf(PropTypes.object),
     onSubmit: PropTypes.func,
     onCancel: PropTypes.func,
     onBrandChange: PropTypes.func,
-    brands: PropTypes.arrayOf(PropTypes.string),
+    brands: PropTypes.arrayOf(PropTypes.object),
     getBrands: PropTypes.func,
     pending: PropTypes.bool,
     isSuccess: PropTypes.bool,
     message: PropTypes.string,
+    type: PropTypes.string,
+    fetchPostData: PropTypes.func,
+    data: PropTypes.object,
+    id: PropTypes.string,
 };
 
 Form.defaultProps = {
@@ -327,6 +399,9 @@ Form.defaultProps = {
     pending: false,
     isSuccess: false,
     message: '',
+    type: '',
+    fetchPostData: {},
+    data: undefined,
 };
 
 const mapStateToProps = (state) => ({ ...state.postReducer });
@@ -334,6 +409,7 @@ const mapDispatchToProps = (dispatch) => ({
     onBrandChange: (payload) => dispatch(action.loadModels(payload)),
     getBrands: () => dispatch(action.loadBrands()),
     getProfile: () => dispatch(action.loadProfile()),
+    fetchPostData: (id) => dispatch(action.fetchPostData(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form);

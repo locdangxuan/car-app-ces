@@ -7,6 +7,7 @@ const initState = {
     message: '',
     pending: false,
     images: [],
+    data: undefined,
 };
 
 const postReducer = (state = initState, action) => {
@@ -44,7 +45,7 @@ const postReducer = (state = initState, action) => {
             };
         case BRANDS.LOAD_BRAND_FAILED:
             return {
-                ...initState,
+                ...state,
                 pending: false,
                 message: action.message,
                 isSuccess: false,
@@ -69,6 +70,32 @@ const postReducer = (state = initState, action) => {
                 models: [],
                 message: action.message,
                 isSuccess: false,
+            };
+        case POSTS.FETCH_DATA_FAILED:
+            return {
+                ...state,
+                pending: false,
+                message: action.message,
+                isSuccess: false,
+            };
+        case POSTS.FETCH_DATA_SUCCEED:
+            return {
+                ...state,
+                pending: false,
+                data: action.data,
+            };
+        case POSTS.UPDATE_FAILED:
+            return {
+                ...state,
+                pending: false,
+                message: action.message,
+            };
+        case POSTS.UPDATE_SUCCEED:
+            return {
+                ...state,
+                pending: false,
+                message: action.message,
+                isSuccess: true,
             };
         default:
             return { ...state };

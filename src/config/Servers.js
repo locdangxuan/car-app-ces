@@ -15,14 +15,14 @@ const api = {
             method: 'POST',
         },
         update: {
-            url: `${server}posts/update`,
+            url: `${server}posts/`,
             method: 'PUT',
         },
     },
-    branch: {
+    brands: {
         get: `${server}brands/`,
     },
-    model: {
+    models: {
         get: `${server}models/`,
     },
 };

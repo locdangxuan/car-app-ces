@@ -13,8 +13,7 @@ const charactersValidator = (value) => {
 };
 
 const usernameValidator = (value) => {
-    const expression = new RegExp(/^(?=.*\d)(?=.*[a-z])[a-z0-9]{8,15}$/);
-    return expression.test(value);
+    return value.length > 7;
 };
 
 const phonenumberValidator = (value) => {

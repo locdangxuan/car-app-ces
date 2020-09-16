@@ -1,4 +1,7 @@
 import styled from 'styled-components';
+import { makeStyles } from '@material-ui/core/styles';
+import globalTheme from 'config/constants/Themes';
+import color from 'config/constants/Colors';
 
 const Wrapper = styled.div`
     margin: auto;
@@ -19,4 +22,38 @@ const Submit = styled.section`
     justify-content: space-between;
 `;
 
-export { Wrapper, Submit };
+const useStyle = makeStyles(() => ({
+    dualLine: {
+        display: 'flex',
+        justifyContent: 'space-between',
+    },
+    selector: {
+        margin: '0 7% 0 0',
+        width: '44%',
+        height: '40px',
+    },
+}));
+
+const theme = {
+    span: {
+        margin: '11px 4px 0 0',
+        width: '30%',
+        color: color.black,
+    },
+    input: {
+        ...globalTheme.input,
+        inputWidth: '100%',
+        fontColor: color.black,
+        margin: '11px 0 0',
+        height: '30px',
+    },
+    field: {
+        width: '600px',
+        margin: '16px 0 0',
+    },
+    imageCard: {
+        width: '200px',
+        height: '100px',
+    },
+};
+export { Wrapper, Submit, useStyle, theme };
