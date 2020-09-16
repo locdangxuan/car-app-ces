@@ -10,6 +10,9 @@ const backgroundHeader = '#1a1a1a';
 const backgroundFooter = '#ffff00';
 const backgroundDetails = 'rgba(0, 0, 0, 0.7)';
 const backgroundInput = 'rgba(255, 255, 255, 0.2)';
+const rangeSliderColor = '#52af77';
+const borderStyledMenu = '#d3d4d5';
+const primary = 'primary';
 
 export default {
     white,
@@ -24,4 +27,7 @@ export default {
     backgroundFooter,
     backgroundDetails,
     backgroundInput,
+    rangeSliderColor,
+    borderStyledMenu,
+    primary,
 };

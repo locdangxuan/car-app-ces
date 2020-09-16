@@ -3,16 +3,17 @@ import Button from './Button';
 import { ModalSpan, Span } from './Span';
 import Modal from './Modal';
 import Image from './Image';
-import Icon from './Icon';
 import Loader from './Loader';
 import RangeSlider from './RangeSlider';
 import SelectBox from './SelectBox';
 import UnAuthenticated from './UnAuthenticated';
 import Authenticated from './Authenticated';
+import Carousel from './Carousel';
 import Field from './Field';
-import Form from './Form/Form';
+import Form from './Form';
 import ImageCard from './ImageCard';
 import Textarea from './Textarea';
+import Categories from './Categories';
 
 export {
     Textarea,
@@ -25,10 +26,11 @@ export {
     ModalSpan,
     Loader,
     Image,
-    Icon,
     RangeSlider,
     SelectBox,
     UnAuthenticated,
     Authenticated,
+    Carousel,
     Form,
+    Categories,
 };

@@ -12,6 +12,7 @@ const Input = styled.input`
     color: ${(props) => props.theme.input.color};
     background-color: ${(props) => props.theme.input.backgroundColor};
     margin: ${(props) => props.theme.input.margin};
+    margin-left: ${(props) => props.theme.input.marginLeft};
     outline: ${(props) => props.theme.input.outline};
     border-radius: ${(props) => props.theme.input.borderRadius};
     border-bottom: 1px solid ${(props) => props.theme.color.darkGrey};
@@ -19,6 +20,7 @@ const Input = styled.input`
         border-bottom: 1px solid ${(props) => props.theme.color.success};
     }
     border: ${(props) => props.theme.input.border};
+    padding: ${(props) => props.theme.input.padding};
 `;
 
 export default Input;

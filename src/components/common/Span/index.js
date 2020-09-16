@@ -1,1 +1,1 @@
-export { ModalSpan, Span } from './Span';
+export { ModalSpan, Span } from './styles';

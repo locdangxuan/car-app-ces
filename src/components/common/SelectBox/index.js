@@ -1,33 +1,10 @@
 import React from 'react';
-import { NativeSelect } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+import { NativeSelect, Box } from '@material-ui/core';
 import PropTypes from 'prop-types';
-import Color from 'config/constants/Colors';
 import FormControl from '@material-ui/core/FormControl';
-import { Span } from 'components/common';
+import useStyles from './styles';
 
-const useStyles = makeStyles(() => ({
-    formControl: {
-        display: 'flex',
-        flexDirection: 'row',
-        minWidth: 120,
-        margin: '20px 0 0 0',
-    },
-    selectEmpty: {
-        padding: 0,
-        height: '25px',
-        margin: '0 0 0 15px',
-        width: '100%',
-        border: '1px solid #fff',
-        color: Color.white,
-        background: Color.backgroundInput,
-    },
-    option: {
-        color: Color.black,
-    },
-}));
-
-const SimpleSelect = (props) => {
+const SelectBox = (props) => {
     const classes = useStyles();
     const [age, setAge] = React.useState('');
     const { name } = props;
@@ -37,7 +14,9 @@ const SimpleSelect = (props) => {
 
     return (
         <FormControl variant="outlined" className={classes.formControl}>
-            <Span>{name}</Span>
+            <Box component="span" className={classes.name}>
+                {name}
+            </Box>
             <NativeSelect
                 value={age}
                 onChange={handleChange}
@@ -46,7 +25,7 @@ const SimpleSelect = (props) => {
                 inputProps={{ 'aria-label': 'age' }}
             >
                 <option className={classes.option} value="">
-                    None
+                    All
                 </option>
                 <option className={classes.option} value={10}>
                     Ten
@@ -62,12 +41,12 @@ const SimpleSelect = (props) => {
     );
 };
 
-export default SimpleSelect;
+export default SelectBox;
 
-SimpleSelect.propTypes = {
+SelectBox.propTypes = {
     name: PropTypes.string,
 };
 
-SimpleSelect.defaultProps = {
+SelectBox.defaultProps = {
     name: '',
 };

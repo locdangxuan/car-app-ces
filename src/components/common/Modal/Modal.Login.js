@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Input, Button, ModalSpan, Loader } from 'components/common';
 import PropTypes from 'prop-types';
 import authActions from 'redux/actions/Action.Auth';
-import { Wrapper, Content, Header, Footer, Body } from './Modal.Styles';
+import { Wrapper, Content, Header, Footer, Body } from './styles';
 
 const LoginForm = (props) => {
     const onChangeHandler = (event) => props.onChangeHandler(event.target);
@@ -35,14 +35,14 @@ const LoginForm = (props) => {
                 {pending && <Loader type="SPAN-STYLE" />}
                 <ModalSpan isValid={isValid}>{message}</ModalSpan>
                 <Footer>
+                    <Button onClick={onCancelHandler} isSuccess={false}>
+                        Cancel
+                    </Button>
                     <Button
                         onClick={onSubmitHandler(username, password)}
                         isSuccess
                     >
                         Login
-                    </Button>
-                    <Button onClick={onCancelHandler} isSuccess={false}>
-                        Cancel
                     </Button>
                 </Footer>
             </Content>

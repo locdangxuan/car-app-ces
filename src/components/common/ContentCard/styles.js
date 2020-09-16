@@ -1,10 +1,11 @@
 import { fontFamilies } from 'config/constants/Fonts';
+import { makeStyles } from '@material-ui/core';
 import Color from 'config/constants/Colors';
 
-const styles = () => ({
+const useStyles = makeStyles({
     root: {
         maxWidth: 500,
-        background: 'transparent',
+        background: Color.transparent,
         color: Color.white,
         fontFamily: fontFamilies.ssfLucida,
     },
@@ -51,4 +52,5 @@ const styles = () => ({
         background: Color.backgroundDetails,
     },
 });
-export default styles;
+
+export default useStyles;

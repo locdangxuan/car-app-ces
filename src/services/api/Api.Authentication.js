@@ -3,6 +3,8 @@ import axios from 'axios';
 import Cookies from 'universal-cookie';
 import * as utilsConstants from 'config/constants/Utils';
 
+const cookies = new Cookies();
+
 const register = async (fields) => {
     try {
         const result = await axios.post(api.user.register, fields);
@@ -23,7 +25,6 @@ const login = async (fields) => {
             utilsConstants.profile,
             JSON.stringify({ id, phone, email, displayName })
         );
-        const cookies = new Cookies();
         cookies.set(utilsConstants.token, token, { path: '/' });
         return { status, message };
     } catch (error) {
@@ -32,4 +33,10 @@ const login = async (fields) => {
         throw new Error(JSON.stringify({ status, message }));
     }
 };
-export default { register, login };
+
+const logout = () => {
+    localStorage.clear();
+    cookies.remove(utilsConstants.token, { path: '/' });
+};
+
+export default { register, login, logout };

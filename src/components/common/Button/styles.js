@@ -30,10 +30,16 @@ const Button = styled.button`
         border: 1px solid var(--onActiveBorderColor);
         box-shadow: 0 2px ${(props) => props.theme.color.darkGrey};
     }
+    &:hover {
+        opacity: 1;
+        cursor: pointer;
+    }
     font-size: ${(props) =>
         props.theme.button.fontSize ? props.theme.button.fontSize : ''};
     margin: ${(props) => props.theme.button.margin};
+    margin-left: ${(props) => props.theme.button.marginLeft};
     display: ${(props) => props.theme.color.display};
+    opacity: 0.85;
 `;
 
 export default Button;
