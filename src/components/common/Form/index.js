@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-shadow */
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable react/require-default-props */
