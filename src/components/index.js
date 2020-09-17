@@ -4,6 +4,14 @@ import LayoutHomepage from './LayoutHomepage';
 import Footer from './Footer';
 import SearchBar from './SearchBar';
 import PostDetails from './PostDetails';
-import Error from './Error';
+import NotFound from './NotFound';
 
-export { Header, LayoutHomepage, Body, Footer, SearchBar, PostDetails, Error };
+export {
+    Header,
+    LayoutHomepage,
+    Body,
+    Footer,
+    SearchBar,
+    PostDetails,
+    NotFound,
+};
