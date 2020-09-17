@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const CarouselWrapper = styled.div`
-    padding: 30px 50px;
+    padding: 20px 5%;
 `;
 
 const Item = styled.div`

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Background from 'assets/images/cars.webp';
+import Background from 'assets/images/cars.jpg';
 
 const Body = styled.div`
     background-image: url(${Background});

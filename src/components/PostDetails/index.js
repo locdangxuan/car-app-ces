@@ -10,6 +10,7 @@ import {
     CalendarToday,
     Explore,
     AttachMoney,
+    Room,
 } from '@material-ui/icons';
 import { Carousel } from 'components/common';
 import action from 'redux/actions/Action.Post';
@@ -29,54 +30,68 @@ const PostDetails = (props) => {
         ]);
         return (
             <Grid container className={classes.globalContent}>
-                <Grid item xs={12} className={`${classes.column}`}>
+                <Grid item xs={9} className={`${classes.column}`}>
                     <Box
                         component="div"
-                        className={`${classes.wrapper} ${classes.textCenter}`}
+                        className={`${classes.wrapper} ${classes.detailCar}`}
                     >
-                        <Typography variant="h4" gutterBottom>
-                            {details.name}
-                        </Typography>
-                    </Box>
-                    <Box
-                        component="div"
-                        className={`${classes.wrapper} ${classes.carousel}`}
-                    >
-                        <Carousel images={details.images} />
-                        <Box component="div" className={classes.info}>
-                            <LocalTaxi />
+                        <Box
+                            className={`${classes.wrapper} ${classes.overview}`}
+                        >
                             <Box
-                                component="span"
-                                className={classes.textCenter}
+                                component="div"
+                                className={`${classes.wrapper} ${classes.textCenter} ${classes.name}`}
                             >
-                                {details.model}
+                                <Typography variant="h5">
+                                    {details.name}
+                                </Typography>
                             </Box>
-                            <CalendarToday className={classes.left} />
-                            <Box
-                                component="span"
-                                className={classes.textCenter}
-                            >
-                                {details.year}
-                            </Box>
-                            <Explore className={classes.left} />
-                            <Box
-                                component="span"
-                                className={classes.textCenter}
-                            >
-                                {details.distanceTraveled}
-                            </Box>
-                            <AttachMoney className={classes.left} />
-                            <Box
-                                component="span"
-                                className={classes.textCenter}
-                            >
-                                {details.price.substring(1)}
+                            <Carousel images={details.images} />
+                            <Box component="div" className={classes.info}>
+                                <LocalTaxi />
+                                <Box
+                                    component="span"
+                                    className={classes.textCenter}
+                                >
+                                    {details.model}
+                                </Box>
+                                <CalendarToday className={classes.left} />
+                                <Box
+                                    component="span"
+                                    className={classes.textCenter}
+                                >
+                                    {details.year}
+                                </Box>
+                                <Explore className={classes.left} />
+                                <Box
+                                    component="span"
+                                    className={classes.textCenter}
+                                >
+                                    {details.distanceTraveled}
+                                </Box>
+                                <AttachMoney className={classes.left} />
+                                <Box
+                                    component="span"
+                                    className={classes.textCenter}
+                                >
+                                    {details.price}
+                                </Box>
+                                <Room className={classes.left} />
+                                <Box
+                                    component="span"
+                                    className={classes.textCenter}
+                                >
+                                    USA
+                                </Box>
                             </Box>
                         </Box>
-                        <Box component="div" className={classes.specifications}>
+                        <Box
+                            component="div"
+                            className={`${classes.specifications} ${classes.wrapper}`}
+                        >
                             <Typography
                                 variant="subtitle1"
-                                className={classes.specificationTitle}
+                                className={`${classes.specificationTitle} ${classes.wrapper}`}
                                 gutterBottom
                             >
                                 Specifications
@@ -107,6 +122,9 @@ const PostDetails = (props) => {
                             })}
                         </Box>
                     </Box>
+                </Grid>
+                <Grid item xs={3}>
+                    <Box className={classes.wrapper}>name</Box>
                 </Grid>
             </Grid>
         );

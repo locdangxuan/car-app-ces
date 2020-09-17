@@ -8,19 +8,25 @@ const useStyles = makeStyles({
         fontFamily: fontFamilies.ssfLucida,
         color: Color.white,
     },
-    carousel: {
-        marginTop: '20px',
-        padding: '10px',
+    name: {
+        margin: '0 5%',
+    },
+    overview: {
+        padding: '20px 0',
+    },
+    detailCar: {
+        padding: '2% 5%',
+        marginBottom: '20px',
     },
     column: {
-        padding: '0 15%',
+        padding: '0 2%',
     },
     wrapper: {
         background: Color.backgroundDetails,
     },
     info: {
         display: 'flex',
-        padding: '0 50px',
+        padding: '0 5%',
     },
     boxInfo: {
         margin: '20px',
@@ -40,7 +46,8 @@ const useStyles = makeStyles({
         marginLeft: '20px',
     },
     specifications: {
-        padding: '0 50px',
+        padding: '10px 5%',
+        marginTop: '20px',
     },
     specificationTitle: {
         marginTop: '20px',
