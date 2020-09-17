@@ -1,7 +1,17 @@
 import styled from 'styled-components';
 
 const Button = styled.button`
-    border: 1.3px solid ${(props) => props.theme.button.borderColor};
+    border: 1.3px solid
+        ${(props) => {
+            switch (props.isSuccess) {
+                case true:
+                    return props.theme.color.success;
+                case false:
+                    return props.theme.color.danger;
+                default:
+                    return props.theme.color.white;
+            }
+        }};
     width: ${(props) => props.theme.button.width};
     height: ${(props) => props.theme.button.height};
     border-radius: ${(props) => props.theme.button.borderRadius};
@@ -22,12 +32,12 @@ const Button = styled.button`
         outline: none;
     }
     &:active {
-        border: 1px solid var(--onActiveBorderColor);
+        border: 2px solid var(--onActiveBorderColor);
         box-shadow: 0 1px ${(props) => props.theme.color.lightGrey};
         transform: translateY(1px);
     }
     &:visited {
-        border: 1px solid var(--onActiveBorderColor);
+        border: 2px solid var(--onActiveBorderColor);
         box-shadow: 0 2px ${(props) => props.theme.color.darkGrey};
     }
     &:hover {

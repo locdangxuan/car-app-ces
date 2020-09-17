@@ -9,6 +9,7 @@ export const formUtilConstant = {
         create: 'CREATE',
     },
     imageUrl: 'imageUrl',
+    location: 'location',
 };
 export const imageFormat = 'image/jpg, image/jpeg, image/png';
 export const modal = {

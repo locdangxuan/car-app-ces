@@ -40,6 +40,7 @@ const Form = (props) => {
         count: 0,
         price: 0,
         oldImages: [],
+        location: 'Danang, Vietnam',
     };
     const {
         onSubmit,
@@ -73,6 +74,7 @@ const Form = (props) => {
         price,
         distanceTraveled,
         oldImages,
+        location,
     } = state;
     const fuelTypes = ['Gasoline', 'Oil', 'Electricity'];
     const modalStateToggleHandler = () => {
@@ -142,6 +144,7 @@ const Form = (props) => {
                     images,
                     oldImageMap: oldImageMap.substring(1),
                     imgUrls: oldImages,
+                    location,
                 });
                 break;
             default:
@@ -155,17 +158,22 @@ const Form = (props) => {
                     distanceTraveled,
                     information: otherFeatures,
                     images,
+                    location,
                 });
                 break;
         }
     };
     const onChange = async (event) => {
-        if (event.target.name === formConstant.imageUrl) {
-            onImageChangeHandler(event.target);
-        } else if (event.target.name === formConstant.brand) {
-            onBrandChangeHandler(event.target);
-        } else {
-            onChangeHandler(event.target);
+        switch (event.target.name) {
+            case formConstant.imageUrl:
+                onImageChangeHandler(event.target);
+                break;
+            case formConstant.brand:
+                onBrandChangeHandler(event.target);
+                break;
+            default:
+                onChangeHandler(event.target);
+                break;
         }
     };
     useEffect(() => {
@@ -186,6 +194,7 @@ const Form = (props) => {
                 distanceTraveled,
                 information,
                 images,
+                location,
             } = data;
             let otherFeatures = '';
             Object.values(information[formConstant.otherFeatures]).forEach(
@@ -211,6 +220,7 @@ const Form = (props) => {
                 previews: newPreviews,
                 count: 1,
                 oldImages,
+                location,
             });
             onBrandChange({ brands, value: brand });
         }
@@ -308,6 +318,15 @@ const Form = (props) => {
                             </Select>
                         </Grid>
                     </Grid>
+                </Field>
+                <Field>
+                    <Span>Location</Span>
+                    <Input
+                        name="price"
+                        type="text"
+                        onChange={onChange}
+                        value={location}
+                    />
                 </Field>
                 <Field>
                     <Span>Price (USD)</Span>
