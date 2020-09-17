@@ -97,6 +97,11 @@ const postReducer = (state = initState, action) => {
                 message: action.message,
                 isSuccess: true,
             };
+        case POSTS.DISMISS_MESSAGE:
+            return {
+                ...state,
+                message: '',
+            };
         default:
             return { ...state };
     }

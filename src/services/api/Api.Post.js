@@ -7,7 +7,7 @@ const loadBrands = async () => {
         const result = await axios.get(api.brands.get);
         return result.data;
     } catch (error) {
-        throw new Error(JSON.stringify(error));
+        apiUtils.apiErrorHandler(error);
     }
 };
 
@@ -21,7 +21,7 @@ const loadModel = async (brand) => {
         });
         return result.data;
     } catch (error) {
-        throw new Error(JSON.stringify(error));
+        apiUtils.apiErrorHandler(error);
     }
 };
 
@@ -39,9 +39,7 @@ const create = async (payload, token) => {
         });
         return result.data;
     } catch (error) {
-        const { status, data } = error.response;
-        const { message } = data;
-        throw new Error(JSON.stringify({ status, message }));
+        apiUtils.apiErrorHandler(error);
     }
 };
 
@@ -59,9 +57,7 @@ const update = async (payload, token) => {
         });
         return result.data;
     } catch (error) {
-        const { status, data } = error.response;
-        const { message } = data;
-        throw new Error(JSON.stringify({ status, message }));
+        apiUtils.apiErrorHandler(error);
     }
 };
 
@@ -70,7 +66,7 @@ const fetch = async (id) => {
         const result = await axios.get(`${api.post.get}${id}`);
         return result.data;
     } catch (error) {
-        throw new Error(JSON.stringify(error));
+        apiUtils.apiErrorHandler(error);
     }
 };
 export default { loadBrands, loadModel, create, fetch, update };

@@ -19,4 +19,15 @@ const getFormDataForPost = (payload) => {
     return data;
 };
 
-export default { getFormDataForPost };
+const apiErrorHandler = (error) => {
+    if (error.message === 'Network Error') {
+        const { message } = error;
+        throw new Error(JSON.stringify({ message }));
+    } else {
+        const { status, data } = error.response;
+        const { message } = data;
+        throw new Error(JSON.stringify({ status, message }));
+    }
+};
+
+export default { getFormDataForPost, apiErrorHandler };

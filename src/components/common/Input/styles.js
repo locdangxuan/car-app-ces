@@ -15,7 +15,10 @@ const Input = styled.input`
     margin-left: ${(props) => props.theme.input.marginLeft};
     outline: ${(props) => props.theme.input.outline};
     border-radius: ${(props) => props.theme.input.borderRadius};
-    border-bottom: 1px solid ${(props) => props.theme.color.darkGrey};
+    border-bottom: ${(props) =>
+        props.isError === 'true'
+            ? `2px solid ${props.theme.color.danger}`
+            : `1px solid ${props.theme.color.darkGrey}`};
     &:focus {
         border-bottom: 1px solid ${(props) => props.theme.color.success};
     }

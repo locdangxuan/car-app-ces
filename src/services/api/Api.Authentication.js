@@ -2,6 +2,7 @@ import api from 'config/Servers';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
 import * as utilsConstants from 'config/constants/Utils';
+import apiUtil from 'utils/utils.Api';
 
 const cookies = new Cookies();
 
@@ -10,9 +11,7 @@ const register = async (fields) => {
         const result = await axios.post(api.user.register, fields);
         return result.data;
     } catch (error) {
-        const { status, data } = error.response;
-        const { message } = data;
-        throw new Error(JSON.stringify({ status, message }));
+        apiUtil.apiErrorHandler(error);
     }
 };
 
@@ -28,9 +27,7 @@ const login = async (fields) => {
         cookies.set(utilsConstants.token, token, { path: '/' });
         return { status, message };
     } catch (error) {
-        const { status, data } = error.response;
-        const { message } = data;
-        throw new Error(JSON.stringify({ status, message }));
+        apiUtil.apiErrorHandler(error);
     }
 };
 

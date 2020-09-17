@@ -1,8 +1,7 @@
+/* eslint-disable no-shadow */
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable react/require-default-props */
 /* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-shadow */
 import React, { useState, useEffect } from 'react';
 import {
     Button,
@@ -12,6 +11,7 @@ import {
     ImageCard,
     Textarea,
     Loader,
+    Modal,
 } from 'components/common';
 import PropTypes from 'prop-types';
 import { ThemeProvider } from 'styled-components';
@@ -20,7 +20,7 @@ import utils from 'utils/utils';
 import { connect } from 'react-redux';
 import { Select, MenuItem, Grid } from '@material-ui/core';
 import * as utilsConstants from 'config/constants/Utils';
-import { makeStyles } from '@material-ui/core/styles';
+import { modal } from 'config/constants/Utils';
 import { Wrapper, Submit, useStyle, theme } from './styles';
 
 const formConstant = utilsConstants.formUtilConstant;
@@ -55,9 +55,12 @@ const Form = (props) => {
         fetchPostData,
         data,
         id,
+        onDismissModal,
     } = props;
+    const [modalState, setModalState] = useState(false);
     const [state, setState] = useState(formState);
     const [oldImageMap, setOldImageMap] = useState('');
+    const classes = useStyle();
     const {
         name,
         brand,
@@ -72,7 +75,10 @@ const Form = (props) => {
         oldImages,
     } = state;
     const fuelTypes = ['Gasoline', 'Oil', 'Electricity'];
-    const classes = useStyle();
+    const modalStateToggleHandler = () => {
+        onDismissModal();
+        setModalState(false);
+    };
     const onImageChangeHandler = async (target) => {
         const { images, previews } = state;
         const imageFile = target.files[0];
@@ -208,6 +214,7 @@ const Form = (props) => {
             });
             onBrandChange({ brands, value: brand });
         }
+        if (message !== '' && modalState === false) setModalState(true);
     });
     return (
         <ThemeProvider theme={theme}>
@@ -263,6 +270,7 @@ const Form = (props) => {
                         type="text"
                         onChange={onChange}
                         value={name}
+                        defaultValue={name}
                     />
                 </Field>
                 <Field>
@@ -347,20 +355,19 @@ const Form = (props) => {
                         {previews &&
                             previews.map((image, index) => {
                                 return (
-                                    <ImageCard
-                                        xs={4}
-                                        key={`key${image}`}
-                                        index={index}
-                                        imgSrc={image}
-                                        removeImage={removeImage}
-                                    />
+                                    <Grid item xs={5}>
+                                        <ImageCard
+                                            xs={4}
+                                            key={`key${image}`}
+                                            index={index}
+                                            imgSrc={image}
+                                            removeImage={removeImage}
+                                        />
+                                    </Grid>
                                 );
                             })}
                     </Grid>
                 </Field>
-                {message.length > 1 && (
-                    <Span isValid={isSuccess}>{message}</Span>
-                )}
                 <Submit>
                     <Button onClick={onSubmitHandler} isSuccess>
                         Upload
@@ -371,6 +378,14 @@ const Form = (props) => {
                 </Submit>
             </Wrapper>
             {pending && <Loader type="FULL-PAGE" />}
+            {modalState && (
+                <Modal
+                    type={modal.type.alert}
+                    alertMessage={message}
+                    isSuccess={isSuccess}
+                    handlerToggle={modalStateToggleHandler}
+                />
+            )}
         </ThemeProvider>
     );
 };
@@ -389,6 +404,7 @@ Form.propTypes = {
     fetchPostData: PropTypes.func,
     data: PropTypes.object,
     id: PropTypes.string,
+    onDismissModal: PropTypes.func,
 };
 
 Form.defaultProps = {
@@ -404,6 +420,7 @@ Form.defaultProps = {
     type: '',
     fetchPostData: {},
     data: undefined,
+    onDismissModal: {},
 };
 
 const mapStateToProps = (state) => ({ ...state.postReducer });
@@ -412,6 +429,7 @@ const mapDispatchToProps = (dispatch) => ({
     getBrands: () => dispatch(action.loadBrands()),
     getProfile: () => dispatch(action.loadProfile()),
     fetchPostData: (id) => dispatch(action.fetchPostData(id)),
+    onDismissModal: () => dispatch(action.dismissMessage()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form);

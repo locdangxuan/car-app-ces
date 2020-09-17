@@ -8,13 +8,12 @@ const Body = styled.section`
 const Wrapper = styled.div`
     display: flex;
     position: fixed;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     top: 0px;
     left: 0px;
     z-index: 500;
-    background-color: ${(props) => props.theme.color.black};
-    opacity: 0.9;
+    background-color: ${(props) => props.theme.color.backgroundModal};
     justify-content: center;
     align-items: center;
     animation: modal-mount linear 0.2s;
@@ -40,16 +39,24 @@ const Footer = styled.section`
     display: flex;
     bottom: 0;
     width: 84%;
-    justify-content: space-between;
-    margin-bottom: 20px;
+    justify-content: ${(props) => {
+        switch (props.type) {
+            case 'single':
+                return 'center';
+            default:
+                return 'space-between';
+        }
+    }};
+    margin: 2vw 0 1vw;
 `;
 const Content = styled.section`
+    padding: 25px;
     z-index: 1000;
     opacity: 1;
     border-radius: 10px;
     display: flex;
     align-items: center;
-    width: 350px;
+    width: 400px;
     text-transform: uppercase;
     background-color: ${(props) => props.theme.color.white};
     flex-direction: column;

@@ -11,3 +11,10 @@ export const formUtilConstant = {
     imageUrl: 'imageUrl',
 };
 export const imageFormat = 'image/jpg, image/jpeg, image/png';
+export const modal = {
+    type: {
+        register: 'REGISTER',
+        login: 'LOGIN',
+        alert: 'ALERT',
+    },
+};
