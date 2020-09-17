@@ -14,6 +14,8 @@ import Form from './Form';
 import ImageCard from './ImageCard';
 import Textarea from './Textarea';
 import Categories from './Categories';
+import Login from './Login';
+import Register from './Register';
 
 export {
     Textarea,
@@ -33,4 +35,6 @@ export {
     Carousel,
     Form,
     Categories,
+    Login,
+    Register,
 };

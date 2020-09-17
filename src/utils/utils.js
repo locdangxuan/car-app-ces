@@ -28,7 +28,7 @@ const getIdFromArray = (array, name) => {
         const result = array.filter((element) => element.name === name);
         return result[0].id;
     } catch (error) {
-        throw new Error(error.message);
+        return '';
     }
 };
 

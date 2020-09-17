@@ -30,50 +30,33 @@ const emailValidator = (value) => {
 
 const checkBlankFields = (payload) => {
     let result = true;
-    Object.values(payload).forEach((value) => {
-        if (!value) result = false;
+    const invalidKeys = [];
+    Object.entries(payload).forEach((entry) => {
+        const [key, value] = entry;
+        if (!value) {
+            invalidKeys.push(key);
+            result = false;
+        }
     });
-    return result;
+    return { invalidKeys, result };
 };
 
 const loginValidator = (payload) => {
-    if (checkBlankFields(payload) === false) {
+    if (checkBlankFields(payload).result === false) {
         throw new Error(
             JSON.stringify({
                 status: statusCode.BAD_REQUEST,
                 message: MESSAGE_ERROR.BLANK_FIELD,
+                invalidFields: checkBlankFields(payload).invalidKeys,
             })
         );
-    }
-    return {
-        status: statusCode.OK,
-        message: MESSAGE_SUCCESS.VALIDFIELD,
-    };
-};
-
-const registerValidator = (payload) => {
-    if (checkBlankFields(payload) !== false) {
+    } else {
         if (usernameValidator(payload.username.toLowerCase()) === false) {
             throw new Error(
                 JSON.stringify({
                     status: statusCode.BAD_REQUEST,
                     message: MESSAGE_ERROR.INVALID_USERNAME,
-                })
-            );
-        }
-        if (phonenumberValidator(payload.phone) === false) {
-            throw new Error(
-                JSON.stringify({
-                    status: statusCode.BAD_REQUEST,
-                    message: MESSAGE_ERROR.INVALID_PHONENUMBER,
-                })
-            );
-        }
-        if (emailValidator(payload.email.toLowerCase()) === false) {
-            throw new Error(
-                JSON.stringify({
-                    status: statusCode.BAD_REQUEST,
-                    message: MESSAGE_ERROR.INVALID_EMAIL,
+                    invalidFields: ['username'],
                 })
             );
         }
@@ -82,6 +65,52 @@ const registerValidator = (payload) => {
                 JSON.stringify({
                     status: statusCode.BAD_REQUEST,
                     message: MESSAGE_ERROR.INVALID_PASSWORD,
+                    invalidFields: ['password'],
+                })
+            );
+        }
+    }
+    return {
+        status: statusCode.OK,
+        message: MESSAGE_SUCCESS.VALIDFIELD,
+    };
+};
+
+const registerValidator = (payload) => {
+    if (checkBlankFields(payload).result !== false) {
+        if (usernameValidator(payload.username.toLowerCase()) === false) {
+            throw new Error(
+                JSON.stringify({
+                    status: statusCode.BAD_REQUEST,
+                    message: MESSAGE_ERROR.INVALID_USERNAME,
+                    invalidFields: ['username'],
+                })
+            );
+        }
+        if (phonenumberValidator(payload.phone) === false) {
+            throw new Error(
+                JSON.stringify({
+                    status: statusCode.BAD_REQUEST,
+                    message: MESSAGE_ERROR.INVALID_PHONENUMBER,
+                    invalidFields: ['phone'],
+                })
+            );
+        }
+        if (emailValidator(payload.email.toLowerCase()) === false) {
+            throw new Error(
+                JSON.stringify({
+                    status: statusCode.BAD_REQUEST,
+                    message: MESSAGE_ERROR.INVALID_EMAIL,
+                    invalidFields: ['email'],
+                })
+            );
+        }
+        if (charactersValidator(payload.password) === false) {
+            throw new Error(
+                JSON.stringify({
+                    status: statusCode.BAD_REQUEST,
+                    message: MESSAGE_ERROR.INVALID_PASSWORD,
+                    invalidFields: ['password'],
                 })
             );
         }
@@ -93,6 +122,7 @@ const registerValidator = (payload) => {
                 JSON.stringify({
                     status: statusCode.BAD_REQUEST,
                     message: MESSAGE_ERROR.INVALID_VERIFICATION,
+                    invalidFields: ['verification'],
                 })
             );
         }
@@ -105,12 +135,13 @@ const registerValidator = (payload) => {
         JSON.stringify({
             status: statusCode.BAD_REQUEST,
             message: MESSAGE_ERROR.BLANK_FIELD,
+            invalidFields: checkBlankFields(payload).invalidKeys,
         })
     );
 };
 
 const postValidator = (payload) => {
-    if (checkBlankFields(payload) === false) {
+    if (checkBlankFields(payload).result === false) {
         throw new Error(
             JSON.stringify({
                 status: statusCode.BAD_REQUEST,

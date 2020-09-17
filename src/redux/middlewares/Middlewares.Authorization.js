@@ -3,11 +3,7 @@
 /* eslint-disable no-unused-vars */
 import Cookies from 'universal-cookie';
 import * as rad from 'redux-allow-deny';
-import {
-    LOGIN,
-    REGISTER,
-    UPDATE_FIELD_AUTH,
-} from 'config/constants/Action.Types';
+import { LOGIN, REGISTER, AUTH } from 'config/constants/Action.Types';
 
 const checkToken = (store) => (next) => (action) => {
     const cookie = new Cookies();
@@ -23,7 +19,8 @@ const verifyToken = rad.denylist(
         REGISTER.REQUEST,
         REGISTER.SUCCESS,
         REGISTER.ERROR,
-        UPDATE_FIELD_AUTH,
+        AUTH.UPDATE_FIELD,
+        AUTH.CANCEL,
     ],
     checkToken
 );

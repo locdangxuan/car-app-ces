@@ -13,6 +13,7 @@ const backgroundInput = 'rgba(255, 255, 255, 0.2)';
 const rangeSliderColor = '#52af77';
 const borderStyledMenu = '#d3d4d5';
 const primary = 'primary';
+const backgroundModal = 'rgba(0, 0, 0, 0.7)';
 
 export default {
     white,
@@ -30,4 +31,5 @@ export default {
     rangeSliderColor,
     borderStyledMenu,
     primary,
+    backgroundModal,
 };

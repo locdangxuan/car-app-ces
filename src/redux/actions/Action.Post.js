@@ -29,9 +29,9 @@ const onLoadModelSuccess = (payload) => ({
     type: MODELS.LOAD_MODEL_SUCCEED,
     models: payload,
 });
-const onLoadModelFailure = () => ({
+const onLoadModelFailure = (message) => ({
     type: MODELS.LOAD_MODEL_FAILED,
-    message: MESSAGE_ERROR.LOAD_MODELS_FAILURE,
+    message: message || MESSAGE_ERROR.LOAD_MODELS_FAILURE,
 });
 const onLoadBrandSuccess = (payload) => ({
     type: BRANDS.LOAD_BRAND_SUCCEED,
@@ -49,6 +49,9 @@ const onFetchPostFailure = () => ({
     type: POSTS.FETCH_DATA_FAILED,
     message: MESSAGE_ERROR.FETCH_DATA_FAILURE,
 });
+const dismissMessage = () => ({
+    type: POSTS.DISMISS_MESSAGE,
+});
 const loadBrands = () => {
     return async (dispatch, getState) => {
         dispatch(onRequest(BRANDS.REQUEST));
@@ -61,26 +64,55 @@ const loadBrands = () => {
     };
 };
 
+const validateFields = async (payload, getState) => {
+    try {
+        const {
+            brand,
+            distanceTraveled,
+            fuelType,
+            information,
+            model,
+            name,
+            price,
+            year,
+        } = payload;
+        const brandId = await utils.getIdFromArray(
+            getState().postReducer.brands,
+            brand
+        );
+        const modelId = await utils.getIdFromArray(
+            getState().postReducer.models,
+            model
+        );
+        validator.postValidator({
+            brand: brandId,
+            distanceTraveled,
+            fuelType,
+            information,
+            model: modelId,
+            name,
+            price,
+            year,
+        });
+        return { brandId, modelId };
+    } catch (error) {
+        const { message } = error;
+        throw new Error(message);
+    }
+};
+
 const upload = (payload) => {
     return async (dispatch, getState) => {
         dispatch(onRequest(POSTS.REQUEST));
         await setTimeout(async () => {
             try {
-                validator.postValidator(payload);
-                const { brand, model, information } = payload;
-                const brandId = await utils.getIdFromArray(
-                    getState().postReducer.brands,
-                    brand
-                );
-                const modelId = await utils.getIdFromArray(
-                    getState().postReducer.models,
-                    model
-                );
+                const validateResult = await validateFields(payload, getState);
                 const newInformation = {};
                 newInformation[
                     formUtilConstant.otherFeatures
-                ] = information.split(',');
+                ] = payload.information.split(',');
                 const token = utils.getToken();
+                const { brandId, modelId } = validateResult;
                 const result = await api.create(
                     {
                         ...payload,
@@ -103,38 +135,11 @@ const update = (payload) => {
         dispatch(onRequest(POSTS.REQUEST));
         await setTimeout(async () => {
             try {
-                const {
-                    brand,
-                    distanceTraveled,
-                    fuelType,
-                    information,
-                    model,
-                    name,
-                    price,
-                    year,
-                } = payload;
-                validator.postValidator({
-                    brand,
-                    distanceTraveled,
-                    fuelType,
-                    information,
-                    model,
-                    name,
-                    price,
-                    year,
-                });
-                const brandId = await utils.getIdFromArray(
-                    getState().postReducer.brands,
-                    brand
-                );
-                const modelId = await utils.getIdFromArray(
-                    getState().postReducer.models,
-                    model
-                );
+                const validateResult = await validateFields(payload, getState);
                 const newInformation = {};
                 newInformation[
                     formUtilConstant.otherFeatures
-                ] = information.split(',');
+                ] = payload.information.split(',');
                 Object.values(
                     newInformation[formUtilConstant.otherFeatures]
                 ).forEach((value) => {
@@ -145,6 +150,7 @@ const update = (payload) => {
                     }
                 });
                 const token = utils.getToken();
+                const { brandId, modelId } = validateResult;
                 const result = await api.update(
                     {
                         ...payload,
@@ -191,7 +197,9 @@ const loadModels = (payload) => {
                 payload.value
             );
             const models = await api.loadModel(brandId);
-            dispatch(onLoadModelSuccess(models.data));
+            if (models.data.length < 1)
+                dispatch(onLoadModelFailure(MESSAGE_ERROR.EMPTY_MODELS));
+            else dispatch(onLoadModelSuccess(models.data));
         } catch (error) {
             dispatch(onLoadModelFailure());
         }
@@ -205,4 +213,5 @@ export default {
     update,
     cancel,
     fetchPostData,
+    dismissMessage,
 };

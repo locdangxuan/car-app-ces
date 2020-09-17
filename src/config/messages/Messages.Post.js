@@ -5,6 +5,8 @@ const MESSAGE_ERROR = {
         'Can not load models from server, please reload the page',
     FETCH_DATA_FAILURE:
         'Can not get information of the post from server, please reload the page',
+    EMPTY_MODELS:
+        'Sorry!There are no models from this brand in our store at this moment',
 };
 const MESSAGE_SUCCESS = {
     LOAD_BRANDS_SUCCESS: 'Successfully loaded brands',

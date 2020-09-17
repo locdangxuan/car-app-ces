@@ -1,10 +1,5 @@
 import authService from 'services/api/Api.Authentication';
-import {
-    REGISTER,
-    LOGIN,
-    UPDATE_FIELD_AUTH,
-    LOGOUT,
-} from 'config/constants/Action.Types';
+import { REGISTER, LOGIN, AUTH, LOGOUT } from 'config/constants/Action.Types';
 import * as statusCode from 'config/constants/StatusCode';
 import { MESSAGE_ERROR } from 'config/messages/Messages.Auth';
 import validator from 'services/validator/FieldsValidator';
@@ -23,21 +18,22 @@ const logoutSuccess = () => {
 };
 
 const handleError = (errorRes) => {
-    const { status, message } = errorRes;
+    const { status, message, invalidFields } = errorRes;
     switch (status) {
         case statusCode.UNAUTHORIZED:
-            return message;
+            return { message };
         case statusCode.BAD_REQUEST:
-            return message;
+            return { message, invalidFields };
         default:
-            return MESSAGE_ERROR.SERVER_DOWN;
+            return { message: MESSAGE_ERROR.SERVER_DOWN };
     }
 };
 const loginFailure = (errorRes) => {
-    const message = handleError(errorRes);
+    const { message, invalidFields } = handleError(errorRes);
     return {
         type: LOGIN.ERROR,
         message,
+        invalidFields,
     };
 };
 
@@ -50,42 +46,45 @@ const registerSuccess = (payload) => {
 };
 
 const registerFailure = (errorRes) => {
-    const message = handleError(errorRes);
+    const { message, invalidFields } = handleError(errorRes);
     return {
         type: REGISTER.ERROR,
         message,
+        invalidFields,
     };
 };
 
-const authPending = () => {
-    return {
-        type: REGISTER.REQUEST,
-    };
-};
+const onRegisterRequest = () => ({ type: REGISTER.REQUEST });
+
+const onLoginRequest = () => ({ type: LOGIN.REQUEST });
 
 const register = (fields) => {
     return async (dispatch) => {
-        dispatch(authPending);
-        try {
-            validator.registerValidator(fields);
-            const payload = await authService.register(fields);
-            dispatch(registerSuccess(payload));
-        } catch (errorRes) {
-            dispatch(registerFailure(JSON.parse(errorRes.message)));
-        }
+        dispatch(onRegisterRequest());
+        setTimeout(async () => {
+            try {
+                validator.registerValidator(fields);
+                const payload = await authService.register(fields);
+                dispatch(registerSuccess(payload));
+            } catch (errorRes) {
+                dispatch(registerFailure(JSON.parse(errorRes.message)));
+            }
+        }, 1000);
     };
 };
 
 const login = (fields) => {
     return async (dispatch) => {
-        dispatch(authPending);
-        try {
-            validator.loginValidator(fields);
-            const payload = await authService.login(fields);
-            dispatch(loginSuccess(payload));
-        } catch (errorRes) {
-            dispatch(loginFailure(JSON.parse(errorRes.message)));
-        }
+        dispatch(onLoginRequest());
+        setTimeout(async () => {
+            try {
+                validator.loginValidator(fields);
+                const payload = await authService.login(fields);
+                dispatch(loginSuccess(payload));
+            } catch (errorRes) {
+                dispatch(loginFailure(JSON.parse(errorRes.message)));
+            }
+        }, 1000);
     };
 };
 
@@ -112,9 +111,17 @@ const verifyAuthenticationStatus = () => {
 const updateFieldAuth = (fields) => {
     return (dispatch) => {
         dispatch({
-            type: UPDATE_FIELD_AUTH,
+            type: AUTH.UPDATE_FIELD,
             key: fields.id,
             value: fields.value,
+        });
+    };
+};
+
+const onCancel = () => {
+    return (dispatch) => {
+        dispatch({
+            type: AUTH.CANCEL,
         });
     };
 };
@@ -124,4 +131,5 @@ export default {
     updateFieldAuth,
     verifyAuthenticationStatus,
     logout,
+    onCancel,
 };

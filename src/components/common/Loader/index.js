@@ -2,6 +2,8 @@ import React from 'react';
 import { Span } from 'components/common';
 import { ThemeProvider } from 'styled-components';
 import PropTypes from 'prop-types';
+import globalTheme from 'config/constants/Themes';
+import Color from 'config/constants/Colors';
 import { Circle, MiniCircle, Wrapper, FullpageWrapper } from './styles';
 
 const Loader = (props) => {
@@ -23,16 +25,25 @@ const Loader = (props) => {
             </Circle>
         </ThemeProvider>
     );
+    let theme;
     switch (props.type) {
         case 'SPAN-STYLE':
+            theme = {
+                span: {
+                    ...globalTheme.span,
+                    color: Color.darkGrey,
+                },
+            };
             return (
-                <Wrapper>
-                    {content()}
-                    <Span>Loading</Span>
-                </Wrapper>
+                <ThemeProvider theme={theme}>
+                    <Wrapper>
+                        {content()}
+                        <Span>Loading</Span>
+                    </Wrapper>
+                </ThemeProvider>
             );
         case 'FULL-PAGE': {
-            const theme = {
+            theme = {
                 loader: {
                     width: '70px',
                     height: '70px',

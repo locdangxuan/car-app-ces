@@ -1,9 +1,4 @@
-import {
-    UPDATE_FIELD_AUTH,
-    REGISTER,
-    LOGIN,
-    LOGOUT,
-} from 'config/constants/Action.Types';
+import { AUTH, REGISTER, LOGIN, LOGOUT } from 'config/constants/Action.Types';
 
 const initState = {
     username: '',
@@ -17,8 +12,16 @@ const initState = {
 
 const authReducer = (state = initState, action) => {
     switch (action.type) {
-        case UPDATE_FIELD_AUTH:
+        case AUTH.UPDATE_FIELD:
             return { ...state, [action.key]: action.value };
+        case AUTH.CANCEL:
+            return {
+                ...initState,
+                isValid: true,
+                message: '',
+                invalidFields: [],
+                isLogginSucceed: state.isLogginSucceed,
+            };
         case LOGIN.SUCCESS: {
             return {
                 ...state,
@@ -27,11 +30,23 @@ const authReducer = (state = initState, action) => {
             };
         }
         case LOGIN.ERROR: {
-            const { message } = action;
-            return { ...state, message, isValid: false, pending: false };
+            return {
+                ...state,
+                message: action.message,
+                isValid: false,
+                pending: false,
+                invalidFields: action.invalidFields,
+            };
         }
+        case LOGIN.REQUEST:
         case REGISTER.REQUEST: {
-            return { ...state, pending: true };
+            return {
+                ...state,
+                message: '',
+                pending: true,
+                isValid: true,
+                invalidFields: [],
+            };
         }
         case REGISTER.SUCCESS: {
             const { username, password } = state;
@@ -50,6 +65,7 @@ const authReducer = (state = initState, action) => {
                 isValid: false,
                 pending: false,
                 message: action.message,
+                invalidFields: action.invalidFields,
             };
         case LOGOUT.SUCCESS:
             return {

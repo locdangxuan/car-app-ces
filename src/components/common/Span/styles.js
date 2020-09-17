@@ -11,7 +11,7 @@ const Span = styled.span`
             case undefined:
                 return props.theme.span.color;
             default:
-                return props.theme.span.color;
+                return props.theme.color.black;
         }
     }};
     height: ${(props) =>

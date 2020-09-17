@@ -4,7 +4,7 @@ import { Button } from 'components/common';
 import color from 'config/constants/Colors';
 import PropTypes from 'prop-types';
 import Delete from 'assets/images/trash.svg';
-import Wrapper from './styles';
+import { Wrapper, Background } from './styles';
 
 const ImageCard = (props) => {
     const { imgSrc, removeImage, index } = props;
@@ -23,10 +23,12 @@ const ImageCard = (props) => {
     };
     return (
         <ThemeProvider theme={theme}>
-            <Wrapper imgSrc={imgSrc}>
-                <Button onClick={onClickHandler}>
-                    <img src={Delete} alt="X" width="10px" height="10px" />
-                </Button>
+            <Wrapper>
+                <Background imgSrc={imgSrc}>
+                    <Button onClick={onClickHandler}>
+                        <img src={Delete} alt="X" width="10px" height="10px" />
+                    </Button>
+                </Background>
             </Wrapper>
         </ThemeProvider>
     );
