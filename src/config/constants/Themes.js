@@ -16,7 +16,6 @@ const body = {
     color: Color.white,
 };
 
-
 const input = {
     noBorder: 'true',
     width: '100%',
