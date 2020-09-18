@@ -15,7 +15,7 @@ const useStyles = makeStyles({
     media: {
         height: '280px',
     },
-    price: {
+    priceOfCar: {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'flex-start',

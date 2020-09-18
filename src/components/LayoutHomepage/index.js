@@ -24,7 +24,7 @@ const LayoutHomepage = (props) => {
                             key={Content.id}
                             className={classes.content}
                         >
-                            <StyledLink to={`/posts/details/${Content.id}`}>
+                            <StyledLink to={`/posts/${Content.id}`}>
                                 <ContentCard data={Content} />
                             </StyledLink>
                         </Grid>

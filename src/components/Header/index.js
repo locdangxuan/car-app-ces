@@ -13,6 +13,7 @@ import { Box } from '@material-ui/core';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import action from 'redux/actions/Action.Auth';
+import component from 'config/constants/Components';
 import { HeaderWrapper, GridHeader, useStyles } from './styles';
 
 const src = {
@@ -28,7 +29,7 @@ const Header = (props) => {
         verifyAuthenticationStatus();
     }, []);
     return (
-        <Box component="div">
+        <Box component={component.div}>
             <HeaderWrapper>
                 <GridHeader
                     container

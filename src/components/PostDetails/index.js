@@ -15,6 +15,8 @@ import {
 } from '@material-ui/icons';
 import { Carousel } from 'components/common';
 import action from 'redux/actions/Action.Post';
+import variant from 'config/constants/Variant';
+import component from 'config/constants/Components';
 import useStyles from './styles';
 
 const PostDetails = (props) => {
@@ -25,10 +27,6 @@ const PostDetails = (props) => {
     const classes = useStyles();
     const { length } = Object.keys(details);
     if (length > 0) {
-        const specifications = Object.keys(details.specs).map((element) => [
-            element,
-            details.specs[element],
-        ]);
         const {
             name,
             images,
@@ -38,63 +36,71 @@ const PostDetails = (props) => {
             fuelType,
             distanceTraveled,
             seller,
+            specs,
         } = details;
+        const specifications = Object.keys(specs).map((element) => [
+            element,
+            details.specs[element],
+        ]);
         return (
             <Grid container className={classes.globalContent}>
                 <Grid item xs={9} className={`${classes.column}`}>
                     <Box
-                        component="div"
+                        component={component.div}
                         className={`${classes.wrapper} ${classes.detailCar}`}
                     >
                         <Box
                             className={`${classes.wrapper} ${classes.overview}`}
                         >
                             <Box
-                                component="div"
+                                component={component.div}
                                 className={`${classes.wrapper} ${classes.textCenter} ${classes.name}`}
                             >
                                 {name}
                             </Box>
                             <Carousel images={images} />
-                            <Box component="div" className={classes.info}>
+                            <Box
+                                component={component.div}
+                                className={classes.info}
+                            >
                                 <LocalTaxi />
                                 <Box
-                                    component="span"
+                                    component={component.span}
                                     className={classes.textCenter}
                                 >
                                     {model}
                                 </Box>
                                 <CalendarToday className={classes.left} />
                                 <Box
-                                    component="span"
+                                    component={component.span}
                                     className={classes.textCenter}
                                 >
                                     {year}
                                 </Box>
                                 <Explore className={classes.left} />
                                 <Box
-                                    component="span"
+                                    component={component.span}
                                     className={classes.textCenter}
                                 >
                                     {distanceTraveled}
                                 </Box>
                                 <AttachMoney className={classes.left} />
                                 <Box
-                                    component="span"
+                                    component={component.span}
                                     className={classes.textCenter}
                                 >
                                     {price}
                                 </Box>
                                 <LocalGasStation className={classes.left} />
                                 <Box
-                                    component="span"
+                                    component={component.span}
                                     className={classes.textCenter}
                                 >
                                     {fuelType}
                                 </Box>
                                 <Room className={classes.left} />
                                 <Box
-                                    component="span"
+                                    component={component.span}
                                     className={classes.textCenter}
                                 >
                                     USA
@@ -102,7 +108,7 @@ const PostDetails = (props) => {
                             </Box>
                         </Box>
                         <Box
-                            component="div"
+                            component={component.div}
                             className={`${classes.specifications} ${classes.wrapper}`}
                         >
                             <Box
@@ -111,20 +117,20 @@ const PostDetails = (props) => {
                                 Specifications
                             </Box>
                             <Box
-                                component="div"
+                                component={component.div}
                                 className={classes.specificationDetails}
                             >
                                 {specifications.map((item) => {
                                     return (
                                         <Box
                                             key={item}
-                                            component="div"
+                                            component={component.div}
                                             className={
                                                 classes.specificationContent
                                             }
                                         >
                                             <Typography
-                                                variant="subtitle1"
+                                                variant={variant.subtitle1}
                                                 className={
                                                     classes.specificationKey
                                                 }
@@ -132,7 +138,7 @@ const PostDetails = (props) => {
                                                 {item[0]}
                                             </Typography>
                                             <Typography
-                                                variant="subtitle1"
+                                                variant={variant.subtitle1}
                                                 className={
                                                     classes.specificationValue
                                                 }

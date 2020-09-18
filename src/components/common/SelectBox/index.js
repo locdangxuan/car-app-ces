@@ -2,6 +2,8 @@ import React from 'react';
 import { NativeSelect, Box } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import FormControl from '@material-ui/core/FormControl';
+import component from 'config/constants/Components';
+import variant from 'config/constants/Variant';
 import useStyles from './styles';
 
 const SelectBox = (props) => {
@@ -13,8 +15,8 @@ const SelectBox = (props) => {
     };
 
     return (
-        <FormControl variant="outlined" className={classes.formControl}>
-            <Box component="span" className={classes.name}>
+        <FormControl variant={variant.outlined} className={classes.formControl}>
+            <Box component={component.span} className={classes.name}>
                 {name}
             </Box>
             <NativeSelect
@@ -27,15 +29,10 @@ const SelectBox = (props) => {
                 <option className={classes.option} value="">
                     All
                 </option>
-                <option className={classes.option} value={10}>
-                    Ten
-                </option>
-                <option className={classes.option} value={20}>
-                    Twenty
-                </option>
-                <option className={classes.option} value={30}>
-                    Thirty
-                </option>
+                <option className={classes.option}>Ford</option>
+                <option className={classes.option}>Audi</option>
+                <option className={classes.option}>Ferrari</option>
+                <option className={classes.option}>Acura</option>
             </NativeSelect>
         </FormControl>
     );

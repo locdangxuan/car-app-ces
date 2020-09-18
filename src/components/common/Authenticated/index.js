@@ -13,6 +13,8 @@ import {
 } from '@material-ui/icons';
 import utils from 'utils/utils';
 import Color from 'config/constants/Colors';
+import component from 'config/constants/Components';
+import variant from 'config/constants/Variant';
 import { useStyles, StyledMenu, StyledMenuItem } from './styles';
 
 const Authenticated = (props) => {
@@ -34,13 +36,13 @@ const Authenticated = (props) => {
     const classes = useStyles();
 
     return (
-        <Box component="div" className={classes.authenticated}>
-            <Box component="div" className={classes.name}>
+        <Box component={component.div} className={classes.authenticated}>
+            <Box component={component.div} className={classes.name}>
                 {displayName}
             </Box>
             <Link to="/posts/new" className={classes.link}>
                 <Button
-                    variant="contained"
+                    variant={variant.contained}
                     color={Color.primary}
                     startIcon={<AddCircle />}
                 >
@@ -50,7 +52,7 @@ const Authenticated = (props) => {
             <Button
                 aria-controls="customized-menu"
                 aria-haspopup="true"
-                variant="contained"
+                variant={variant.contained}
                 color="default"
                 onClick={handleClick}
                 className={classes.navbarButton}
