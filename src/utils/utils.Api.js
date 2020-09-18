@@ -7,6 +7,7 @@ const getFormDataForPost = (payload) => {
     data.append('distanceTraveled', payload.distanceTraveled);
     data.append('price', payload.price);
     data.append('information', payload.information);
+    data.append('location', payload.location);
     Object.values(payload.images).forEach((value) => {
         data.append('images', value);
     });
