@@ -1,5 +1,5 @@
 import React from 'react';
-import { LayoutHomepage, SearchBar, PostDetails, Error } from 'components';
+import { LayoutHomepage, SearchBar, PostDetails, NotFound } from 'components';
 import { Switch, Route } from 'react-router-dom';
 import PostCreating from 'pages/CreatePost/createPost';
 
@@ -12,7 +12,7 @@ const Routes = () => {
                 <SearchBar />
                 <LayoutHomepage />
             </Route>
-            <Route component={Error} />
+            <Route component={NotFound} />
         </Switch>
     );
 };

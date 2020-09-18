@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
-import { fontFamilies } from 'config/constants/Fonts';
+import { fontFamilies, fontSize } from 'config/constants/Fonts';
 import Color from 'config/constants/Colors';
 
 const useStyles = makeStyles({
@@ -8,11 +8,13 @@ const useStyles = makeStyles({
         fontFamily: fontFamilies.ssfLucida,
         color: Color.white,
     },
-    name: {
-        margin: '0 5%',
-    },
     overview: {
-        padding: '20px 0',
+        padding: '0 0 30px',
+    },
+    name: {
+        padding: '10px',
+        fontSize: fontSize.fontMain,
+        fontWeight: 'bold',
     },
     detailCar: {
         padding: '2% 5%',
@@ -46,13 +48,18 @@ const useStyles = makeStyles({
         marginLeft: '20px',
     },
     specifications: {
-        padding: '10px 5%',
+        paddingBottom: '10px',
         marginTop: '20px',
     },
     specificationTitle: {
-        marginTop: '20px',
         display: 'flex',
         justifyContent: 'center',
+        fontSize: fontSize.fontMain,
+        fontWeight: 'bold',
+        padding: '10px',
+    },
+    specificationDetails: {
+        padding: '10px 5%',
     },
     specificationContent: {
         display: 'flex',

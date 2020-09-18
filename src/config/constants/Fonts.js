@@ -6,6 +6,7 @@ export const fontSize = {
     fontSmall: '14px',
     fontMedium: '18px',
     fontLarge: '26px',
+    fontMain: '1.8rem',
 };
 export const fontWeight = {
     bold: 'bold',

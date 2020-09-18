@@ -11,6 +11,7 @@ import {
     Explore,
     AttachMoney,
     Room,
+    LocalGasStation,
 } from '@material-ui/icons';
 import { Carousel } from 'components/common';
 import action from 'redux/actions/Action.Post';
@@ -28,6 +29,16 @@ const PostDetails = (props) => {
             element,
             details.specs[element],
         ]);
+        const {
+            name,
+            images,
+            model,
+            year,
+            price,
+            fuelType,
+            distanceTraveled,
+            seller,
+        } = details;
         return (
             <Grid container className={classes.globalContent}>
                 <Grid item xs={9} className={`${classes.column}`}>
@@ -42,39 +53,44 @@ const PostDetails = (props) => {
                                 component="div"
                                 className={`${classes.wrapper} ${classes.textCenter} ${classes.name}`}
                             >
-                                <Typography variant="h5">
-                                    {details.name}
-                                </Typography>
+                                {name}
                             </Box>
-                            <Carousel images={details.images} />
+                            <Carousel images={images} />
                             <Box component="div" className={classes.info}>
                                 <LocalTaxi />
                                 <Box
                                     component="span"
                                     className={classes.textCenter}
                                 >
-                                    {details.model}
+                                    {model}
                                 </Box>
                                 <CalendarToday className={classes.left} />
                                 <Box
                                     component="span"
                                     className={classes.textCenter}
                                 >
-                                    {details.year}
+                                    {year}
                                 </Box>
                                 <Explore className={classes.left} />
                                 <Box
                                     component="span"
                                     className={classes.textCenter}
                                 >
-                                    {details.distanceTraveled}
+                                    {distanceTraveled}
                                 </Box>
                                 <AttachMoney className={classes.left} />
                                 <Box
                                     component="span"
                                     className={classes.textCenter}
                                 >
-                                    {details.price}
+                                    {price}
+                                </Box>
+                                <LocalGasStation className={classes.left} />
+                                <Box
+                                    component="span"
+                                    className={classes.textCenter}
+                                >
+                                    {fuelType}
                                 </Box>
                                 <Room className={classes.left} />
                                 <Box
@@ -89,42 +105,49 @@ const PostDetails = (props) => {
                             component="div"
                             className={`${classes.specifications} ${classes.wrapper}`}
                         >
-                            <Typography
-                                variant="subtitle1"
+                            <Box
                                 className={`${classes.specificationTitle} ${classes.wrapper}`}
-                                gutterBottom
                             >
                                 Specifications
-                            </Typography>
-                            {specifications.map((item) => {
-                                return (
-                                    <Box
-                                        key={item}
-                                        component="div"
-                                        className={classes.specificationContent}
-                                    >
-                                        <Typography
-                                            variant="subtitle1"
-                                            className={classes.specificationKey}
-                                        >
-                                            {item[0]}
-                                        </Typography>
-                                        <Typography
-                                            variant="subtitle1"
+                            </Box>
+                            <Box
+                                component="div"
+                                className={classes.specificationDetails}
+                            >
+                                {specifications.map((item) => {
+                                    return (
+                                        <Box
+                                            key={item}
+                                            component="div"
                                             className={
-                                                classes.specificationValue
+                                                classes.specificationContent
                                             }
                                         >
-                                            {item[1]}
-                                        </Typography>
-                                    </Box>
-                                );
-                            })}
+                                            <Typography
+                                                variant="subtitle1"
+                                                className={
+                                                    classes.specificationKey
+                                                }
+                                            >
+                                                {item[0]}
+                                            </Typography>
+                                            <Typography
+                                                variant="subtitle1"
+                                                className={
+                                                    classes.specificationValue
+                                                }
+                                            >
+                                                {item[1]}
+                                            </Typography>
+                                        </Box>
+                                    );
+                                })}
+                            </Box>
                         </Box>
                     </Box>
                 </Grid>
                 <Grid item xs={3}>
-                    <Box className={classes.wrapper}>name</Box>
+                    <Box className={classes.wrapper}>{seller}</Box>
                 </Grid>
             </Grid>
         );

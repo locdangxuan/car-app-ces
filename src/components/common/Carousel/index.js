@@ -23,9 +23,12 @@ const Carousel = (props) => {
                 outsideChevron
                 chevronWidth={chevronWidth}
             >
-                {imageUrls.map((imageUrl) => {
-                    return <Item key={imageUrl} backgroundImage={imageUrl} />;
-                })}
+                {imageUrls &&
+                    imageUrls.map((imageUrl) => {
+                        return (
+                            <Item key={imageUrl} backgroundImage={imageUrl} />
+                        );
+                    })}
             </ItemsCarousel>
         </CarouselWrapper>
     );

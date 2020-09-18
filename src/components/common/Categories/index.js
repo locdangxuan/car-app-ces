@@ -26,17 +26,18 @@ const Categories = () => {
                         BRAND
                         <ExpandMore />
                         <DropdownContent>
-                            {listBrands.map((brand) => {
-                                return (
-                                    <Brand>
-                                        <StyledLink
-                                            to={`${brand.toLowerCase()}`}
-                                        >
-                                            {brand}
-                                        </StyledLink>
-                                    </Brand>
-                                );
-                            })}
+                            {listBrands &&
+                                listBrands.map((brand) => {
+                                    return (
+                                        <Brand key={brand}>
+                                            <StyledLink
+                                                to={`${brand.toLowerCase()}`}
+                                            >
+                                                {brand}
+                                            </StyledLink>
+                                        </Brand>
+                                    );
+                                })}
                         </DropdownContent>
                     </DropdownButton>
                 </Dropdown>
