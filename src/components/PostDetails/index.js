@@ -1,8 +1,10 @@
+/* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable react/prop-types */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
-import { Grid, Box, Typography } from '@material-ui/core';
+import { Link } from 'react-router-dom';
+import { Grid, Box, Typography, Button } from '@material-ui/core';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import {
@@ -17,11 +19,14 @@ import { Carousel } from 'components/common';
 import action from 'redux/actions/Action.Post';
 import variant from 'config/constants/Variant';
 import component from 'config/constants/Components';
+import Color from 'config/constants/Colors';
+import utils from 'utils/utils';
 import useStyles from './styles';
 
 const PostDetails = (props) => {
+    const { id } = props.match.params;
     useEffect(() => {
-        props.fetchPostData(props.match.params.id);
+        props.fetchPostData(id);
     }, []);
     const { details } = props;
     const classes = useStyles();
@@ -42,6 +47,7 @@ const PostDetails = (props) => {
             element,
             details.specs[element],
         ]);
+        const { displayName } = utils.getProfile();
         return (
             <Grid container className={classes.globalContent}>
                 <Grid item xs={9} className={`${classes.column}`}>
@@ -153,7 +159,24 @@ const PostDetails = (props) => {
                     </Box>
                 </Grid>
                 <Grid item xs={3}>
-                    <Box className={classes.wrapper}>{seller}</Box>
+                    <Box component={component.div} className={classes.wrapper}>
+                        <Typography
+                            variant={variant.subtitle1}
+                            className={classes.specificationValue}
+                        >
+                            {seller}
+                        </Typography>
+                        {displayName === seller && (
+                            <Link to={`/posts/update/${id}`}>
+                                <Button
+                                    variant={variant.contained}
+                                    color={Color.primary}
+                                >
+                                    Update post
+                                </Button>
+                            </Link>
+                        )}
+                    </Box>
                 </Grid>
             </Grid>
         );
@@ -181,7 +204,7 @@ PostDetails.propTypes = {
 
 PostDetails.defaultProps = {
     details: {},
-    fetchPostData: {},
+    fetchPostData: () => {},
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostDetails);

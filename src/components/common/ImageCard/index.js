@@ -40,7 +40,7 @@ ImageCard.propTypes = {
 };
 ImageCard.defaultProps = {
     imgSrc: '',
-    removeImage: {},
+    removeImage: () => {},
     index: '0',
 };
 

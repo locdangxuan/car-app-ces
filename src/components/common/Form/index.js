@@ -374,7 +374,7 @@ const Form = (props) => {
                         {previews &&
                             previews.map((image, index) => {
                                 return (
-                                    <Grid item xs={5}>
+                                    <Grid item xs={5} key={`key${image}`}>
                                         <ImageCard
                                             xs={4}
                                             key={`key${image}`}
@@ -428,18 +428,18 @@ Form.propTypes = {
 
 Form.defaultProps = {
     models: ['Rx'],
-    onSubmit: {},
-    onCancel: {},
+    onSubmit: () => {},
+    onCancel: () => {},
     brands: [],
-    onBrandChange: {},
-    getBrands: {},
+    onBrandChange: () => {},
+    getBrands: () => {},
     pending: false,
     isSuccess: false,
     message: '',
     type: '',
-    fetchPostData: {},
+    fetchPostData: () => {},
     data: undefined,
-    onDismissModal: {},
+    onDismissModal: () => {},
 };
 
 const mapStateToProps = (state) => ({ ...state.postReducer });

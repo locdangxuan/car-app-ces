@@ -1,24 +1,23 @@
 import style from 'styled-components';
+import Color from 'config/constants/Colors';
 
-const wrapper = style.div`
+const Wrapper = style.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 79vh;
+    height: 80vh;
 `;
 
-const body = style.div`
-    background-color: black;
+const Body = style.div`
+    background-color: ${Color.black};
     opacity: 0.8;
     display: flex;
     align-items: center;
     flex-direction: column;
     justify-content: center;
-    width: 20vw;
+    width: 30vw;
     height: 40vh;
+    text-align: justify;
 `;
 
-export default {
-    wrapper,
-    body,
-};
+export { Wrapper, Body };

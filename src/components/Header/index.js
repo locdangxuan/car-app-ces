@@ -63,7 +63,7 @@ Header.propTypes = {
 };
 Header.defaultProps = {
     isLogginSucceed: false,
-    verifyAuthenticationStatus: {},
+    verifyAuthenticationStatus: () => {},
 };
 
 const mapStateToProps = (state) => ({ ...state.authReducer });

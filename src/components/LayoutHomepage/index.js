@@ -39,7 +39,7 @@ LayoutHomepage.propTypes = {
 };
 LayoutHomepage.defaultProps = {
     Contents: [],
-    actRequestProducts: {},
+    actRequestProducts: () => {},
 };
 const mapStateToProp = (state) => {
     return {
