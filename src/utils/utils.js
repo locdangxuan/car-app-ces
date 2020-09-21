@@ -58,7 +58,9 @@ const getToken = () => {
 
 const getProfile = () => {
     try {
-        const profile = JSON.parse(localStorage.getItem(utilsConstant.profile));
+        const profile = localStorage.getItem(utilsConstant.profile)
+            ? JSON.parse(localStorage.getItem(utilsConstant.profile))
+            : '';
         return profile;
     } catch (error) {
         throw new Error(error);

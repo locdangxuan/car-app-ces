@@ -102,7 +102,7 @@ Register.defaultProps = {
     email: '',
     password: '',
     verification: '',
-    onInputChange: {},
+    onInputChange: () => {},
     invalidFields: [],
 };
 

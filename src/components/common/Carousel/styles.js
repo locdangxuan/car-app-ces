@@ -1,14 +1,14 @@
 import styled from 'styled-components';
-import Color from 'config/constants/Colors';
 
 const CarouselWrapper = styled.div`
-    padding: 40px;
+    padding: 0 5% 10px;
 `;
 
 const Item = styled.div`
-    background-color: ${Color.white};
-    height: 400px;
-    color: ${Color.black};
+    background-color: ${(props) => props.backgroundColor};
+    background-image: url(${(props) => props.backgroundImage});
+    height: 490px;
+    background-size: cover;
 `;
 
 export { Item, CarouselWrapper };

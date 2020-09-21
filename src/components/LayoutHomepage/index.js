@@ -17,14 +17,14 @@ const LayoutHomepage = (props) => {
         <Container fixed>
             <Grid container className={classes.layoutWrapper}>
                 {Contents.length > 0 &&
-                    Contents.map((Content) => (
+                    Contents[0].map((Content) => (
                         <Grid
                             item
                             sm={4}
                             key={Content.id}
                             className={classes.content}
                         >
-                            <StyledLink to={`/posts/details/${Content.id}`}>
+                            <StyledLink to={`/posts/${Content.id}`}>
                                 <ContentCard data={Content} />
                             </StyledLink>
                         </Grid>
@@ -39,18 +39,18 @@ LayoutHomepage.propTypes = {
 };
 LayoutHomepage.defaultProps = {
     Contents: [],
-    actRequestProducts: {},
+    actRequestProducts: () => {},
 };
 const mapStateToProp = (state) => {
     return {
-        Contents: state.contentCar,
+        Contents: state.contentCarReducer,
     };
 };
-const MapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch) => {
     return {
         actRequestProducts: () => {
             dispatch(action.actRequestProducts());
         },
     };
 };
-export default connect(mapStateToProp, MapDispatchToProps)(LayoutHomepage);
+export default connect(mapStateToProp, mapDispatchToProps)(LayoutHomepage);

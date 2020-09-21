@@ -1,6 +1,12 @@
 import { makeStyles } from '@material-ui/core/styles';
-import { fontFamilies } from 'config/constants/Fonts';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import { fontFamilies, fontSize } from 'config/constants/Fonts';
 import Color from 'config/constants/Colors';
+
+const StyledLink = styled(Link)`
+    text-decoration: none;
+`;
 
 const useStyles = makeStyles({
     globalContent: {
@@ -8,19 +14,27 @@ const useStyles = makeStyles({
         fontFamily: fontFamilies.ssfLucida,
         color: Color.white,
     },
+    overview: {
+        padding: '0 0 30px',
+    },
+    name: {
+        padding: '10px',
+        fontSize: fontSize.fontMain,
+        fontWeight: 'bold',
+    },
+    detailCar: {
+        padding: '2% 5%',
+        marginBottom: '20px',
+    },
     column: {
-        padding: '30px 50px',
+        padding: '0 2%',
     },
-    carInfo: {
+    wrapper: {
         background: Color.backgroundDetails,
-    },
-    titleWrapper: {
-        background: Color.backgroundDetails,
-        textAlign: 'center',
     },
     info: {
         display: 'flex',
-        padding: '0 40px',
+        padding: '0 5%',
     },
     boxInfo: {
         margin: '20px',
@@ -39,10 +53,26 @@ const useStyles = makeStyles({
     left: {
         marginLeft: '20px',
     },
-    specification: {
+    specifications: {
+        paddingBottom: '10px',
+        marginTop: '20px',
+    },
+    specificationTitle: {
         display: 'flex',
         justifyContent: 'center',
+        fontSize: fontSize.fontMain,
+        fontWeight: 'bold',
+        padding: '10px',
+    },
+    specificationDetails: {
+        padding: '10px 5%',
+    },
+    specificationContent: {
+        display: 'flex',
+    },
+    specificationValue: {
+        marginLeft: '10px',
     },
 });
 
-export default useStyles;
+export { useStyles, StyledLink };

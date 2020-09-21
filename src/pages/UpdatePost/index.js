@@ -34,7 +34,7 @@ UpdatePost.propTypes = {
     onCancel: PropTypes.func,
 };
 UpdatePost.defaultProps = {
-    onSubmit: {},
-    onCancel: {},
+    onSubmit: () => {},
+    onCancel: () => {},
 };
 export default connect(null, mapDispatchToProps)(UpdatePost);

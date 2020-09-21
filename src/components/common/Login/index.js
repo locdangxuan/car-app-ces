@@ -48,7 +48,7 @@ Login.propTypes = {
 Login.defaultProps = {
     username: '',
     password: '',
-    onChangeHandler: {},
+    onChangeHandler: () => {},
     invalidFields: [],
 };
 

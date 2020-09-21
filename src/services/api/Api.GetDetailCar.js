@@ -1,8 +1,11 @@
 import axios from 'axios';
 import api from 'config/Servers';
 
-export const GetDetailCar = (data) => {
+const GetDetailCar = (token, data) => {
     return axios({
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
         method: 'GET',
         url: api.post.get,
         data,
@@ -10,7 +13,7 @@ export const GetDetailCar = (data) => {
         throw new Error(JSON.stringify(error));
     });
 };
-export const GetCarByValue = (value, page = 1, data) => {
+const GetCarByValue = (value, page = 1, data) => {
     return axios({
         method: 'GET',
         url: `${api.post.get}`,
@@ -25,3 +28,5 @@ export const GetCarByValue = (value, page = 1, data) => {
         throw new Error(JSON.stringify(error));
     });
 };
+
+export { GetDetailCar, GetCarByValue };

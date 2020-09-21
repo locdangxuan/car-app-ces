@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-shadow */
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable react/require-default-props */
@@ -21,7 +22,7 @@ import { connect } from 'react-redux';
 import { Select, MenuItem, Grid } from '@material-ui/core';
 import * as utilsConstants from 'config/constants/Utils';
 import { modal } from 'config/constants/Utils';
-import { Wrapper, Submit, useStyle, theme } from './styles';
+import { Wrapper, Submit, useStyle, theme, StyledLink } from './styles';
 
 const formConstant = utilsConstants.formUtilConstant;
 const { imageFormat } = utilsConstants;
@@ -32,6 +33,7 @@ const Form = (props) => {
         year: '2020',
         fuelType: 'Gasoline',
         distanceTraveled: 0,
+        location: '',
         images: [],
         previews: [],
         model: '',
@@ -40,7 +42,6 @@ const Form = (props) => {
         count: 0,
         price: 0,
         oldImages: [],
-        location: 'Danang, Vietnam',
     };
     const {
         onSubmit,
@@ -140,11 +141,11 @@ const Form = (props) => {
                     fuelType,
                     price,
                     distanceTraveled,
+                    location,
                     information: otherFeatures,
                     images,
                     oldImageMap: oldImageMap.substring(1),
                     imgUrls: oldImages,
-                    location,
                 });
                 break;
             default:
@@ -155,10 +156,10 @@ const Form = (props) => {
                     year,
                     fuelType,
                     price,
+                    location,
                     distanceTraveled,
                     information: otherFeatures,
                     images,
-                    location,
                 });
                 break;
         }
@@ -181,10 +182,14 @@ const Form = (props) => {
         if (type === formConstant.type.update) {
             fetchPostData(id);
         }
+        return () => {
+            props.onCancel();
+        };
     }, []);
     useEffect(() => {
         if (data && state.count === 0 && type === formConstant.type.update) {
             const {
+                id,
                 name,
                 brand,
                 model,
@@ -214,13 +219,16 @@ const Form = (props) => {
                 model,
                 year,
                 fuelType,
-                price: parseInt(price.replace(',', ''), 10),
-                distanceTraveled,
+                price: parseInt(price.replace(/,|$/, ''), 10),
+                location,
+                distanceTraveled: parseInt(
+                    distanceTraveled.replace(/,|km/, ''),
+                    10
+                ),
                 otherFeatures,
                 previews: newPreviews,
                 count: 1,
                 oldImages,
-                location,
             });
             onBrandChange({ brands, value: brand });
         }
@@ -280,6 +288,15 @@ const Form = (props) => {
                         type="text"
                         onChange={onChange}
                         value={name}
+                    />
+                </Field>
+                <Field>
+                    <Span>Location</Span>
+                    <Input
+                        name="location"
+                        type="text"
+                        onChange={onChange}
+                        value={location}
                     />
                 </Field>
                 <Field>
@@ -373,7 +390,7 @@ const Form = (props) => {
                         {previews &&
                             previews.map((image, index) => {
                                 return (
-                                    <Grid item xs={5}>
+                                    <Grid item xs={5} key={`key${image}`}>
                                         <ImageCard
                                             xs={4}
                                             key={`key${image}`}
@@ -391,7 +408,11 @@ const Form = (props) => {
                         Upload
                     </Button>
                     <Button onClick={onCancel} isSuccess={false}>
-                        Cancel
+                        {type === formConstant.type.update ? (
+                            <StyledLink to={`/posts/${id}`}>Cancel</StyledLink>
+                        ) : (
+                            <StyledLink to="/">Cancel</StyledLink>
+                        )}
                     </Button>
                 </Submit>
             </Wrapper>
@@ -427,18 +448,18 @@ Form.propTypes = {
 
 Form.defaultProps = {
     models: ['Rx'],
-    onSubmit: {},
-    onCancel: {},
+    onSubmit: () => {},
+    onCancel: () => {},
     brands: [],
-    onBrandChange: {},
-    getBrands: {},
+    onBrandChange: () => {},
+    getBrands: () => {},
     pending: false,
     isSuccess: false,
     message: '',
     type: '',
-    fetchPostData: {},
+    fetchPostData: () => {},
     data: undefined,
-    onDismissModal: {},
+    onDismissModal: () => {},
 };
 
 const mapStateToProps = (state) => ({ ...state.postReducer });
@@ -448,6 +469,7 @@ const mapDispatchToProps = (dispatch) => ({
     getProfile: () => dispatch(action.loadProfile()),
     fetchPostData: (id) => dispatch(action.fetchPostData(id)),
     onDismissModal: () => dispatch(action.dismissMessage()),
+    onCancel: () => dispatch(action.cancel()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form);

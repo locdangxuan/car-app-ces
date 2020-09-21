@@ -5,6 +5,7 @@ import { ThemeProvider } from 'styled-components';
 import * as action from 'redux/actions/Action.GetCar';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import component from 'config/constants/Components';
 import { theme, useStyles } from './styles';
 
 const SearchBar = (props) => {
@@ -19,11 +20,14 @@ const SearchBar = (props) => {
 
     return (
         <ThemeProvider theme={theme}>
-            <Box component="div" className={classes.searchBarWrapper}>
+            <Box component={component.div} className={classes.searchBarWrapper}>
                 <Grid container className={classes.wrapper}>
                     <Grid item xs={3} className={classes.search}>
                         <Grid className={classes.advantageSearch}>
-                            <Box component="span" className={classes.keyword}>
+                            <Box
+                                component={component.span}
+                                className={classes.keyword}
+                            >
                                 Keywords
                             </Box>
                             <Input
@@ -31,7 +35,7 @@ const SearchBar = (props) => {
                                 onChange={handleChangeValueSearch}
                             />
                         </Grid>
-                        <SelectBox name="Category" />
+                        <SelectBox name="Brand" />
                     </Grid>
                     <Grid item xs={3} className={classes.searchBarComponent}>
                         <RangeSlider name="Age (year)" min="1900" max="2020" />

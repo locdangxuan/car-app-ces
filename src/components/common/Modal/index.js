@@ -62,9 +62,9 @@ Modal.propTypes = {
 
 Modal.defaultProps = {
     type: REGISTER,
-    handlerToggle: {},
-    onSubmitLogin: {},
-    onSubmitRegister: {},
+    handlerToggle: () => {},
+    onSubmitLogin: () => {},
+    onSubmitRegister: () => {},
     alertMessage: '',
     isSuccess: false,
 };

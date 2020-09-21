@@ -72,6 +72,7 @@ const validateFields = async (payload, getState) => {
             fuelType,
             information,
             model,
+            location,
             name,
             price,
             year,
@@ -87,6 +88,7 @@ const validateFields = async (payload, getState) => {
         validator.postValidator({
             brand: brandId,
             distanceTraveled,
+            location,
             fuelType,
             information,
             model: modelId,

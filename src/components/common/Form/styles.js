@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { makeStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom';
 import globalTheme from 'config/constants/Themes';
 import color from 'config/constants/Colors';
 
@@ -11,6 +12,10 @@ const Wrapper = styled.div`
     width: 60%;
     align-items: center;
     opacity: 0.95;
+`;
+
+const StyledLink = styled(Link)`
+    text-decoration: none;
 `;
 
 const Submit = styled.section`
@@ -56,4 +61,4 @@ const theme = {
         height: '100px',
     },
 };
-export { Wrapper, Submit, useStyle, theme };
+export { Wrapper, Submit, useStyle, theme, StyledLink };

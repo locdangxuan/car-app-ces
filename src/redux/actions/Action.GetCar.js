@@ -1,4 +1,5 @@
-import * as GetCar from 'services/api/Api.GetDetailCar';
+import { GetDetailCar, GetCarByValue } from 'services/api/Api.GetDetailCar';
+import utils from 'utils/utils';
 import * as actionType from 'config/constants/Action.Types';
 
 export const actFetchToProducts = (products) => {
@@ -15,9 +16,15 @@ export const fetchProductsFailure = () => {
     };
 };
 export const actRequestProducts = () => {
+    let token = '';
+    try {
+        token = utils.getToken();
+    } catch (error) {
+        token = '';
+    }
     return async (dispatch) => {
         try {
-            const data = await GetCar.GetDetailCar();
+            const data = await GetDetailCar(token);
             return dispatch(actFetchToProducts(data.data.data.list));
         } catch (error) {
             dispatch(fetchProductsFailure());
@@ -37,13 +44,12 @@ export const actFetchToProductsSearch = (products, pagination, value) => {
 export const actRequestProductsSearch = (value, page = 1) => {
     return async (dispatch) => {
         try {
-            const data = await GetCar.GetCarByValue(value, page);
-            const products = data.data.data.data;
-            const { pagination } = data.data.data;
+            const data = await GetCarByValue(value, page);
+            const { pagination, list } = data.data.data;
             pagination['value'] = value;
             const valueSearch = value;
             return dispatch(
-                actFetchToProductsSearch(products, pagination, valueSearch)
+                actFetchToProductsSearch(list, pagination, valueSearch)
             );
         } catch (error) {
             dispatch(fetchProductsFailure(error));

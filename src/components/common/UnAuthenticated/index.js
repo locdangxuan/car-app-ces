@@ -4,6 +4,7 @@ import { Typography, Box } from '@material-ui/core';
 import { ThemeProvider } from 'styled-components';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import PersonIcon from '@material-ui/icons/Person';
+import component from 'config/constants/Components';
 import { theme, useStyles } from './styles';
 
 const UnAuthenticated = () => {
@@ -17,9 +18,15 @@ const UnAuthenticated = () => {
     };
     const classes = useStyles();
     return (
-        <Box component="div" className={classes.unAuthenticatedWrapper}>
+        <Box
+            component={component.div}
+            className={classes.unAuthenticatedWrapper}
+        >
             <ThemeProvider theme={theme}>
-                <Box component="div" className={classes.unAuthenticated}>
+                <Box
+                    component={component.div}
+                    className={classes.unAuthenticated}
+                >
                     <Button
                         className={classes.styleAuthButton}
                         onClick={toggleLogin}

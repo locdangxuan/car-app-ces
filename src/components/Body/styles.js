@@ -1,6 +1,5 @@
 import styled from 'styled-components';
-import theme from 'config/constants/Themes';
-import Background from 'assets/images/cars.webp';
+import Background from 'assets/images/cars.jpg';
 
 const Body = styled.div`
     background-image: url(${Background});
@@ -12,7 +11,7 @@ const Body = styled.div`
     padding-top: 100px;
     background-repeat: no-repeat;
     opacity: 0.95;
-    color: ${theme.body.color};
+    color: ${(props) => props.theme.body.color};
 `;
 
 export default Body;

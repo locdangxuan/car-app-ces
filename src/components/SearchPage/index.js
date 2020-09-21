@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 // eslint-disable-line react-hooks/exhaustive-deps
 import React, { useEffect } from 'react';
 import { withStyles } from '@material-ui/core';
@@ -54,11 +55,11 @@ SearchPage.propTypes = {
 SearchPage.defaultProps = {
     classes: [],
     Contents: [[], {}],
-    actRequestProducts: {},
+    actRequestProducts: () => {},
 };
 const mapStateToProp = (state) => {
     return {
-        Contents: state.contentCar,
+        Contents: state.contentCarReducer,
     };
 };
 const MapDispatchToProps = (dispatch) => {
