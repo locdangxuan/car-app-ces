@@ -5,13 +5,14 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 const PostCreating = (props) => {
+    const { onSubmitCreatingPost, onCancelCreatingPost } = props;
     const onSubmitHandler = (payload) => {
-        props.onSubmitCreatingPost(payload);
+        onSubmitCreatingPost(payload);
     };
     const onCancelHandler = () => {
-        return () => {
-            props.onCancelCreatingPost();
-        };
+        onCancelCreatingPost();
+        window.history.pushState({}, 'detail', '/');
+        window.history.go();
     };
     return <Form onSubmit={onSubmitHandler} onCancel={onCancelHandler} />;
 };
@@ -22,7 +23,7 @@ const mapDispatchToProps = (dispatch) => ({
         dispatch(action.upload(payload));
     },
     onCancelCreatingPost: () => {
-        dispatch(action.cancel());
+        dispatch(action.cancelUpload());
     },
 });
 
@@ -32,8 +33,8 @@ PostCreating.propTypes = {
 };
 
 PostCreating.defaultProps = {
-    onSubmitCreatingPost: {},
-    onCancelCreatingPost: {},
+    onSubmitCreatingPost: () => {},
+    onCancelCreatingPost: () => {},
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostCreating);

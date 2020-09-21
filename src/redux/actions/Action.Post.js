@@ -168,14 +168,6 @@ const update = (payload) => {
     };
 };
 
-const cancel = () => {
-    return (dispatch, getState) => {
-        dispatch({
-            type: POSTS.CANCEL,
-        });
-    };
-};
-
 const fetchPostData = (id) => {
     return async (dispatch, getState) => {
         dispatch(onRequest(POSTS.REQUEST));
@@ -206,12 +198,25 @@ const loadModels = (payload) => {
     };
 };
 
+const cancelUpdate = () => {
+    return (dispatch) => {
+        dispatch({ type: POSTS.UPDATE_CANCELED });
+    };
+};
+
+const cancelUpload = () => {
+    return (dispatch) => {
+        dispatch({ type: POSTS.UPLOAD_CANCELED });
+    };
+};
+
 export default {
     upload,
     loadModels,
     loadBrands,
     update,
-    cancel,
+    cancelUpdate,
     fetchPostData,
     dismissMessage,
+    cancelUpload,
 };
