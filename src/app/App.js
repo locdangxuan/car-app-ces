@@ -12,6 +12,7 @@ import {
 } from 'components';
 import globalTheme from 'config/constants/Themes';
 import PostCreating from 'pages/CreatePost/createPost';
+import UpdatePost from 'pages/UpdatePost';
 import Wrapper from './styles';
 
 const App = () => {
@@ -24,13 +25,18 @@ const App = () => {
                         <Switch>
                             <Route
                                 exact
-                                path="/posts/details/:id"
-                                component={PostDetails}
+                                path="/post/new"
+                                component={PostCreating}
                             />
                             <Route
                                 exact
-                                path="/post/new"
-                                component={PostCreating}
+                                path="/post/update/:id"
+                                component={UpdatePost}
+                            />
+                            <Route
+                                exact
+                                path="/post/:id"
+                                component={PostDetails}
                             />
                             <Route exact path="/">
                                 <SearchBar />

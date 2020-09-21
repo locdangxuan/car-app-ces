@@ -183,7 +183,7 @@ const Form = (props) => {
         }
     }, []);
     useEffect(() => {
-        if (data && state.count === 0) {
+        if (data && state.count === 0 && type === formConstant.type.update) {
             const {
                 name,
                 brand,
@@ -280,7 +280,6 @@ const Form = (props) => {
                         type="text"
                         onChange={onChange}
                         value={name}
-                        defaultValue={name}
                     />
                 </Field>
                 <Field>

@@ -33,7 +33,6 @@ const checkBlankFields = (payload) => {
     });
     return { invalidKeys, result };
 };
-
 const loginValidator = (payload) => {
     if (checkBlankFields(payload).result === false) {
         throw new Error(
