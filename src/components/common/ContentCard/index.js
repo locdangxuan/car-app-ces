@@ -9,14 +9,16 @@ import {
     Typography,
     MenuItem,
     Grid,
+    Box,
 } from '@material-ui/core';
 import { DirectionsCar, Speed, DateRange, Label } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import HANDLE_ERROR from 'config/messages/Messages.Content';
 import Color from 'config/constants/Colors';
 import variant from 'config/constants/Variant';
+import Component from 'config/constants/Components';
 import { fontSize } from 'config/constants/Fonts';
-import useStyles from './styles';
+import { useStyles, StyledLink } from './styles';
 
 const ContentCard = (props) => {
     const { data } = props;
@@ -42,6 +44,8 @@ const ContentCard = (props) => {
         year,
         distanceTraveled,
         price,
+        id,
+        editable,
     } = data;
     if (Object.values(data).length === 0) {
         return HANDLE_ERROR;
@@ -49,7 +53,15 @@ const ContentCard = (props) => {
     return (
         <Card className={root}>
             <CardActionArea>
-                <CardMedia className={media} image={thumbnail} />
+                <CardMedia className={media} image={thumbnail}>
+                    {editable && (
+                        <Box component={Component.div} className={classes.edit}>
+                            <StyledLink to={`/posts/update/${id}`}>
+                                Edit
+                            </StyledLink>
+                        </Box>
+                    )}
+                </CardMedia>
                 <CardContent>
                     <Typography
                         gutterBottom

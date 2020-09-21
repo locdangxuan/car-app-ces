@@ -1,6 +1,12 @@
 import { makeStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 import { fontFamilies, fontSize } from 'config/constants/Fonts';
 import Color from 'config/constants/Colors';
+
+const StyledLink = styled(Link)`
+    text-decoration: none;
+`;
 
 const useStyles = makeStyles({
     globalContent: {
@@ -69,4 +75,4 @@ const useStyles = makeStyles({
     },
 });
 
-export default useStyles;
+export { useStyles, StyledLink };

@@ -3,7 +3,6 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { Grid, Box, Typography, Button } from '@material-ui/core';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -21,7 +20,7 @@ import variant from 'config/constants/Variant';
 import component from 'config/constants/Components';
 import Color from 'config/constants/Colors';
 import utils from 'utils/utils';
-import useStyles from './styles';
+import { StyledLink, useStyles } from './styles';
 
 const PostDetails = (props) => {
     const { id } = props.match.params;
@@ -42,6 +41,7 @@ const PostDetails = (props) => {
             distanceTraveled,
             seller,
             specs,
+            location,
         } = details;
         const specifications = Object.keys(specs).map((element) => [
             element,
@@ -109,7 +109,7 @@ const PostDetails = (props) => {
                                     component={component.span}
                                     className={classes.textCenter}
                                 >
-                                    USA
+                                    {location}
                                 </Box>
                             </Box>
                         </Box>
@@ -167,14 +167,14 @@ const PostDetails = (props) => {
                             {seller}
                         </Typography>
                         {displayName === seller && (
-                            <Link to={`/posts/update/${id}`}>
+                            <StyledLink to={`/posts/update/${id}`}>
                                 <Button
                                     variant={variant.contained}
                                     color={Color.primary}
                                 >
                                     Update post
                                 </Button>
-                            </Link>
+                            </StyledLink>
                         )}
                     </Box>
                 </Grid>

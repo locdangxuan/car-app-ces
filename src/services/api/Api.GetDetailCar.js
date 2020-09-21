@@ -1,8 +1,11 @@
 import axios from 'axios';
 import api from 'config/Servers';
 
-export const GetDetailCar = (data) => {
+export default function GetDetailCar(token, data) {
     return axios({
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
         method: 'GET',
         url: api.post.get,
         data,

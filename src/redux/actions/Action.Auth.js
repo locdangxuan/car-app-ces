@@ -81,6 +81,7 @@ const login = (fields) => {
                 validator.loginValidator(fields);
                 const payload = await authService.login(fields);
                 dispatch(loginSuccess(payload));
+                window.location.reload();
             } catch (errorRes) {
                 dispatch(loginFailure(JSON.parse(errorRes.message)));
             }
@@ -92,6 +93,7 @@ const logout = () => {
     return (dispatch) => {
         authService.logout();
         dispatch(logoutSuccess());
+        window.location.reload();
     };
 };
 

@@ -1,6 +1,18 @@
 import { fontFamilies } from 'config/constants/Fonts';
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core';
 import Color from 'config/constants/Colors';
+
+const StyledLink = styled(Link)`
+    text-decoration: none;
+    color: ${Color.white};
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
 
 const useStyles = makeStyles({
     root: {
@@ -9,11 +21,23 @@ const useStyles = makeStyles({
         color: Color.white,
         fontFamily: fontFamilies.ssfLucida,
     },
+    edit: {
+        fontSize: '15px',
+        fontWeight: 'bold',
+        backgroundColor: 'red',
+        width: '15%',
+        height: '15%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
     textCenter: {
         textAlign: 'center',
     },
     media: {
         height: '280px',
+        display: 'flex',
+        justifyContent: 'flex-end',
     },
     priceOfCar: {
         display: 'flex',
@@ -53,4 +77,4 @@ const useStyles = makeStyles({
     },
 });
 
-export default useStyles;
+export { useStyles, StyledLink };

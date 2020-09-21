@@ -1,4 +1,5 @@
-import * as GetCar from 'services/api/Api.GetDetailCar';
+import utils from 'utils/utils';
+import GetDetailCar from 'services/api/Api.GetDetailCar';
 import * as actionType from 'config/constants/Action.Types';
 
 export const actFetchToProducts = (products) => {
@@ -15,9 +16,15 @@ export const fetchProductsFailure = () => {
     };
 };
 export const actRequestProducts = () => {
+    let token = '';
+    try {
+        token = utils.getToken();
+    } catch (error) {
+        token = '';
+    }
     return async (dispatch) => {
         try {
-            const data = await GetCar.GetDetailCar();
+            const data = await GetDetailCar(token);
             return dispatch(actFetchToProducts(data.data.data.list));
         } catch (error) {
             dispatch(fetchProductsFailure());
