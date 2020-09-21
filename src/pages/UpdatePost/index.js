@@ -8,12 +8,13 @@ import PropTypes from 'prop-types';
 
 const UpdatePost = (props) => {
     const { onSubmit, onCancel } = props;
-    const id = props.match ? props.match.params.id : `3`;
+    const { id } = props.match.params;
     const onSubmitHandler = (payload) => {
         onSubmit({ ...payload, id });
     };
     const onCancelHandler = () => {
         onCancel();
+        window.history.back();
     };
     return (
         <Form
@@ -26,7 +27,7 @@ const UpdatePost = (props) => {
 };
 const mapDispatchToProps = (dispatch) => ({
     onSubmit: (payload) => dispatch(action.update(payload)),
-    onCancel: () => dispatch(action.cancel()),
+    onCancel: () => dispatch(action.cancelUpdate()),
 });
 UpdatePost.propTypes = {
     onSubmit: PropTypes.func,
