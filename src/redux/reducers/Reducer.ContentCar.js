@@ -12,7 +12,6 @@ const contentCarReducer = (state = initProduct, action) => {
         case actionType.FETCH_DATA_TO_PRODUCT_FAILURE:
             return [...action.nullProducts];
         case actionType.FETCH_DATA_TO_PRODUCT_SEARCH:
-            console.log(action);
             return [action.products, action.pagination];
         default:
             return [...state];
