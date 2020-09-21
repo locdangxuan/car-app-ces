@@ -17,7 +17,7 @@ const LayoutHomepage = (props) => {
         <Container fixed>
             <Grid container className={classes.layoutWrapper}>
                 {Contents.length > 0 &&
-                    Contents.map((Content) => (
+                    Contents[0].map((Content) => (
                         <Grid
                             item
                             sm={4}

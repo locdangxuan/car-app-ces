@@ -42,7 +42,6 @@ const Form = (props) => {
         count: 0,
         price: 0,
         oldImages: [],
-        location: 'Danang, Vietnam',
     };
     const {
         onSubmit,

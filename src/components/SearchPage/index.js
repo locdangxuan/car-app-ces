@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 // eslint-disable-line react-hooks/exhaustive-deps
 import React, { useEffect } from 'react';
 import { withStyles } from '@material-ui/core';
@@ -15,6 +16,7 @@ const SearchPage = (props) => {
         props.actRequestProducts();
     }, []);
     const ShowContent = (Contents, classes) => {
+        console.log('contents', Contents);
         if (Contents.length > 0) {
             return Contents.map((Content) => {
                 return (
@@ -32,6 +34,7 @@ const SearchPage = (props) => {
         return null;
     };
     const { classes, Contents } = props;
+    console.log(Contents);
     const pagination = Contents[1];
     return (
         <Container fixed>
@@ -54,11 +57,11 @@ SearchPage.propTypes = {
 SearchPage.defaultProps = {
     classes: [],
     Contents: [[], {}],
-    actRequestProducts: {},
+    actRequestProducts: () => {},
 };
 const mapStateToProp = (state) => {
     return {
-        Contents: state.contentCar,
+        Contents: state.contentCarReducer,
     };
 };
 const MapDispatchToProps = (dispatch) => {

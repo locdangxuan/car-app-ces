@@ -1,5 +1,5 @@
 import React from 'react';
-import { LayoutHomepage, SearchBar, PostDetails, NotFound } from 'components';
+import { SearchPage, SearchBar, PostDetails, NotFound } from 'components';
 import { Switch, Route } from 'react-router-dom';
 import PostCreating from 'pages/CreatePost';
 import UpdatePost from 'pages/UpdatePost';
@@ -12,7 +12,7 @@ const Routes = () => {
             <Route exact path="/posts/:id" component={PostDetails} />
             <Route exact path="/">
                 <SearchBar />
-                <LayoutHomepage />
+                <SearchPage />
             </Route>
             <Route component={NotFound} />
         </Switch>
