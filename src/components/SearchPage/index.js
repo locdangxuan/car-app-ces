@@ -16,7 +16,6 @@ const SearchPage = (props) => {
         props.actRequestProducts();
     }, []);
     const ShowContent = (Contents, classes) => {
-        console.log('contents', Contents);
         if (Contents.length > 0) {
             return Contents.map((Content) => {
                 return (
@@ -34,7 +33,6 @@ const SearchPage = (props) => {
         return null;
     };
     const { classes, Contents } = props;
-    console.log(Contents);
     const pagination = Contents[1];
     return (
         <Container fixed>
