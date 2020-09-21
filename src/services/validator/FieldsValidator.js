@@ -5,14 +5,7 @@ const passwordVerification = (password, verification) => {
     return password === verification;
 };
 
-const charactersValidator = (value) => {
-    const expression = new RegExp(
-        /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{8,15}$/
-    );
-    return expression.test(value);
-};
-
-const usernameValidator = (value) => {
+const lengthValidator = (value) => {
     return value.length > 7;
 };
 
@@ -51,7 +44,7 @@ const loginValidator = (payload) => {
             })
         );
     } else {
-        if (usernameValidator(payload.username.toLowerCase()) === false) {
+        if (lengthValidator(payload.username.toLowerCase()) === false) {
             throw new Error(
                 JSON.stringify({
                     status: statusCode.BAD_REQUEST,
@@ -60,7 +53,7 @@ const loginValidator = (payload) => {
                 })
             );
         }
-        if (charactersValidator(payload.password) === false) {
+        if (lengthValidator(payload.password) === false) {
             throw new Error(
                 JSON.stringify({
                     status: statusCode.BAD_REQUEST,
@@ -78,7 +71,7 @@ const loginValidator = (payload) => {
 
 const registerValidator = (payload) => {
     if (checkBlankFields(payload).result !== false) {
-        if (usernameValidator(payload.username.toLowerCase()) === false) {
+        if (lengthValidator(payload.username.toLowerCase()) === false) {
             throw new Error(
                 JSON.stringify({
                     status: statusCode.BAD_REQUEST,
@@ -105,7 +98,7 @@ const registerValidator = (payload) => {
                 })
             );
         }
-        if (charactersValidator(payload.password) === false) {
+        if (lengthValidator(payload.password) === false) {
             throw new Error(
                 JSON.stringify({
                     status: statusCode.BAD_REQUEST,
