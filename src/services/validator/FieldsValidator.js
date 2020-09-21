@@ -27,97 +27,36 @@ const checkBlankFields = (payload) => {
     Object.entries(payload).forEach((entry) => {
         const [key, value] = entry;
         if (!value) {
-            invalidKeys.push(key);
+            invalidKeys.push({ name: key, message: MESSAGE_ERROR.BLANK_FIELD });
             result = false;
         }
     });
     return { invalidKeys, result };
 };
 const loginValidator = (payload) => {
-    if (checkBlankFields(payload).result === false) {
-        throw new Error(
-            JSON.stringify({
-                status: statusCode.BAD_REQUEST,
-                message: MESSAGE_ERROR.BLANK_FIELD,
-                invalidFields: checkBlankFields(payload).invalidKeys,
-            })
-        );
+    let isValid = true;
+    let invalidFields = [];
+    const blankValidator = checkBlankFields(payload);
+    if (blankValidator.result !== false) {
+        if (lengthValidator(payload.username.toLowerCase()) === false) {
+            isValid = false;
+            invalidFields.push({
+                name: 'username',
+                message: MESSAGE_ERROR.INVALID_USERNAME,
+            });
+        }
+        if (lengthValidator(payload.password) === false) {
+            isValid = false;
+            invalidFields.push({
+                name: 'password',
+                message: MESSAGE_ERROR.INVALID_PASSWORD,
+            });
+        }
     } else {
-        if (lengthValidator(payload.username.toLowerCase()) === false) {
-            throw new Error(
-                JSON.stringify({
-                    status: statusCode.BAD_REQUEST,
-                    message: MESSAGE_ERROR.INVALID_USERNAME,
-                    invalidFields: ['username'],
-                })
-            );
-        }
-        if (lengthValidator(payload.password) === false) {
-            throw new Error(
-                JSON.stringify({
-                    status: statusCode.BAD_REQUEST,
-                    message: MESSAGE_ERROR.INVALID_PASSWORD,
-                    invalidFields: ['password'],
-                })
-            );
-        }
+        isValid = false;
+        invalidFields = blankValidator.invalidKeys;
     }
-    return {
-        status: statusCode.OK,
-        message: MESSAGE_SUCCESS.VALIDFIELD,
-    };
-};
-
-const registerValidator = (payload) => {
-    if (checkBlankFields(payload).result !== false) {
-        if (lengthValidator(payload.username.toLowerCase()) === false) {
-            throw new Error(
-                JSON.stringify({
-                    status: statusCode.BAD_REQUEST,
-                    message: MESSAGE_ERROR.INVALID_USERNAME,
-                    invalidFields: ['username'],
-                })
-            );
-        }
-        if (phonenumberValidator(payload.phone) === false) {
-            throw new Error(
-                JSON.stringify({
-                    status: statusCode.BAD_REQUEST,
-                    message: MESSAGE_ERROR.INVALID_PHONENUMBER,
-                    invalidFields: ['phone'],
-                })
-            );
-        }
-        if (emailValidator(payload.email.toLowerCase()) === false) {
-            throw new Error(
-                JSON.stringify({
-                    status: statusCode.BAD_REQUEST,
-                    message: MESSAGE_ERROR.INVALID_EMAIL,
-                    invalidFields: ['email'],
-                })
-            );
-        }
-        if (lengthValidator(payload.password) === false) {
-            throw new Error(
-                JSON.stringify({
-                    status: statusCode.BAD_REQUEST,
-                    message: MESSAGE_ERROR.INVALID_PASSWORD,
-                    invalidFields: ['password'],
-                })
-            );
-        }
-        if (
-            passwordVerification(payload.password, payload.verification) ===
-            false
-        ) {
-            throw new Error(
-                JSON.stringify({
-                    status: statusCode.BAD_REQUEST,
-                    message: MESSAGE_ERROR.INVALID_VERIFICATION,
-                    invalidFields: ['verification'],
-                })
-            );
-        }
+    if (isValid) {
         return {
             status: statusCode.OK,
             message: MESSAGE_SUCCESS.VALID_FIELD,
@@ -126,8 +65,77 @@ const registerValidator = (payload) => {
     throw new Error(
         JSON.stringify({
             status: statusCode.BAD_REQUEST,
-            message: MESSAGE_ERROR.BLANK_FIELD,
-            invalidFields: checkBlankFields(payload).invalidKeys,
+            message: MESSAGE_ERROR.INVALID_FIELD,
+            invalidFields,
+        })
+    );
+};
+
+const registerValidator = (payload) => {
+    let isValid = true;
+    let invalidFields = [];
+    const blankValidator = checkBlankFields(payload);
+    if (blankValidator.result !== false) {
+        if (lengthValidator(payload.username.toLowerCase()) === false) {
+            isValid = false;
+            invalidFields.push({
+                name: 'username',
+                message: MESSAGE_ERROR.INVALID_USERNAME,
+            });
+        }
+        if (lengthValidator(payload.displayName) === false) {
+            isValid = false;
+            invalidFields.push({
+                name: 'displayName',
+                message: MESSAGE_ERROR.INVALID_USERNAME,
+            });
+        }
+        if (phonenumberValidator(payload.phone) === false) {
+            isValid = false;
+            invalidFields.push({
+                name: 'phone',
+                message: MESSAGE_ERROR.INVALID_PHONENUMBER,
+            });
+        }
+        if (emailValidator(payload.email.toLowerCase()) === false) {
+            isValid = false;
+            invalidFields.push({
+                name: 'email',
+                message: MESSAGE_ERROR.INVALID_EMAIL,
+            });
+        }
+        if (lengthValidator(payload.password) === false) {
+            isValid = false;
+            invalidFields.push({
+                name: 'password',
+                message: MESSAGE_ERROR.INVALID_PASSWORD,
+            });
+        }
+        if (
+            passwordVerification(payload.password, payload.verification) ===
+            false
+        ) {
+            isValid = false;
+            invalidFields.push({
+                name: 'verification',
+                message: MESSAGE_ERROR.INVALID_VERIFICATION,
+            });
+        }
+    } else {
+        isValid = false;
+        invalidFields = blankValidator.invalidKeys;
+    }
+    if (isValid) {
+        return {
+            status: statusCode.OK,
+            message: MESSAGE_SUCCESS.VALID_FIELD,
+        };
+    }
+    throw new Error(
+        JSON.stringify({
+            status: statusCode.BAD_REQUEST,
+            message: MESSAGE_ERROR.INVALID_FIELD,
+            invalidFields,
         })
     );
 };
