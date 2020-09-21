@@ -5,6 +5,8 @@ import Footer from './Footer';
 import SearchBar from './SearchBar';
 import PostDetails from './PostDetails';
 import NotFound from './NotFound';
+import SearchPage from './SearchPage';
+import PaginationBar from './PaginationBar';
 
 export {
     Header,
@@ -14,4 +16,6 @@ export {
     SearchBar,
     PostDetails,
     NotFound,
+    SearchPage,
+    PaginationBar,
 };
