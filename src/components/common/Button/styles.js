@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const Button = styled.button`
-    border: 1.3px solid
+    border: 1.8px solid
         ${(props) => {
             switch (props.isSuccess) {
                 case true:
