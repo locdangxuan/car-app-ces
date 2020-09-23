@@ -1,6 +1,8 @@
 import 'dotenv/config';
 
 const server = process.env.REACT_APP_API_SERVER || 'http://localhost:3002/api/';
+const geocodeServer =
+    'https://api.bigdatacloud.net/data/reverse-geocode-client';
 
 const api = {
     user: {
@@ -23,6 +25,9 @@ const api = {
     },
     models: {
         get: `${server}models/`,
+    },
+    geocode: {
+        get: geocodeServer,
     },
 };
 
