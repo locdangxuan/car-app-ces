@@ -324,14 +324,11 @@ const Form = (props) => {
                     </Grid>
                 </Field>
                 <Field>
-<<<<<<< HEAD
                     <Span>Location</Span>
                     <Input value={utils.getLocationString(location)} />
                 </Field>
                 <LocationPicker />
                 <Field>
-=======
->>>>>>> fix UI template for mentor requset
                     <Span>Price (USD)</Span>
                     <Input
                         name="price"

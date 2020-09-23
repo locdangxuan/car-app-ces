@@ -1,23 +1,27 @@
 import { GetDetailCar, GetCarByValue } from 'services/api/Api.GetDetailCar';
 import utils from 'utils/utils';
-import * as actionType from 'config/constants/Action.Types';
+import { PRODUCTS } from 'config/constants/Action.Types';
+import { MESSAGE_ERROR } from 'config/messages/Messages.Post';
 
-export const actFetchToProducts = (products) => {
+const onRequset = (type) => ({
+    type,
+});
+
+const actFetchToProducts = (products) => {
     return {
-        type: actionType.FETCH_DATA_TO_PRODUCT,
+        type: PRODUCTS.FETCH_LIST_POSTS_SUCCEED,
         products,
     };
 };
-export const fetchProductsFailure = () => {
-    const nullProducts = {};
+const fetchProductsFailure = () => {
     return {
-        type: actionType.FETCH_DATA_TO_PRODUCT_FAILURE,
-        nullProducts,
+        type: PRODUCTS.FETCH_LIST_POSTS_FAILURE,
+        message: MESSAGE_ERROR.FETCH_DATA_FAILURE,
     };
 };
-export const actFetchToProductsSearch = (products, pagination, value) => {
+const actFetchToProductsSearch = (products, pagination, value) => {
     return {
-        type: actionType.FETCH_DATA_TO_PRODUCT_SEARCH,
+        type: PRODUCTS.FETCH_LIST_POSTS_SEARCH_SUCCEED,
         products,
         pagination,
         value,
@@ -32,12 +36,15 @@ export const actRequestProducts = () => {
         token = '';
     }
     return async (dispatch) => {
-        try {
-            const result = await GetDetailCar(token);
-            return dispatch(actFetchToProducts(result.data.list));
-        } catch (error) {
-            dispatch(fetchProductsFailure());
-        }
+        dispatch(onRequset(PRODUCTS.REQUEST));
+        await setTimeout(async () => {
+            try {
+                const data = await GetDetailCar(token);
+                return dispatch(actFetchToProducts(data.data.data.data.list));
+            } catch (error) {
+                dispatch(fetchProductsFailure(error));
+            }
+        }, 2000);
     };
 };
 
@@ -49,16 +56,19 @@ export const actRequestProductsSearch = (value, page = 1) => {
         token = '';
     }
     return async (dispatch) => {
-        try {
-            const result = await GetCarByValue(token, value, page);
-            const { pagination, list } = result.data;
-            pagination['value'] = value;
-            const valueSearch = value;
-            return dispatch(
-                actFetchToProductsSearch(list, pagination, valueSearch)
-            );
-        } catch (error) {
-            dispatch(fetchProductsFailure(error));
-        }
+        dispatch(onRequset(PRODUCTS.REQUEST));
+        await setTimeout(async () => {
+            try {
+                const data = await GetCarByValue(token, value, page);
+                const { pagination, list } = data.data.data.data;
+                pagination['value'] = value;
+                const valueSearch = value;
+                return dispatch(
+                    actFetchToProductsSearch(list, pagination, valueSearch)
+                );
+            } catch (error) {
+                dispatch(fetchProductsFailure());
+            }
+        }, 2000);
     };
 };

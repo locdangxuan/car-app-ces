@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 import { withStyles, Grid, Box } from '@material-ui/core';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import ContentCard from 'components/common/ContentCard';
+import { ContentCard, Loader } from 'components/common';
 import * as action from 'redux/actions/Action.GetCar';
 import PaginationBar from 'components/PaginationBar';
 import Component from 'config/constants/Components';
@@ -34,15 +34,16 @@ const SearchResults = (props) => {
         return null;
     };
     const { classes, Contents } = props;
-    const { pagination } = Contents;
+    const { pagination, pending } = Contents;
     const contentsLength = Object.keys(Contents).length;
     const paginationLength = Object.keys(pagination).length;
     return (
         <Box component={Component.div} className={classes.contentCarWrapper}>
+            {pending && <Loader type="FULL-PAGE">Searching</Loader>}
             {contentsLength > 0 && (
                 <Grid container className={classes.layoutWrapper}>
                     {ShowContent(Contents.products, classes)}
-                    {paginationLength > 0 && (
+                    {paginationLength && (
                         <PaginationBar
                             count={pagination.lastPage}
                             valueSearch={pagination.value}

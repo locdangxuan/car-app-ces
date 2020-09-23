@@ -17,6 +17,7 @@ import Categories from './Categories';
 import Login from './Login';
 import Register from './Register';
 import LocationPicker from './LocationPicker';
+import ContentCard from './ContentCard';
 
 export {
     LocationPicker,
@@ -39,4 +40,5 @@ export {
     Categories,
     Login,
     Register,
+    ContentCard,
 };
