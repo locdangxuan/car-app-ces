@@ -291,15 +291,6 @@ const Form = (props) => {
                     />
                 </Field>
                 <Field>
-                    <Span>Location</Span>
-                    <Input
-                        name="location"
-                        type="text"
-                        onChange={onChange}
-                        value={location}
-                    />
-                </Field>
-                <Field>
                     <Grid container spacing={3}>
                         <Grid item xs={6} className={classes.dualLine}>
                             <Span>Year</Span>

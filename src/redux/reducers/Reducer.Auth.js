@@ -30,22 +30,66 @@ const authReducer = (state = initState, action) => {
             };
         }
         case LOGIN.ERROR: {
+            const fieldsValidity = {
+                username: true,
+                password: true,
+            };
+            const fieldsErrorMessage = {
+                username: '',
+                password: '',
+            };
+            Object.values(action.invalidFields).forEach((value) => {
+                const { name, message } = value;
+                fieldsValidity[name] = false;
+                fieldsErrorMessage[name] = message;
+            });
             return {
                 ...state,
-                message: action.message,
                 isValid: false,
                 pending: false,
-                invalidFields: action.invalidFields,
+                message: action.message,
+                fieldsValidity,
+                fieldsErrorMessage,
             };
         }
-        case LOGIN.REQUEST:
+        case LOGIN.REQUEST: {
+            return {
+                ...state,
+                message: '',
+                pending: true,
+                isValid: true,
+                fieldsValidity: {
+                    username: true,
+                    password: true,
+                },
+                fieldsErrorMessage: {
+                    username: '',
+                    password: '',
+                },
+            };
+        }
         case REGISTER.REQUEST: {
             return {
                 ...state,
                 message: '',
                 pending: true,
                 isValid: true,
-                invalidFields: [],
+                fieldsValidity: {
+                    username: true,
+                    displayName: true,
+                    email: true,
+                    phone: true,
+                    password: true,
+                    verification: true,
+                },
+                fieldsErrorMessage: {
+                    username: '',
+                    displayName: '',
+                    email: '',
+                    phone: '',
+                    password: '',
+                    verification: '',
+                },
             };
         }
         case REGISTER.SUCCESS: {
@@ -59,14 +103,37 @@ const authReducer = (state = initState, action) => {
                 message: REGISTER.SUCCESS,
             };
         }
-        case REGISTER.ERROR:
+        case REGISTER.ERROR: {
+            const fieldsValidity = {
+                username: true,
+                displayName: true,
+                email: true,
+                phone: true,
+                password: true,
+                verification: true,
+            };
+            const fieldsErrorMessage = {
+                username: '',
+                displayName: '',
+                email: '',
+                phone: '',
+                password: '',
+                verification: '',
+            };
+            Object.values(action.invalidFields).forEach((value) => {
+                const { name, message } = value;
+                fieldsValidity[name] = false;
+                fieldsErrorMessage[name] = message;
+            });
             return {
                 ...state,
                 isValid: false,
                 pending: false,
                 message: action.message,
-                invalidFields: action.invalidFields,
+                fieldsValidity,
+                fieldsErrorMessage,
             };
+        }
         case LOGOUT.SUCCESS:
             return {
                 ...initState,
