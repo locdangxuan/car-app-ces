@@ -38,7 +38,7 @@ const SearchBar = (props) => {
                         <SelectBox name="Brand" />
                     </Grid>
                     <Grid item xs={3} className={classes.searchBarComponent}>
-                        <RangeSlider name="Age (year)" min="1900" max="2020" />
+                        <RangeSlider name="Year" min="1900" max="2020" />
                     </Grid>
                     <Grid item xs={3} className={classes.searchBarComponent}>
                         <RangeSlider name="Price (USD)" min="0" max="69500" />
