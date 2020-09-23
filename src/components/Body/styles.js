@@ -5,7 +5,7 @@ const Body = styled.div`
     background-image: url(${Background});
     width: 100%;
     height: 100%;
-    min-height: 100vh;
+    min-height: 80vh;
     background-size: cover;
     background-attachment: fixed;
     padding-top: 100px;
