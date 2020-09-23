@@ -102,13 +102,8 @@ const postReducer = (state = initState, action) => {
                 ...state,
                 message: '',
             };
-        case POSTS.UPLOAD_CANCELED:
+        case POSTS.CANCEL:
             return { ...initState };
-        case POSTS.UPDATE_CANCELED:
-            return {
-                ...initState,
-                data: state.data,
-            };
         default:
             return { ...state };
     }
