@@ -29,20 +29,23 @@ const useStyles = makeStyles(() => ({
         justifyContent: 'center',
         color: Color.white,
         paddingLeft: '30px',
+        '& p': {
+            fontSize: '18px',
+        },
     },
     keyword: {
         width: '100px',
-        marginTop: '5px',
         fontFamily: fontFamilies.ssfLucida,
         fontSize: fontSize.fontMedium,
     },
 }));
 const theme = {
     input: {
+        ...globalTheme.input,
         width: '100%',
-        backgroundColor: Color.backgroundInput,
-        marginLeft: '8px',
-        border: `0.5px solid ${Color.white}`,
+        // backgroundColor: Color.backgroundInput,
+        margin: '0 0 0 8px',
+        borderBottom: `1px solid ${Color.white}`,
         color: Color.white,
     },
     button: {

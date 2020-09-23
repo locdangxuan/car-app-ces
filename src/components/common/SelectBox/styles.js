@@ -23,7 +23,6 @@ const useStyles = makeStyles(() => ({
     },
     name: {
         width: '100px',
-        marginTop: '5px',
         fontFamily: fontFamilies.ssfLucida,
         fontSize: '18px',
     },
