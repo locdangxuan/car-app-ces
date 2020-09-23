@@ -1,15 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Input } from 'components/common';
+import { Input, ModalSpan } from 'components/common';
 import PropTypes from 'prop-types';
 import authActions from 'redux/actions/Action.Auth';
 
 const Login = (props) => {
     const onChangeHandler = (event) => props.onChangeHandler(event.target);
-    const { username, password, invalidFields } = props;
-    const isErrorExist = (string) => {
-        return invalidFields.includes(string) ? 'true' : '';
-    };
+    const { username, password, fieldsValidity, fieldsErrorMessage } = props;
     return (
         <div>
             <Input
@@ -18,16 +15,26 @@ const Login = (props) => {
                 placeholder="Username"
                 onChange={onChangeHandler}
                 value={username}
-                isError={isErrorExist('username')}
+                isError={!fieldsValidity['username']}
             />
+            {fieldsValidity['username'] === false && (
+                <ModalSpan isValid={false}>
+                    {fieldsErrorMessage['username']}
+                </ModalSpan>
+            )}
             <Input
                 id="password"
                 type="password"
                 placeholder="Password"
                 onChange={onChangeHandler}
                 value={password}
-                isError={isErrorExist('password')}
+                isError={!fieldsValidity['password']}
             />
+            {fieldsValidity['password'] === false && (
+                <ModalSpan isValid={false}>
+                    {fieldsErrorMessage['password']}
+                </ModalSpan>
+            )}
         </div>
     );
 };
@@ -42,14 +49,28 @@ Login.propTypes = {
     username: PropTypes.string,
     password: PropTypes.string,
     onChangeHandler: PropTypes.func,
-    invalidFields: PropTypes.arrayOf(PropTypes.string),
+    fieldsValidity: {
+        username: true,
+        password: true,
+    },
+    fieldsErrorMessage: {
+        username: '',
+        password: '',
+    },
 };
 
 Login.defaultProps = {
     username: '',
     password: '',
-    onChangeHandler: () => {},
-    invalidFields: [],
+    onChangeHandler: {},
+    fieldsValidity: {
+        username: true,
+        password: true,
+    },
+    fieldsErrorMessage: {
+        username: '',
+        password: '',
+    },
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

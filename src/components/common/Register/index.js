@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Input } from 'components/common';
+import { Input, ModalSpan } from 'components/common';
 import PropTypes from 'prop-types';
 import authAction from 'redux/actions/Action.Auth';
 
@@ -15,11 +15,9 @@ const Register = (props) => {
         phonenumber,
         password,
         verification,
-        invalidFields,
+        fieldsErrorMessage,
+        fieldsValidity,
     } = props;
-    const isErrorExist = (string) => {
-        return invalidFields.includes(string) ? 'true' : '';
-    };
     return (
         <div>
             <Input
@@ -28,48 +26,78 @@ const Register = (props) => {
                 placeholder="Username"
                 onChange={onChangeHandler}
                 value={username}
-                isError={isErrorExist('username')}
+                isError={!fieldsValidity['username']}
             />
+            {fieldsValidity['username'] === false && (
+                <ModalSpan isValid={false}>
+                    {fieldsErrorMessage['username']}
+                </ModalSpan>
+            )}
             <Input
                 id="displayname"
                 type="text"
                 placeholder="Display Name"
                 onChange={onChangeHandler}
                 value={displayname}
-                isError={isErrorExist('displayName')}
+                isError={!fieldsValidity['displayName']}
             />
+            {fieldsValidity['displayName'] === false && (
+                <ModalSpan isValid={false}>
+                    {fieldsErrorMessage['displayName']}
+                </ModalSpan>
+            )}
             <Input
                 id="email"
                 type="email"
                 placeholder="Email"
                 onChange={onChangeHandler}
                 value={email}
-                isError={isErrorExist('email')}
+                isError={!fieldsValidity['email']}
             />
+            {fieldsValidity['email'] === false && (
+                <ModalSpan isValid={false}>
+                    {fieldsErrorMessage['email']}
+                </ModalSpan>
+            )}
             <Input
                 id="phonenumber"
                 type="text"
                 placeholder="Contact No."
                 onChange={onChangeHandler}
                 value={phonenumber}
-                isError={isErrorExist('phone')}
+                isError={!fieldsValidity['phone']}
             />
+            {fieldsValidity['phone'] === false && (
+                <ModalSpan isValid={false}>
+                    {fieldsErrorMessage['phone']}
+                </ModalSpan>
+            )}
             <Input
                 id="password"
                 type="password"
                 placeholder="Password"
                 onChange={onChangeHandler}
                 value={password}
-                isError={isErrorExist('password')}
+                isError={!fieldsValidity['password']}
             />
+            {fieldsValidity['password'] === false && (
+                <ModalSpan isValid={false}>
+                    {fieldsErrorMessage['password']}
+                </ModalSpan>
+            )}
             <Input
                 id="verification"
                 type="password"
                 placeholder="Confirm password"
                 onChange={onChangeHandler}
                 value={verification}
-                isError={isErrorExist('verification')}
+                isError={!fieldsValidity['verification']}
             />
+            {fieldsValidity['verification'] === false && (
+                <ModalSpan isValid={false}>
+                    {fieldsErrorMessage['verification']}
+                </ModalSpan>
+            )}
         </div>
     );
 };
@@ -92,7 +120,8 @@ Register.propTypes = {
     email: PropTypes.string,
     verification: PropTypes.string,
     onInputChange: PropTypes.func,
-    invalidFields: PropTypes.arrayOf(PropTypes.string),
+    fieldsValidity: PropTypes.objectOf(PropTypes.bool),
+    fieldsErrorMessage: PropTypes.objectOf(PropTypes.string),
 };
 
 Register.defaultProps = {
@@ -102,8 +131,23 @@ Register.defaultProps = {
     email: '',
     password: '',
     verification: '',
-    onInputChange: () => {},
-    invalidFields: [],
+    onInputChange: {},
+    fieldsValidity: {
+        username: true,
+        displayName: true,
+        email: true,
+        phone: true,
+        password: true,
+        verification: true,
+    },
+    fieldsErrorMessage: {
+        username: '',
+        displayName: '',
+        email: '',
+        phone: '',
+        password: '',
+        verification: '',
+    },
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Register);

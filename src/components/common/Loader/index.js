@@ -38,7 +38,7 @@ const Loader = (props) => {
                 <ThemeProvider theme={theme}>
                     <Wrapper>
                         {content()}
-                        <Span>Loading</Span>
+                        <Span>&nbsp; &nbsp;Loading...</Span>
                     </Wrapper>
                 </ThemeProvider>
             );

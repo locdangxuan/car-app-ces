@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable no-shadow */
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable react/require-default-props */
@@ -189,7 +188,6 @@ const Form = (props) => {
     useEffect(() => {
         if (data && state.count === 0 && type === formConstant.type.update) {
             const {
-                id,
                 name,
                 brand,
                 model,
@@ -288,6 +286,7 @@ const Form = (props) => {
                         type="text"
                         onChange={onChange}
                         value={name}
+                        defaultValue={name}
                     />
                 </Field>
                 <Field>

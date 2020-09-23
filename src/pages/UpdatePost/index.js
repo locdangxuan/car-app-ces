@@ -7,13 +7,12 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 const UpdatePost = (props) => {
-    const { onSubmit, onCancel } = props;
+    const { onSubmit } = props;
     const { id } = props.match.params;
     const onSubmitHandler = (payload) => {
         onSubmit({ ...payload, id });
     };
     const onCancelHandler = () => {
-        onCancel();
         window.history.back();
     };
     return (
@@ -27,14 +26,11 @@ const UpdatePost = (props) => {
 };
 const mapDispatchToProps = (dispatch) => ({
     onSubmit: (payload) => dispatch(action.update(payload)),
-    onCancel: () => dispatch(action.cancelUpdate()),
 });
 UpdatePost.propTypes = {
     onSubmit: PropTypes.func,
-    onCancel: PropTypes.func,
 };
 UpdatePost.defaultProps = {
     onSubmit: () => {},
-    onCancel: () => {},
 };
 export default connect(null, mapDispatchToProps)(UpdatePost);

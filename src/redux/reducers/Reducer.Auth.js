@@ -38,11 +38,13 @@ const authReducer = (state = initState, action) => {
                 username: '',
                 password: '',
             };
-            Object.values(action.invalidFields).forEach((value) => {
-                const { name, message } = value;
-                fieldsValidity[name] = false;
-                fieldsErrorMessage[name] = message;
-            });
+            if (action.invalidFields) {
+                Object.values(action.invalidFields).forEach((value) => {
+                    const { name, message } = value;
+                    fieldsValidity[name] = false;
+                    fieldsErrorMessage[name] = message;
+                });
+            }
             return {
                 ...state,
                 isValid: false,

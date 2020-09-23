@@ -200,15 +200,9 @@ const loadModels = (payload) => {
     };
 };
 
-const cancelUpdate = () => {
+const cancel = () => {
     return (dispatch) => {
-        dispatch({ type: POSTS.UPDATE_CANCELED });
-    };
-};
-
-const cancelUpload = () => {
-    return (dispatch) => {
-        dispatch({ type: POSTS.UPLOAD_CANCELED });
+        dispatch({ type: POSTS.CANCEL });
     };
 };
 
@@ -217,8 +211,7 @@ export default {
     loadModels,
     loadBrands,
     update,
-    cancelUpdate,
+    cancel,
     fetchPostData,
     dismissMessage,
-    cancelUpload,
 };
