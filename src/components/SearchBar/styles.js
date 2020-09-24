@@ -5,8 +5,7 @@ import { fontFamilies, fontSize } from 'config/constants/Fonts';
 
 const useStyles = makeStyles(() => ({
     searchBarWrapper: {
-        paddingLeft: '44px',
-        paddingRight: '44px',
+        padding: '0 51px',
     },
     search: {
         display: 'flex',
@@ -43,7 +42,6 @@ const theme = {
     input: {
         ...globalTheme.input,
         width: '100%',
-        // backgroundColor: Color.backgroundInput,
         margin: '0 0 0 8px',
         borderBottom: `1px solid ${Color.white}`,
         color: Color.white,

@@ -182,9 +182,6 @@ const Form = (props) => {
         if (type === formConstant.type.update) {
             fetchPostData(id);
         }
-        return () => {
-            props.onCancel();
-        };
     }, []);
     useEffect(() => {
         if (data && state.count === 0 && type === formConstant.type.update) {
@@ -458,7 +455,6 @@ const mapStateToProps = (state) => ({ ...state.postReducer });
 const mapDispatchToProps = (dispatch) => ({
     onBrandChange: (payload) => dispatch(action.loadModels(payload)),
     getBrands: () => dispatch(action.loadBrands()),
-    getProfile: () => dispatch(action.loadProfile()),
     fetchPostData: (id) => dispatch(action.fetchPostData(id)),
     onDismissModal: () => dispatch(action.dismissMessage()),
     onCancel: () => dispatch(action.cancel()),

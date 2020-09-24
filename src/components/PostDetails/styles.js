@@ -18,6 +18,8 @@ const useStyles = makeStyles({
         padding: '0 0 30px',
     },
     name: {
+        display: 'flex',
+        justifyContent: 'center',
         padding: '10px',
         fontSize: fontSize.fontMain,
         fontWeight: 'bold',
@@ -34,15 +36,14 @@ const useStyles = makeStyles({
     },
     info: {
         display: 'flex',
-        padding: '0 5%',
+        padding: '1% 5%',
     },
     boxInfo: {
         margin: '20px',
     },
     textCenter: {
         display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'flex-end',
+        width: '33%',
     },
     descriptionText: {
         textAlign: 'justify',

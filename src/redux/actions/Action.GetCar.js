@@ -9,29 +9,12 @@ export const actFetchToProducts = (products) => {
     };
 };
 export const fetchProductsFailure = () => {
-    const nullProducts = [];
+    const nullProducts = {};
     return {
         type: actionType.FETCH_DATA_TO_PRODUCT_FAILURE,
         nullProducts,
     };
 };
-export const actRequestProducts = () => {
-    let token = '';
-    try {
-        token = utils.getToken();
-    } catch (error) {
-        token = '';
-    }
-    return async (dispatch) => {
-        try {
-            const data = await GetDetailCar(token);
-            return dispatch(actFetchToProducts(data.data.data.list));
-        } catch (error) {
-            dispatch(fetchProductsFailure());
-        }
-    };
-};
-
 export const actFetchToProductsSearch = (products, pagination, value) => {
     return {
         type: actionType.FETCH_DATA_TO_PRODUCT_SEARCH,
@@ -41,11 +24,34 @@ export const actFetchToProductsSearch = (products, pagination, value) => {
     };
 };
 
-export const actRequestProductsSearch = (value, page = 1) => {
+export const actRequestProducts = () => {
+    let token = '';
+    try {
+        token = utils.getToken();
+    } catch (error) {
+        token = '';
+    }
     return async (dispatch) => {
         try {
-            const data = await GetCarByValue(value, page);
-            const { pagination, list } = data.data.data;
+            const result = await GetDetailCar(token);
+            return dispatch(actFetchToProducts(result.data.list));
+        } catch (error) {
+            dispatch(fetchProductsFailure());
+        }
+    };
+};
+
+export const actRequestProductsSearch = (value, page = 1) => {
+    let token = '';
+    try {
+        token = utils.getToken();
+    } catch (error) {
+        token = '';
+    }
+    return async (dispatch) => {
+        try {
+            const result = await GetCarByValue(token, value, page);
+            const { pagination, list } = result.data;
             pagination['value'] = value;
             const valueSearch = value;
             return dispatch(
