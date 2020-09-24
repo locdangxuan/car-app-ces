@@ -12,6 +12,7 @@ import {
     Textarea,
     Loader,
     Modal,
+    LocationPicker,
 } from 'components/common';
 import PropTypes from 'prop-types';
 import { ThemeProvider } from 'styled-components';
@@ -32,7 +33,6 @@ const Form = (props) => {
         year: '2020',
         fuelType: 'Gasoline',
         distanceTraveled: 0,
-        location: '',
         images: [],
         previews: [],
         model: '',
@@ -57,6 +57,8 @@ const Form = (props) => {
         data,
         id,
         onDismissModal,
+        location,
+        loadLocation,
     } = props;
     const [modalState, setModalState] = useState(false);
     const [state, setState] = useState(formState);
@@ -74,9 +76,8 @@ const Form = (props) => {
         price,
         distanceTraveled,
         oldImages,
-        location,
     } = state;
-    const fuelTypes = ['Gasoline', 'Oil', 'Electricity'];
+    const fuelTypes = ['Gasoline', 'Oil', 'Electric'];
     const modalStateToggleHandler = () => {
         onDismissModal();
         setModalState(false);
@@ -228,6 +229,7 @@ const Form = (props) => {
                 count: 1,
                 oldImages,
             });
+            loadLocation(JSON.parse(location).coor);
             onBrandChange({ brands, value: brand });
         }
         if (message !== '' && modalState === false) setModalState(true);
@@ -286,7 +288,6 @@ const Form = (props) => {
                         type="text"
                         onChange={onChange}
                         value={name}
-                        defaultValue={name}
                     />
                 </Field>
                 <Field>
@@ -327,13 +328,9 @@ const Form = (props) => {
                 </Field>
                 <Field>
                     <Span>Location</Span>
-                    <Input
-                        name="price"
-                        type="text"
-                        onChange={onChange}
-                        value={location}
-                    />
+                    <Input value={utils.getLocationString(location)} />
                 </Field>
+                <LocationPicker />
                 <Field>
                     <Span>Price (USD)</Span>
                     <Input
@@ -421,6 +418,7 @@ const Form = (props) => {
 
 Form.propTypes = {
     models: PropTypes.arrayOf(PropTypes.object),
+    location: PropTypes.string,
     onSubmit: PropTypes.func,
     onCancel: PropTypes.func,
     onBrandChange: PropTypes.func,
@@ -434,10 +432,13 @@ Form.propTypes = {
     data: PropTypes.object,
     id: PropTypes.string,
     onDismissModal: PropTypes.func,
+    loadLocation: PropTypes.func,
 };
 
 Form.defaultProps = {
     models: ['Rx'],
+    location:
+        '{"place":"Da Nang,Vietnam","coor":{"lat":16.054745932122085,"lng":108.2209027359643}}',
     onSubmit: () => {},
     onCancel: () => {},
     brands: [],
@@ -450,6 +451,7 @@ Form.defaultProps = {
     fetchPostData: () => {},
     data: undefined,
     onDismissModal: () => {},
+    loadLocation: () => {},
 };
 
 const mapStateToProps = (state) => ({ ...state.postReducer });
@@ -460,6 +462,8 @@ const mapDispatchToProps = (dispatch) => ({
     fetchPostData: (id) => dispatch(action.fetchPostData(id)),
     onDismissModal: () => dispatch(action.dismissMessage()),
     onCancel: () => dispatch(action.cancel()),
+    loadLocation: (coordinates) =>
+        dispatch(action.onLocationChange(coordinates)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Form);

@@ -8,6 +8,8 @@ const initState = {
     pending: false,
     images: [],
     data: undefined,
+    location:
+        '{"place":"Da Nang,Vietnam","coor":{"lat":16.054796,"lng":108.220891}}',
 };
 
 const postReducer = (state = initState, action) => {
@@ -101,6 +103,11 @@ const postReducer = (state = initState, action) => {
             return {
                 ...state,
                 message: '',
+            };
+        case POSTS.LOCATION:
+            return {
+                ...state,
+                location: action.location,
             };
         case POSTS.CANCEL:
             return { ...initState };

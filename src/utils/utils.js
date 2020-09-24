@@ -3,6 +3,24 @@ import Cookies from 'universal-cookie';
 import * as statusCode from 'config/constants/StatusCode';
 import { MESSAGE_ERROR } from 'config/messages/Messages.Auth';
 import * as utilsConstant from 'config/constants/Utils';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
+import locationIcon from 'assets/images/location.png';
+
+const LocationIcon = L.Icon.extend({
+    options: {
+        iconSize: [38, 45],
+        iconAnchor: [20, 40],
+        popupAnchor: [-3, -76],
+    },
+});
+const selfLocation = new LocationIcon({ iconUrl: locationIcon });
+
+const marketInit = (latlng) => {
+    return new L.Marker([latlng.lat, latlng.lng], {
+        icon: selfLocation,
+    });
+};
 
 const base64Converter = (file) =>
     new Promise((resolve, reject) => {
@@ -67,6 +85,25 @@ const getProfile = () => {
     }
 };
 
+const getLocationString = (location) => JSON.parse(location).place;
+
+const mapInit = (defaultLatLng, zoomRatio = 6) => {
+    const map = L.map('map').setView(
+        [defaultLatLng.lat, defaultLatLng.lng],
+        zoomRatio
+    );
+    L.tileLayer(
+        'https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png',
+        {
+            maxZoom: 20,
+            detectRetina: true,
+            attribution:
+                '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
+        }
+    ).addTo(map);
+    return map;
+};
+
 export default {
     base64Converter,
     getYears,
@@ -74,4 +111,7 @@ export default {
     getNameListFromArray,
     getToken,
     getProfile,
+    getLocationString,
+    mapInit,
+    marketInit,
 };

@@ -8,7 +8,7 @@ const Body = styled.div`
     min-height: 80vh;
     background-size: cover;
     background-attachment: fixed;
-    padding-top: 100px;
+    padding-top: 74px;
     background-repeat: no-repeat;
     opacity: 0.95;
     color: ${(props) => props.theme.body.color};
