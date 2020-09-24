@@ -1,25 +1,20 @@
 import React from 'react';
-import { Span } from 'components/common';
-import color from 'config/constants/Colors';
+import Typography from '@material-ui/core/Typography';
 import { ThemeProvider } from 'styled-components';
-import { Wrapper, Body } from './NotFound';
+import { Wrapper, Body, StyledLink, StyledSpan, theme } from './styles';
 
 const NotFound = () => {
-    const theme = {
-        span: {
-            color: color.white,
-        },
-    };
     return (
         <ThemeProvider theme={theme}>
             <Wrapper>
                 <Body>
-                    <Span>404 Not Found</Span>
-                    <Span>
+                    <Typography variant="h2">404 Not Found</Typography>
+                    <StyledSpan>
                         Sorry! The page you are looking for cannot be found.
-                        Please use the provided search box to find what you are
-                        looking for, click on our top navigational menu
-                    </Span>
+                        Click on our top navigational menu or{' '}
+                        <StyledLink to="/">here</StyledLink> to get back to
+                        homepage.
+                    </StyledSpan>
                 </Body>
             </Wrapper>
         </ThemeProvider>
