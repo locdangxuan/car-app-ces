@@ -39,8 +39,8 @@ export const actRequestProducts = () => {
         dispatch(onRequset(PRODUCTS.REQUEST));
         await setTimeout(async () => {
             try {
-                const data = await GetDetailCar(token);
-                return dispatch(actFetchToProducts(data.data.data.data.list));
+                const result = await GetDetailCar(token);
+                return dispatch(actFetchToProducts(result.data.list));
             } catch (error) {
                 dispatch(fetchProductsFailure(error));
             }
@@ -59,8 +59,8 @@ export const actRequestProductsSearch = (value, page = 1) => {
         dispatch(onRequset(PRODUCTS.REQUEST));
         await setTimeout(async () => {
             try {
-                const data = await GetCarByValue(token, value, page);
-                const { pagination, list } = data.data.data.data;
+                const result = await GetCarByValue(token, value, page);
+                const { pagination, list } = result.data;
                 pagination['value'] = value;
                 const valueSearch = value;
                 return dispatch(

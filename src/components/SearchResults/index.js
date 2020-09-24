@@ -43,7 +43,7 @@ const SearchResults = (props) => {
             {contentsLength > 0 && (
                 <Grid container className={classes.layoutWrapper}>
                     {ShowContent(Contents.products, classes)}
-                    {paginationLength && (
+                    {paginationLength > 0 && (
                         <PaginationBar
                             count={pagination.lastPage}
                             valueSearch={pagination.value}
