@@ -1,20 +1,31 @@
-// eslint-disable-line no-param-reassign
-/* eslint no-param-reassign: "error" */
-/* eslint no-param-reassign: ["error", { "props": true, "ignorePropertyModificationsFor": ["$scope"] }] */
-
 import * as actionType from 'config/constants/Action.Types';
 
-const initProduct = [[], {}];
-const contentCarReducer = (state = initProduct, action) => {
+const initState = {
+    products: [],
+    pagination: {},
+    pending: false,
+};
+
+const contentCarReducer = (state = initState, action) => {
     switch (action.type) {
         case actionType.FETCH_DATA_TO_PRODUCT:
-            return [action.products, {}];
+            return {
+                products: action.products,
+                pagination: {},
+                pending: false,
+            };
         case actionType.FETCH_DATA_TO_PRODUCT_FAILURE:
-            return [action.nullProducts, {}];
+            return {
+                ...action.nullProducts,
+            };
         case actionType.FETCH_DATA_TO_PRODUCT_SEARCH:
-            return [action.products, action.pagination];
+            return {
+                products: action.products,
+                pagination: action.pagination,
+                pending: false,
+            };
         default:
-            return [...state];
+            return { ...state };
     }
 };
 export default contentCarReducer;

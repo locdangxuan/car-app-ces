@@ -1,7 +1,8 @@
+/* eslint-disable react/forbid-prop-types */
 import React, { useState } from 'react';
 import Pagination from '@material-ui/lab/Pagination';
 import { withStyles } from '@material-ui/core';
-import PropTypes, { number, string } from 'prop-types';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import * as action from 'redux/actions/Action.GetCar';
 import styles from './styles';
@@ -14,27 +15,26 @@ const PaginationBar = (props) => {
         props.actRequestProductsSearch(valueSearch, page);
     };
     return (
-        <div className={classes.root}>
-            <Pagination
-                page={page}
-                count={count}
-                color="primary"
-                defaultPage={page}
-                onChange={handleChange}
-            />
-        </div>
+        <Pagination
+            className={classes.root}
+            page={page}
+            count={count}
+            color="primary"
+            defaultPage={page}
+            onChange={handleChange}
+        />
     );
 };
 PaginationBar.propTypes = {
-    classes: PropTypes.arrayOf(PropTypes.object),
+    classes: PropTypes.object,
     count: PropTypes.number,
     valueSearch: PropTypes.string,
     actRequestProductsSearch: PropTypes.func,
 };
 PaginationBar.defaultProps = {
-    classes: [],
-    count: number,
-    valueSearch: string,
+    classes: {},
+    count: 1,
+    valueSearch: '',
     actRequestProductsSearch: {},
 };
 const mapStateToProp = () => {

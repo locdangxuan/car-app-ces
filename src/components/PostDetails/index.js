@@ -60,7 +60,7 @@ const PostDetails = (props) => {
                         >
                             <Box
                                 component={component.div}
-                                className={`${classes.wrapper} ${classes.textCenter} ${classes.name}`}
+                                className={`${classes.wrapper} ${classes.name}`}
                             >
                                 {name}
                             </Box>
@@ -69,46 +69,53 @@ const PostDetails = (props) => {
                                 component={component.div}
                                 className={classes.info}
                             >
-                                <LocalTaxi />
                                 <Box
-                                    component={component.span}
+                                    component={component.div}
                                     className={classes.textCenter}
                                 >
+                                    <LocalTaxi />
                                     {model}
                                 </Box>
-                                <CalendarToday className={classes.left} />
                                 <Box
-                                    component={component.span}
+                                    component={component.div}
                                     className={classes.textCenter}
                                 >
+                                    <CalendarToday className={classes.left} />
                                     {year}
                                 </Box>
-                                <Explore className={classes.left} />
+
                                 <Box
-                                    component={component.span}
+                                    component={component.div}
                                     className={classes.textCenter}
                                 >
+                                    <Explore className={classes.left} />
                                     {distanceTraveled}
                                 </Box>
-                                <AttachMoney className={classes.left} />
+                            </Box>
+                            <Box
+                                component={component.div}
+                                className={classes.info}
+                            >
                                 <Box
-                                    component={component.span}
+                                    component={component.div}
                                     className={classes.textCenter}
                                 >
+                                    <AttachMoney />
                                     {price}
                                 </Box>
-                                <LocalGasStation className={classes.left} />
+
                                 <Box
-                                    component={component.span}
+                                    component={component.div}
                                     className={classes.textCenter}
                                 >
+                                    <LocalGasStation className={classes.left} />
                                     {fuelType}
                                 </Box>
-                                <Room className={classes.left} />
                                 <Box
-                                    component={component.span}
+                                    component={component.div}
                                     className={classes.textCenter}
                                 >
+                                    <Room className={classes.left} />
                                     {location}
                                 </Box>
                             </Box>

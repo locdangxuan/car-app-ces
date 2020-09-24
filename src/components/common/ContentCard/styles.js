@@ -16,13 +16,12 @@ const StyledLink = styled(Link)`
 
 const useStyles = makeStyles({
     root: {
-        maxWidth: 500,
         background: Color.transparent,
         color: Color.white,
         fontFamily: fontFamilies.ssfLucida,
     },
     edit: {
-        fontSize: '15px',
+        fontSize: '18px',
         fontWeight: 'bold',
         backgroundColor: 'red',
         width: '15%',
