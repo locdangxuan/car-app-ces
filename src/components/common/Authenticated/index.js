@@ -1,9 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Box, Button, ListItemIcon, ListItemText } from '@material-ui/core';
 import { connect } from 'react-redux';
 import authActions from 'redux/actions/Action.Auth';
+import * as action from 'redux/actions/Action.GetCar';
 import {
     ExitToApp,
     Drafts,
@@ -18,6 +20,9 @@ import variant from 'config/constants/Variant';
 import { useStyles, StyledMenu, StyledMenuItem } from './styles';
 
 const Authenticated = (props) => {
+    useEffect(() => {
+        props.actRequestProducts();
+    }, []);
     const [anchorEl, setAnchorEl] = React.useState(null);
     const { displayName } = utils.getProfile();
 
@@ -95,6 +100,9 @@ const Authenticated = (props) => {
 
 const mapDispatchToProps = (dispatch) => ({
     onSubmitLogout: () => dispatch(authActions.logout()),
+    actRequestProducts: () => {
+        dispatch(action.actRequestProducts());
+    },
 });
 
 export default connect(null, mapDispatchToProps)(Authenticated);
