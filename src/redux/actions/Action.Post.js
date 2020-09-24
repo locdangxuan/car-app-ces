@@ -2,6 +2,7 @@
 import utils from 'utils/utils';
 import { formUtilConstant } from 'config/constants/Utils';
 import api from 'services/api/Api.Post';
+import { loadLocationByCoor } from 'services/api/Api.Utils';
 import { POSTS, MODELS, BRANDS } from 'config/constants/Action.Types';
 import validator from 'services/validator/FieldsValidator';
 import { MESSAGE_ERROR } from 'config/messages/Messages.Post';
@@ -60,6 +61,34 @@ const loadBrands = () => {
             dispatch(onLoadBrandSuccess(result.data));
         } catch (error) {
             dispatch(onLoadBrandFailure());
+        }
+    };
+};
+
+const onLocationChange = (coordinates) => {
+    return async (dispatch) => {
+        const location = {
+            place: '',
+            coor: {
+                lat: 0.0,
+                lng: 0.0,
+            },
+        };
+        try {
+            const { lat, lng } = coordinates;
+            const result = await loadLocationByCoor(lat, lng);
+            location.place = result;
+            location.coor.lat = lat;
+            location.coor.lng = lng;
+            dispatch({
+                type: POSTS.LOCATION,
+                location: JSON.stringify(location),
+            });
+        } catch (error) {
+            dispatch({
+                type: POSTS.LOCATION,
+                location: '',
+            });
         }
     };
 };
@@ -214,4 +243,5 @@ export default {
     cancel,
     fetchPostData,
     dismissMessage,
+    onLocationChange,
 };

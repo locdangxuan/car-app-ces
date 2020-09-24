@@ -16,8 +16,10 @@ import Textarea from './Textarea';
 import Categories from './Categories';
 import Login from './Login';
 import Register from './Register';
+import LocationPicker from './LocationPicker';
 
 export {
+    LocationPicker,
     Textarea,
     ImageCard,
     Field,
