@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
@@ -34,7 +35,7 @@ const SearchResults = (props) => {
         return null;
     };
     const { classes, Contents } = props;
-    const { pagination, pending } = Contents;
+    const { pagination, pending, products } = Contents;
     const contentsLength = Object.keys(Contents).length;
     const paginationLength = Object.keys(pagination).length;
     return (
@@ -42,7 +43,7 @@ const SearchResults = (props) => {
             {pending && <Loader type="FULL-PAGE">Searching</Loader>}
             {contentsLength > 0 && (
                 <Grid container className={classes.layoutWrapper}>
-                    {ShowContent(Contents.products, classes)}
+                    {ShowContent(products, classes)}
                     {paginationLength > 0 && (
                         <PaginationBar
                             count={pagination.lastPage}
@@ -60,11 +61,13 @@ SearchResults.propTypes = {
     classes: PropTypes.object,
     Contents: PropTypes.object,
     actRequestProducts: PropTypes.func,
+    products: PropTypes.arrayOf(PropTypes.object),
 };
 SearchResults.defaultProps = {
     classes: {},
     Contents: {},
     actRequestProducts: () => {},
+    products: [],
 };
 const mapStateToProp = (state) => {
     return {
