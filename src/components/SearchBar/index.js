@@ -14,7 +14,7 @@ const SearchBar = (props) => {
         setvalueSearch(e.target.value);
     }
     function submitSearch() {
-        props.actRequestProductsSearch(valueSearch);
+        props.actRequestProductsSearch('search', valueSearch);
     }
     const classes = useStyles();
 
@@ -57,7 +57,7 @@ SearchBar.propTypes = {
     actRequestProductsSearch: PropTypes.func,
 };
 SearchBar.defaultProps = {
-    actRequestProductsSearch: {},
+    actRequestProductsSearch: () => {},
 };
 const mapStateToProp = (state) => {
     return {
@@ -66,8 +66,8 @@ const mapStateToProp = (state) => {
 };
 const MapDispatchToProps = (dispatch) => {
     return {
-        actRequestProductsSearch: (value) => {
-            dispatch(action.actRequestProductsSearch(value));
+        actRequestProductsSearch: (orderBy, value) => {
+            dispatch(action.actRequestProductsSearch(orderBy, value));
         },
     };
 };

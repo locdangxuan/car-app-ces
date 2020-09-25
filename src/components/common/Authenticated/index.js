@@ -1,6 +1,7 @@
+/* eslint-disable react/require-default-props */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { Box, Button, ListItemIcon, ListItemText } from '@material-ui/core';
 import { connect } from 'react-redux';
@@ -13,6 +14,7 @@ import {
     Settings,
     AddCircle,
 } from '@material-ui/icons';
+import PropTypes from 'prop-types';
 import utils from 'utils/utils';
 import Color from 'config/constants/Colors';
 import component from 'config/constants/Components';
@@ -20,11 +22,8 @@ import variant from 'config/constants/Variant';
 import { useStyles, StyledMenu, StyledMenuItem } from './styles';
 
 const Authenticated = (props) => {
-    useEffect(() => {
-        props.actRequestProducts();
-    }, []);
     const [anchorEl, setAnchorEl] = React.useState(null);
-    const { displayName } = utils.getProfile();
+    const { displayName, id } = utils.getProfile();
 
     const onSubmitLogout = () => {
         props.onSubmitLogout();
@@ -36,6 +35,10 @@ const Authenticated = (props) => {
 
     const handleClose = () => {
         setAnchorEl(null);
+    };
+
+    const getPostsByUser = () => {
+        props.actRequestProductsSearch('user', id.toString());
     };
 
     const classes = useStyles();
@@ -64,7 +67,6 @@ const Authenticated = (props) => {
             >
                 <Settings />
             </Button>
-
             <StyledMenu
                 id="customized-menu"
                 anchorEl={anchorEl}
@@ -78,12 +80,14 @@ const Authenticated = (props) => {
                     </ListItemIcon>
                     <ListItemText primary="My Profile" />
                 </StyledMenuItem>
-                <StyledMenuItem>
-                    <ListItemIcon className={classes.designIcon}>
-                        <Drafts />
-                    </ListItemIcon>
-                    <ListItemText primary="My post" />
-                </StyledMenuItem>
+                <Link to="/" className={classes.link}>
+                    <StyledMenuItem onClick={getPostsByUser}>
+                        <ListItemIcon className={classes.designIcon}>
+                            <Drafts />
+                        </ListItemIcon>
+                        <ListItemText primary="My post" />
+                    </StyledMenuItem>
+                </Link>
 
                 <Link to="/" className={classes.link}>
                     <StyledMenuItem onClick={onSubmitLogout}>
@@ -98,10 +102,20 @@ const Authenticated = (props) => {
     );
 };
 
+Authenticated.propTypes = {
+    onSubmitLogout: PropTypes.func,
+    actRequestProductsSearch: PropTypes.func,
+};
+
+Authenticated.defaultProps = {
+    onSubmitLogout: () => {},
+    actRequestProductsSearch: () => {},
+};
+
 const mapDispatchToProps = (dispatch) => ({
     onSubmitLogout: () => dispatch(authActions.logout()),
-    actRequestProducts: () => {
-        dispatch(action.actRequestProducts());
+    actRequestProductsSearch: (orderBy, value) => {
+        dispatch(action.actRequestProductsSearch(orderBy, value));
     },
 });
 

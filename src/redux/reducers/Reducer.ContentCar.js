@@ -27,6 +27,7 @@ const contentCarReducer = (state = initState, action) => {
                 message: action.message,
             };
         case PRODUCTS.FETCH_LIST_POSTS_SEARCH_SUCCEED:
+        case PRODUCTS.FETCH_LIST_POSTS_BY_USER:
             return {
                 ...state,
                 products: action.products,

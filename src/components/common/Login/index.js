@@ -49,14 +49,8 @@ Login.propTypes = {
     username: PropTypes.string,
     password: PropTypes.string,
     onChangeHandler: PropTypes.func,
-    fieldsValidity: {
-        username: true,
-        password: true,
-    },
-    fieldsErrorMessage: {
-        username: '',
-        password: '',
-    },
+    fieldsValidity: PropTypes.objectOf(PropTypes.bool),
+    fieldsErrorMessage: PropTypes.objectOf(PropTypes.string),
 };
 
 Login.defaultProps = {

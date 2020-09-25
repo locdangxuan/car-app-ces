@@ -1,21 +1,15 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Modal, Button } from 'components/common';
-import { connect } from 'react-redux';
 import { Typography, Box } from '@material-ui/core';
 import { ThemeProvider } from 'styled-components';
-import PropTypes from 'prop-types';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import PersonIcon from '@material-ui/icons/Person';
-import * as action from 'redux/actions/Action.GetCar';
 import component from 'config/constants/Components';
 import { theme, useStyles } from './styles';
 
-const UnAuthenticated = (props) => {
-    useEffect(() => {
-        props.actRequestProducts();
-    }, []);
+const UnAuthenticated = () => {
     const [loginF, setLoginF] = useState(false);
     const [registerF, setRegisterF] = useState(false);
     const toggleLogin = () => {
@@ -65,20 +59,4 @@ const UnAuthenticated = (props) => {
     );
 };
 
-UnAuthenticated.propsTypes = {
-    actRequestProducts: PropTypes.func,
-};
-
-UnAuthenticated.defaultProps = {
-    actRequestProducts: () => {},
-};
-
-const MapDispatchToProps = (dispatch) => {
-    return {
-        actRequestProducts: () => {
-            dispatch(action.actRequestProducts());
-        },
-    };
-};
-
-export default connect(null, MapDispatchToProps)(UnAuthenticated);
+export default UnAuthenticated;

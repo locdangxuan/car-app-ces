@@ -27,7 +27,6 @@ const actFetchToProductsSearch = (products, pagination, value) => {
         value,
     };
 };
-
 export const actRequestProducts = () => {
     let token = '';
     try {
@@ -48,7 +47,7 @@ export const actRequestProducts = () => {
     };
 };
 
-export const actRequestProductsSearch = (value, page = 1) => {
+export const actRequestProductsSearch = (orderBy, value, page) => {
     let token = '';
     try {
         token = utils.getToken();
@@ -59,12 +58,12 @@ export const actRequestProductsSearch = (value, page = 1) => {
         dispatch(onRequset(PRODUCTS.REQUEST));
         setTimeout(async () => {
             try {
-                const result = await GetCarByValue(token, value, page);
+                const result = await GetCarByValue(token, orderBy, value, page);
                 const { pagination, list } = result.data;
-                pagination['value'] = value;
-                const valueSearch = value;
+                pagination.orderBy = orderBy;
+                pagination.value = value;
                 return dispatch(
-                    actFetchToProductsSearch(list, pagination, valueSearch)
+                    actFetchToProductsSearch(list, pagination, value)
                 );
             } catch (error) {
                 dispatch(fetchProductsFailure());

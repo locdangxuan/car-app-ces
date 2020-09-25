@@ -9,11 +9,11 @@ import Color from 'config/constants/Colors';
 import styles from './styles';
 
 const PaginationBar = (props) => {
-    const { classes, valueSearch, count } = props;
+    const { classes, orderBy, valueSearch, count } = props;
     const [page, setPage] = useState(1);
     const handleChange = (event, value) => {
         setPage(value);
-        props.actRequestProductsSearch(valueSearch, page);
+        props.actRequestProductsSearch(orderBy, valueSearch, value);
     };
     return (
         <Pagination
@@ -30,25 +30,24 @@ PaginationBar.propTypes = {
     classes: PropTypes.object,
     count: PropTypes.number,
     valueSearch: PropTypes.string,
+    orderBy: PropTypes.string,
     actRequestProductsSearch: PropTypes.func,
 };
 PaginationBar.defaultProps = {
     classes: {},
     count: 1,
     valueSearch: '',
-    actRequestProductsSearch: {},
-};
-const mapStateToProp = () => {
-    return {};
+    orderBy: '',
+    actRequestProductsSearch: () => {},
 };
 const MapDispatchToProps = (dispatch) => {
     return {
-        actRequestProductsSearch: (value, page) => {
-            dispatch(action.actRequestProductsSearch(value, page));
+        actRequestProductsSearch: (orderBy, value, page) => {
+            dispatch(action.actRequestProductsSearch(orderBy, value, page));
         },
     };
 };
 export default connect(
-    mapStateToProp,
+    null,
     MapDispatchToProps
 )(withStyles(styles)(PaginationBar));

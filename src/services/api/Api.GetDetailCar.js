@@ -16,7 +16,8 @@ const GetDetailCar = async (token) => {
         apiUtil.apiErrorHandler(error);
     }
 };
-const GetCarByValue = async (token, value, page = 1) => {
+
+const GetCarByValue = async (token, orderBy, value, page) => {
     try {
         const results = await axios({
             headers: {
@@ -25,7 +26,7 @@ const GetCarByValue = async (token, value, page = 1) => {
             method: 'GET',
             url: `${api.post.get}`,
             params: {
-                order_by: 'search',
+                order_by: orderBy,
                 value,
                 page,
                 limit: '6',

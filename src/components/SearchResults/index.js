@@ -9,7 +9,7 @@ import { ContentCard, Loader } from 'components/common';
 import * as action from 'redux/actions/Action.GetCar';
 import PaginationBar from 'components/PaginationBar';
 import Component from 'config/constants/Components';
-import { styles, StyledLink } from './styles';
+import styles from './styles';
 
 const SearchResults = (props) => {
     useEffect(() => {
@@ -25,9 +25,7 @@ const SearchResults = (props) => {
                         key={Content.id}
                         className={classes.content}
                     >
-                        <StyledLink to={`/posts/${Content.id}`}>
-                            <ContentCard data={Content} />
-                        </StyledLink>
+                        <ContentCard data={Content} />
                     </Grid>
                 );
             });
@@ -44,14 +42,15 @@ const SearchResults = (props) => {
             {contentsLength > 0 && (
                 <Grid container className={classes.layoutWrapper}>
                     {ShowContent(products, classes)}
-                    {paginationLength > 0 && (
-                        <PaginationBar
-                            count={pagination.lastPage}
-                            valueSearch={pagination.value}
-                            className={classes.paginationBar}
-                        />
-                    )}
                 </Grid>
+            )}
+            {paginationLength > 0 && (
+                <PaginationBar
+                    orderBy={pagination.orderBy}
+                    count={pagination.lastPage}
+                    valueSearch={pagination.value}
+                    className={classes.paginationBar}
+                />
             )}
         </Box>
     );

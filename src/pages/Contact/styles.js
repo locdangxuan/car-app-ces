@@ -9,7 +9,7 @@ const Wrapper = styled.div`
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    height: 88vh;
+    height: 100vh;
     padding-bottom: 5vh;
 `;
 
