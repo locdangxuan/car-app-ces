@@ -58,7 +58,7 @@ const Authenticated = (props) => {
                 aria-controls="customized-menu"
                 aria-haspopup="true"
                 variant={variant.contained}
-                color="default"
+                color={Color.defaultColor}
                 onClick={handleClick}
                 className={classes.navbarButton}
             >

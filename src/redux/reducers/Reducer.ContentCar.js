@@ -1,4 +1,4 @@
-import * as actionType from 'config/constants/Action.Types';
+import { PRODUCTS } from 'config/constants/Action.Types';
 
 const initState = {
     products: [],
@@ -8,18 +8,27 @@ const initState = {
 
 const contentCarReducer = (state = initState, action) => {
     switch (action.type) {
-        case actionType.FETCH_DATA_TO_PRODUCT:
+        case PRODUCTS.REQUEST:
             return {
+                ...state,
+                pending: true,
+            };
+        case PRODUCTS.FETCH_LIST_POSTS_SUCCEED:
+            return {
+                ...state,
                 products: action.products,
                 pagination: {},
                 pending: false,
             };
-        case actionType.FETCH_DATA_TO_PRODUCT_FAILURE:
+        case PRODUCTS.FETCH_LIST_POSTS_FAILURE:
             return {
-                ...action.nullProducts,
+                ...state,
+                pending: false,
+                message: action.message,
             };
-        case actionType.FETCH_DATA_TO_PRODUCT_SEARCH:
+        case PRODUCTS.FETCH_LIST_POSTS_SEARCH_SUCCEED:
             return {
+                ...state,
                 products: action.products,
                 pagination: action.pagination,
                 pending: false,

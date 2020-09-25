@@ -5,6 +5,7 @@ import { withStyles } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import * as action from 'redux/actions/Action.GetCar';
+import Color from 'config/constants/Colors';
 import styles from './styles';
 
 const PaginationBar = (props) => {
@@ -19,7 +20,7 @@ const PaginationBar = (props) => {
             className={classes.root}
             page={page}
             count={count}
-            color="primary"
+            color={Color.primary}
             defaultPage={page}
             onChange={handleChange}
         />
