@@ -135,7 +135,7 @@ const validateFields = async (payload, getState) => {
 const upload = (payload) => {
     return async (dispatch, getState) => {
         dispatch(onRequest(POSTS.REQUEST));
-        await setTimeout(async () => {
+        setTimeout(async () => {
             try {
                 const validateResult = await validateFields(payload, getState);
                 const newInformation = {};
@@ -164,7 +164,7 @@ const upload = (payload) => {
 const update = (payload) => {
     return async (dispatch, getState) => {
         dispatch(onRequest(POSTS.REQUEST));
-        await setTimeout(async () => {
+        setTimeout(async () => {
             try {
                 const validateResult = await validateFields(payload, getState);
                 const newInformation = {};

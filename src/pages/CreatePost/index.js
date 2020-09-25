@@ -4,7 +4,7 @@ import { Form } from 'components/common';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-const PostCreating = (props) => {
+const CreatePost = (props) => {
     const { onSubmitCreatingPost } = props;
     const onSubmitHandler = (payload) => {
         onSubmitCreatingPost(payload);
@@ -23,12 +23,12 @@ const mapDispatchToProps = (dispatch) => ({
     },
 });
 
-PostCreating.propTypes = {
+CreatePost.propTypes = {
     onSubmitCreatingPost: PropTypes.func,
 };
 
-PostCreating.defaultProps = {
+CreatePost.defaultProps = {
     onSubmitCreatingPost: () => {},
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(PostCreating);
+export default connect(mapStateToProps, mapDispatchToProps)(CreatePost);
