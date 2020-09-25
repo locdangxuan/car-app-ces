@@ -7,8 +7,7 @@ const Wrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 88vh;
-    margin-top: -8vh;
+    height: 100vh;
 `;
 
 const Body = styled.div`

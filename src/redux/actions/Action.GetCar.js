@@ -37,14 +37,14 @@ export const actRequestProducts = () => {
     }
     return async (dispatch) => {
         dispatch(onRequset(PRODUCTS.REQUEST));
-        await setTimeout(async () => {
+        setTimeout(async () => {
             try {
                 const result = await GetDetailCar(token);
                 return dispatch(actFetchToProducts(result.data.list));
             } catch (error) {
                 dispatch(fetchProductsFailure(error));
             }
-        }, 2000);
+        }, 500);
     };
 };
 
@@ -57,7 +57,7 @@ export const actRequestProductsSearch = (value, page = 1) => {
     }
     return async (dispatch) => {
         dispatch(onRequset(PRODUCTS.REQUEST));
-        await setTimeout(async () => {
+        setTimeout(async () => {
             try {
                 const result = await GetCarByValue(token, value, page);
                 const { pagination, list } = result.data;
@@ -69,6 +69,6 @@ export const actRequestProductsSearch = (value, page = 1) => {
             } catch (error) {
                 dispatch(fetchProductsFailure());
             }
-        }, 2000);
+        }, 500);
     };
 };
