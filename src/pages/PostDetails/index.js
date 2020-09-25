@@ -116,7 +116,7 @@ const PostDetails = (props) => {
                                     className={classes.textCenter}
                                 >
                                     <Room className={classes.left} />
-                                    {location}
+                                    {utils.getLocationString(location)}
                                 </Box>
                             </Box>
                         </Box>

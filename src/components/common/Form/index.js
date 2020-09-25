@@ -58,7 +58,6 @@ const Form = (props) => {
         id,
         onDismissModal,
         location,
-        loadLocation,
     } = props;
     const [modalState, setModalState] = useState(false);
     const [state, setState] = useState(formState);
@@ -83,16 +82,18 @@ const Form = (props) => {
         setModalState(false);
     };
     const onImageChangeHandler = async (target) => {
-        const { images, previews } = state;
-        const imageFile = target.files[0];
-        const preview = await utils.base64Converter(imageFile);
-        previews.push(preview);
-        images.push(imageFile);
-        setState({
-            ...state,
-            images,
-            previews,
-        });
+        if (target.files.length !== 0) {
+            const { images, previews } = state;
+            const imageFile = target.files[0];
+            const preview = await utils.base64Converter(imageFile);
+            previews.push(preview);
+            images.push(imageFile);
+            setState({
+                ...state,
+                images,
+                previews,
+            });
+        }
     };
     const onBrandChangeHandler = (target) => {
         onBrandChange({ brands, value: target.value });
@@ -141,7 +142,7 @@ const Form = (props) => {
                     fuelType,
                     price,
                     distanceTraveled,
-                    location,
+                    location: props.location || props.data.location,
                     information: otherFeatures,
                     images,
                     oldImageMap: oldImageMap.substring(1),
@@ -195,7 +196,6 @@ const Form = (props) => {
                 distanceTraveled,
                 information,
                 images,
-                location,
             } = data;
             let otherFeatures = '';
             Object.values(information[formConstant.otherFeatures]).forEach(
@@ -216,7 +216,6 @@ const Form = (props) => {
                 year,
                 fuelType,
                 price: parseInt(price.replace(/,|$/, ''), 10),
-                location,
                 distanceTraveled: parseInt(
                     distanceTraveled.replace(/,|km/, ''),
                     10
@@ -226,8 +225,11 @@ const Form = (props) => {
                 count: 1,
                 oldImages,
             });
-            loadLocation(JSON.parse(location).coor);
             onBrandChange({ brands, value: brand });
+        }
+        if (data && state.count === 1 && type === formConstant.type.update) {
+            props.getLocation(JSON.parse(props.data.location).coor);
+            setState({ ...state, count: 2 });
         }
         if (message !== '' && modalState === false) setModalState(true);
     });
@@ -327,7 +329,7 @@ const Form = (props) => {
                     <Span>Location</Span>
                     <Input value={utils.getLocationString(location)} />
                 </Field>
-                <LocationPicker />
+                <LocationPicker defaultLocation={location} />
                 <Field>
                     <Span>Price (USD)</Span>
                     <Input
@@ -429,7 +431,7 @@ Form.propTypes = {
     data: PropTypes.object,
     id: PropTypes.string,
     onDismissModal: PropTypes.func,
-    loadLocation: PropTypes.func,
+    getLocation: PropTypes.func,
 };
 
 Form.defaultProps = {
@@ -448,7 +450,7 @@ Form.defaultProps = {
     fetchPostData: () => {},
     data: undefined,
     onDismissModal: () => {},
-    loadLocation: () => {},
+    getLocation: () => {},
 };
 
 const mapStateToProps = (state) => ({ ...state.postReducer });
@@ -458,7 +460,7 @@ const mapDispatchToProps = (dispatch) => ({
     fetchPostData: (id) => dispatch(action.fetchPostData(id)),
     onDismissModal: () => dispatch(action.dismissMessage()),
     onCancel: () => dispatch(action.cancel()),
-    loadLocation: (coordinates) =>
+    getLocation: (coordinates) =>
         dispatch(action.onLocationChange(coordinates)),
 });
 

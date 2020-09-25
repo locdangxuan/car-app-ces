@@ -8,8 +8,7 @@ const initState = {
     pending: false,
     images: [],
     data: undefined,
-    location:
-        '{"place":"Da Nang,Vietnam","coor":{"lat":16.054796,"lng":108.220891}}',
+    location: undefined,
 };
 
 const postReducer = (state = initState, action) => {
