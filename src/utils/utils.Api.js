@@ -5,7 +5,6 @@ const getFormDataForPost = (payload) => {
     data.append('year', payload.year);
     data.append('fuelType', payload.fuelType);
     data.append('distanceTraveled', payload.distanceTraveled);
-    data.append('location', payload.location);
     data.append('price', payload.price);
     data.append('information', payload.information);
     data.append('location', payload.location);

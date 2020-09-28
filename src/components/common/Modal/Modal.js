@@ -68,7 +68,10 @@ const ModalBase = (props) => {
                         <Span isValid={props.isSuccess}>{alertMessage}</Span>
                     </Body>
                     <Footer type="single">
-                        <Button onClick={onCancelHandler} isSuccess={false}>
+                        <Button
+                            onClick={onCancelHandler}
+                            isSuccess={props.isSuccess}
+                        >
                             OK
                         </Button>
                     </Footer>

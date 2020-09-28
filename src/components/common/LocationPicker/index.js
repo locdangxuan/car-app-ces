@@ -7,14 +7,18 @@ import PropTypes from 'prop-types';
 import utils from 'utils/utils';
 import Wrapper from './styles';
 
-const defaultLatLng = { lat: 16.054796, lng: 108.220891 };
-
 const LocationPicker = (props) => {
-    const { onLocationChangeHandler } = props;
+    const { onLocationChangeHandler, defaultLocation } = props;
+    let defaultLat = 16.054745932122085;
+    let defaultLng = 108.2209027359643;
+    if (defaultLocation) {
+        defaultLat = JSON.parse(defaultLocation).coor.lat;
+        defaultLng = JSON.parse(defaultLocation).coor.lng;
+    }
     let marker;
     useEffect(() => {
-        const map = utils.mapInit(defaultLatLng);
-        marker = utils.marketInit(defaultLatLng);
+        const map = utils.mapInit({ lat: defaultLat, lng: defaultLng });
+        marker = utils.marketInit({ lat: defaultLat, lng: defaultLng });
         marker.addTo(map).bindPopup('Danang, Vietnam');
         map.on('dblclick', async (event) => {
             if (marker) map.removeLayer(marker);
@@ -29,10 +33,12 @@ const LocationPicker = (props) => {
 
 LocationPicker.propTypes = {
     onLocationChangeHandler: PropTypes.func,
+    defaultLocation: PropTypes.string,
 };
 
 LocationPicker.defaultProps = {
     onLocationChangeHandler: () => {},
+    defaultLocation: '',
 };
 
 const mapDispatchToProps = (dispatch) => ({
