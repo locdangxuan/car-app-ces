@@ -327,7 +327,7 @@ const Form = (props) => {
                 </Field>
                 <Field>
                     <Span>Location</Span>
-                    <Input value={utils.getLocationString(location)} />
+                    <Input readOnly value={utils.getLocationString(location)} />
                 </Field>
                 <LocationPicker defaultLocation={location} />
                 <Field>

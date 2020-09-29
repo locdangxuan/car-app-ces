@@ -1,4 +1,4 @@
-import { fontFamilies } from 'config/constants/Fonts';
+import { fontFamilies, fontSize } from 'config/constants/Fonts';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core';
@@ -21,7 +21,7 @@ const useStyles = makeStyles({
         fontFamily: fontFamilies.ssfLucida,
     },
     edit: {
-        fontSize: '18px',
+        fontSize: fontSize.medium,
         fontWeight: 'bold',
         backgroundColor: 'red',
         width: '15%',

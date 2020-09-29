@@ -1,9 +1,21 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable react/prop-types */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
-import { Grid, Box, Typography, Button } from '@material-ui/core';
+import {
+    Grid,
+    Box,
+    Typography,
+    Button,
+    Table,
+    TableContainer,
+    TableHead,
+    TableBody,
+    TableRow,
+    TableCell,
+} from '@material-ui/core';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import {
@@ -40,14 +52,16 @@ const PostDetails = (props) => {
             fuelType,
             distanceTraveled,
             seller,
+            email,
+            phone,
             specs,
             location,
+            editable,
         } = details;
         const specifications = Object.keys(specs).map((element) => [
             element,
             details.specs[element],
         ]);
-        const { displayName } = utils.getProfile();
         return (
             <Grid container className={classes.globalContent}>
                 <Grid item xs={9} className={`${classes.column}`}>
@@ -133,47 +147,83 @@ const PostDetails = (props) => {
                                 component={component.div}
                                 className={classes.specificationDetails}
                             >
-                                {specifications.map((item) => {
-                                    return (
-                                        <Box
-                                            key={item}
-                                            component={component.div}
-                                            className={
-                                                classes.specificationContent
-                                            }
-                                        >
-                                            <Typography
-                                                variant={variant.subtitle1}
-                                                className={
-                                                    classes.specificationKey
-                                                }
-                                            >
-                                                {item[0]}
-                                            </Typography>
-                                            <Typography
-                                                variant={variant.subtitle1}
-                                                className={
-                                                    classes.specificationValue
-                                                }
-                                            >
-                                                {item[1]}
-                                            </Typography>
-                                        </Box>
-                                    );
-                                })}
+                                <TableContainer>
+                                    <Table className={classes.table}>
+                                        <TableHead>
+                                            <TableRow>
+                                                <TableCell
+                                                    className={`${classes.tableColor} ${classes.tableHead}`}
+                                                    align="center"
+                                                >
+                                                    Specs
+                                                </TableCell>
+                                                <TableCell
+                                                    className={`${classes.tableColor} ${classes.tableHead}`}
+                                                    align="center"
+                                                >
+                                                    Value
+                                                </TableCell>
+                                            </TableRow>
+                                        </TableHead>
+                                        <TableBody>
+                                            {specifications.map((item) => {
+                                                return (
+                                                    <TableRow key={item}>
+                                                        <TableCell
+                                                            className={
+                                                                classes.tableColor
+                                                            }
+                                                            component="th"
+                                                            scope="row"
+                                                            align="center"
+                                                        >
+                                                            {item[0].replace(
+                                                                /:/,
+                                                                ''
+                                                            )}
+                                                        </TableCell>
+                                                        <TableCell
+                                                            align="center"
+                                                            className={
+                                                                classes.tableColor
+                                                            }
+                                                        >
+                                                            {item[1]}
+                                                        </TableCell>
+                                                    </TableRow>
+                                                );
+                                            })}
+                                        </TableBody>
+                                    </Table>
+                                </TableContainer>
                             </Box>
                         </Box>
                     </Box>
                 </Grid>
                 <Grid item xs={3}>
-                    <Box component={component.div} className={classes.wrapper}>
+                    <Box
+                        component={component.div}
+                        className={` ${classes.wrapper} ${classes.sellerInfo}`}
+                    >
                         <Typography
                             variant={variant.subtitle1}
                             className={classes.specificationValue}
                         >
-                            {seller}
+                            Seller: {seller}
                         </Typography>
-                        {displayName === seller && (
+                        <Typography
+                            variant={variant.subtitle1}
+                            className={classes.specificationValue}
+                        >
+                            Email: {email}
+                        </Typography>
+                        <Typography
+                            variant={variant.subtitle1}
+                            className={classes.specificationValue}
+                        >
+                            Phone Number: {phone}
+                        </Typography>
+                        {editable && (
                             <StyledLink to={`/posts/update/${id}`}>
                                 <Button
                                     variant={variant.contained}

@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import { Button } from 'components/common';
+import color from 'config/constants/Colors';
 
 const Background = styled.section`
     display: flex;
@@ -8,7 +10,17 @@ const Background = styled.section`
     background-size: cover;
     background-position: center;
     justify-content: flex-end;
+    &:hover {
+        cursor: pointer;
+        ${Button} {
+            display: block;
+            opacity: 0.7;
+            border: none;
+            background: ${color.backgroundImage};
+        }
+    }
 `;
+
 const Wrapper = styled.section`
     margin: 10px;
     padding: 4px;
@@ -18,4 +30,21 @@ const Wrapper = styled.section`
         props.theme.imageCard.height ? props.theme.imageCard.height : '38vh'};
     background: ${(props) => props.theme.color.transparent};
 `;
-export { Wrapper, Background };
+
+const theme = {
+    button: {
+        width: '100%',
+        height: '100%',
+        margin: '0',
+        borderColor: color.transparent,
+        backgroundColor: color.transparent,
+        display: 'none',
+    },
+    image: {
+        width: '100%',
+        height: '100%',
+        color: color.white,
+    },
+};
+
+export { Wrapper, Background, theme };

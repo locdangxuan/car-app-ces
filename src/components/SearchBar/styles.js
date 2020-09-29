@@ -29,7 +29,7 @@ const useStyles = makeStyles(() => ({
         color: Color.white,
         paddingLeft: '30px',
         '& p': {
-            fontSize: '18px',
+            fontSize: fontSize.medium,
         },
     },
     keyword: {

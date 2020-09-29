@@ -15,6 +15,7 @@ const Button = styled.button`
     width: ${(props) => props.theme.button.width};
     height: ${(props) => props.theme.button.height};
     border-radius: ${(props) => props.theme.button.borderRadius};
+    display: ${(props) => props.theme.button.display};
     color: ${(props) => props.theme.button.color};
     background-color: ${(props) => props.theme.button.backgroundColor};
     --onActiveBorderColor: ${(props) => {
@@ -48,7 +49,6 @@ const Button = styled.button`
         props.theme.button.fontSize ? props.theme.button.fontSize : ''};
     margin: ${(props) => props.theme.button.margin};
     margin-left: ${(props) => props.theme.button.marginLeft};
-    display: ${(props) => props.theme.color.display};
     opacity: 0.85;
 `;
 

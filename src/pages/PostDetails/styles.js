@@ -10,7 +10,7 @@ const StyledLink = styled(Link)`
 
 const useStyles = makeStyles({
     globalContent: {
-        padding: '0 15px',
+        padding: '5vh 15px',
         fontFamily: fontFamilies.ssfLucida,
         color: Color.white,
     },
@@ -71,8 +71,22 @@ const useStyles = makeStyles({
     specificationContent: {
         display: 'flex',
     },
+    sellerInfo: {
+        padding: '20px 0',
+        textAlign: 'center',
+    },
     specificationValue: {
-        marginLeft: '10px',
+        margin: '0 0 10px 10px',
+    },
+    table: {
+        minWidth: 650,
+    },
+    tableColor: {
+        color: Color.white,
+        border: `1px solid ${Color.tableBorderColor}`,
+    },
+    tableHead: {
+        fontSize: '30px',
     },
 });
 

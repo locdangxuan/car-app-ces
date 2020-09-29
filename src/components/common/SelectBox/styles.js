@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
-import { fontFamilies } from 'config/constants/Fonts';
+import { fontFamilies, fontSize } from 'config/constants/Fonts';
 import Color from 'config/constants/Colors';
 
 const useStyles = makeStyles(() => ({
@@ -24,7 +24,7 @@ const useStyles = makeStyles(() => ({
     name: {
         width: '100px',
         fontFamily: fontFamilies.ssfLucida,
-        fontSize: '18px',
+        fontSize: fontSize.medium,
     },
 }));
 
