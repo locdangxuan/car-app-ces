@@ -15,6 +15,8 @@ const borderStyledMenu = '#d3d4d5';
 const primary = 'primary';
 const defaultColor = 'default';
 const backgroundModal = 'rgba(0, 0, 0, 0.7)';
+const backgroundImage = 'rgba(255,255,255,0.7)';
+const tableBorderColor = 'rgba(224, 224, 224, 1)';
 
 export default {
     white,
@@ -34,4 +36,6 @@ export default {
     primary,
     backgroundModal,
     defaultColor,
+    backgroundImage,
+    tableBorderColor,
 };

@@ -61,9 +61,15 @@ const update = async (payload, token) => {
     }
 };
 
-const fetch = async (id) => {
+const fetch = async (id, token) => {
     try {
-        const result = await axios.get(`${api.post.get}${id}`);
+        const result = await axios({
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            method: 'GET',
+            url: `${api.post.get}${id}`,
+        });
         return result.data;
     } catch (error) {
         apiUtils.apiErrorHandler(error);

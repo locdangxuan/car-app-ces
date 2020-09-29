@@ -200,10 +200,16 @@ const update = (payload) => {
 };
 
 const fetchPostData = (id) => {
+    let token = '';
+    try {
+        token = utils.getToken();
+    } catch (error) {
+        token = '';
+    }
     return async (dispatch, getState) => {
         dispatch(onRequest(POSTS.REQUEST));
         try {
-            const result = await api.fetch(id);
+            const result = await api.fetch(id, token);
             dispatch(onFetchPostSuccess(result.data));
         } catch (error) {
             dispatch(onFetchPostFailure());
