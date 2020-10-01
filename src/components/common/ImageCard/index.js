@@ -7,7 +7,6 @@ import { Wrapper, Background, theme } from './styles';
 
 const ImageCard = (props) => {
     const { imgSrc, removeImage, index } = props;
-
     const onClickHandler = () => {
         removeImage(index);
     };

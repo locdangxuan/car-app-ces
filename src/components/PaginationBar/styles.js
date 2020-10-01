@@ -16,6 +16,7 @@ const styles = (theme) => ({
                     },
                     '&:hover': {
                         background: Color.grey,
+                        color: Color.white,
                     },
                 },
             },

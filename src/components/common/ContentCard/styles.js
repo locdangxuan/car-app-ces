@@ -7,11 +7,6 @@ import Color from 'config/constants/Colors';
 const StyledLink = styled(Link)`
     text-decoration: none;
     color: ${Color.white};
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 `;
 
 const useStyles = makeStyles({
@@ -19,16 +14,20 @@ const useStyles = makeStyles({
         background: Color.transparent,
         color: Color.white,
         fontFamily: fontFamilies.ssfLucida,
+        position: 'relative',
     },
     edit: {
         fontSize: fontSize.medium,
         fontWeight: 'bold',
         backgroundColor: 'red',
         width: '15%',
-        height: '15%',
+        height: '10%',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
+        position: 'absolute',
+        top: 0,
+        right: 0,
     },
     textCenter: {
         textAlign: 'center',

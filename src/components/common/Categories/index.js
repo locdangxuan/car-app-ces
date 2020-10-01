@@ -45,7 +45,9 @@ const Categories = () => {
                     YEAR
                     <ExpandMore />
                 </ModelCategoryButton>
-                <ModelCategoryButton>CONTACT</ModelCategoryButton>
+                <StyledLink to="/contacts">
+                    <ModelCategoryButton>CONTACT</ModelCategoryButton>
+                </StyledLink>
             </ModelCategories>
         </ThemeProvider>
     );

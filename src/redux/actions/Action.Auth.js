@@ -1,5 +1,6 @@
 import authService from 'services/api/Api.Authentication';
 import { REGISTER, LOGIN, AUTH, LOGOUT } from 'config/constants/Action.Types';
+import * as action from 'redux/actions/Action.GetCar';
 import * as statusCode from 'config/constants/StatusCode';
 import { MESSAGE_ERROR } from 'config/messages/Messages.Auth';
 import validator from 'services/validator/FieldsValidator';
@@ -81,6 +82,7 @@ const login = (fields) => {
                 validator.loginValidator(fields);
                 const payload = await authService.login(fields);
                 dispatch(loginSuccess(payload));
+                dispatch(action.actRequestProducts());
             } catch (errorRes) {
                 dispatch(loginFailure(JSON.parse(errorRes.message)));
             }
@@ -92,6 +94,7 @@ const logout = () => {
     return (dispatch) => {
         authService.logout();
         dispatch(logoutSuccess());
+        dispatch(action.actRequestProducts());
     };
 };
 
