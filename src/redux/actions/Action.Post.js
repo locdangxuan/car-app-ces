@@ -5,6 +5,7 @@ import api from 'services/api/Api.Post';
 import { loadLocationByCoor } from 'services/api/Api.Utils';
 import { POSTS, MODELS, BRANDS } from 'config/constants/Action.Types';
 import validator from 'services/validator/FieldsValidator';
+import * as utilsConstants from 'config/constants/Utils';
 import { MESSAGE_ERROR } from 'config/messages/Messages.Post';
 
 const onUploadSuccess = (payload) => ({
@@ -53,6 +54,78 @@ const onFetchPostFailure = () => ({
 const dismissMessage = () => ({
     type: POSTS.DISMISS_MESSAGE,
 });
+const onLoadReviewsSuccess = (payload) => ({
+    type: POSTS.REVIEWS.LOAD_REVIEWS_SUCCEED,
+    reviewList: payload.list,
+    pagination: payload.pagination,
+});
+const onLoadReviewFailure = () => ({
+    type: POSTS.REVIEWS.LOAD_REVIEWS_FAILED,
+    message: MESSAGE_ERROR.LOAD_REVIEWS_FAILURE,
+});
+const onCreateReviewsSuccess = (payload) => ({
+    type: POSTS.REVIEWS.CREATE_REVIEW_SUCCEED,
+    message: payload.message,
+});
+const onCreateReviewsFailure = (error) => ({
+    type: POSTS.REVIEWS.CREATE_REVIEW_FAILED,
+    message: error.message,
+});
+const onDeleteReviewsSuccess = (payload) => ({
+    type: POSTS.REVIEWS.DELETE_REVIEW_SUCCEED,
+    message: payload.message,
+});
+const onDeleteReviewsFailure = (error) => ({
+    type: POSTS.REVIEWS.DELETE_REVIEW_FAILED,
+    message: error.message,
+});
+const loadReviews = (id, page) => {
+    let token = '';
+    try {
+        token = utils.getToken();
+    } catch (error) {
+        token = '';
+    }
+    return async (dispatch, getState) => {
+        dispatch(onRequest(POSTS.REVIEWS.FETCH_REQUEST));
+        await setTimeout(async () => {
+            try {
+                const result = await api.loadReviews(id, page, token);
+                dispatch(onLoadReviewsSuccess(result.data));
+            } catch (error) {
+                dispatch(onLoadReviewFailure());
+            }
+        }, utilsConstants.delayTime);
+    };
+};
+const createReview = (id, content) => {
+    return async (dispatch, getState) => {
+        dispatch(onRequest(POSTS.REVIEWS.REQUEST));
+        await setTimeout(async () => {
+            try {
+                const token = utils.getToken();
+                const result = await api.createReview(id, content, token);
+                dispatch(onCreateReviewsSuccess(result));
+            } catch (error) {
+                dispatch(onCreateReviewsFailure(JSON.parse(error.message)));
+            }
+        }, utilsConstants.delayTime);
+    };
+};
+const deleteReview = (id) => {
+    return async (dispatch, getState) => {
+        dispatch(onRequest(POSTS.REVIEWS.REQUEST));
+        await setTimeout(async () => {
+            try {
+                const token = utils.getToken();
+                const result = await api.deleteReview(id, token);
+                dispatch(onDeleteReviewsSuccess(result));
+            } catch (error) {
+                dispatch(onDeleteReviewsFailure(JSON.parse(error.message)));
+            }
+        }, utilsConstants.delayTime);
+    };
+};
 const loadBrands = () => {
     return async (dispatch, getState) => {
         dispatch(onRequest(BRANDS.REQUEST));
@@ -157,7 +230,7 @@ const upload = (payload) => {
             } catch (error) {
                 dispatch(onUploadFailure(JSON.parse(error.message)));
             }
-        }, 2000);
+        }, utilsConstants.delayTime);
     };
 };
 
@@ -195,7 +268,7 @@ const update = (payload) => {
             } catch (error) {
                 dispatch(onUpdateFailure(JSON.parse(error.message)));
             }
-        }, 2000);
+        }, utilsConstants.delayTime);
     };
 };
 
@@ -250,4 +323,7 @@ export default {
     fetchPostData,
     dismissMessage,
     onLocationChange,
+    loadReviews,
+    createReview,
+    deleteReview,
 };

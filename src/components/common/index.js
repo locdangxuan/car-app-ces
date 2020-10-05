@@ -18,9 +18,13 @@ import Login from './Login';
 import Register from './Register';
 import LocationPicker from './LocationPicker';
 import ContentCard from './ContentCard';
+import Review from './Review';
+import TextEditor from './TextEditor';
 
 export {
+    TextEditor,
     LocationPicker,
+    Review,
     Textarea,
     ImageCard,
     Field,

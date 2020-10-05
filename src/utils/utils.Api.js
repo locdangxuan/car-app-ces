@@ -1,3 +1,6 @@
+import * as statusCode from 'config/constants/StatusCode';
+import { MESSAGE_ERROR } from 'config/messages/Messages.Auth';
+
 const getFormDataForPost = (payload) => {
     const data = new FormData();
     data.append('idModel', payload.model);
@@ -20,7 +23,7 @@ const getFormDataForPost = (payload) => {
     return data;
 };
 
-const apiErrorHandler = (error) => {
+const authApiErrorHandler = (error) => {
     if (error.message === 'Network Error') {
         const { message } = error;
         throw new Error(JSON.stringify({ message }));
@@ -31,4 +34,24 @@ const apiErrorHandler = (error) => {
     }
 };
 
-export default { getFormDataForPost, apiErrorHandler };
+const apiErrorHandler = (error) => {
+    if (error.message === 'Network Error') {
+        const { message } = error;
+        throw new Error(JSON.stringify({ message }));
+    } else {
+        const { status, data } = error.response;
+        if (status === statusCode.UNAUTHORIZED)
+            throw new Error(
+                JSON.stringify({
+                    status,
+                    message: MESSAGE_ERROR.UNAUTHORIZED,
+                })
+            );
+        else {
+            const { message } = data;
+            throw new Error(JSON.stringify({ status, message }));
+        }
+    }
+};
+
+export default { getFormDataForPost, apiErrorHandler, authApiErrorHandler };

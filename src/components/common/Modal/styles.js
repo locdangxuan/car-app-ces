@@ -57,6 +57,7 @@ const Content = styled.section`
     display: flex;
     align-items: center;
     width: 400px;
+    text-align: center;
     text-transform: uppercase;
     background-color: ${(props) => props.theme.color.white};
     flex-direction: column;

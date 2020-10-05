@@ -19,8 +19,13 @@ const Span = styled.span`
     width: ${(props) => (props.theme.span.width ? props.theme.span.width : '')};
     display: ${(props) => props.theme.span.display};
     margin: ${(props) => props.theme.span.margin};
-    text-align: ${(props) => props.theme.span.text_align};
-    ${(props) => props.theme.font};
+    max-width: ${(props) =>
+        props.theme.span.maxWidth ? props.theme.span.maxWidth : ''};
+    text-align: ${(props) => props.theme.span.textAlign};
+    ${(props) => {
+        if (props.theme.span.font) return props.theme.span.font;
+        return props.theme.font;
+    }};
 `;
 
 const ModalSpan = styled(Span)`
