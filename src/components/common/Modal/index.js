@@ -41,7 +41,9 @@ const Modal = (props) => {
             return (
                 <ModalBase
                     type={modal.type.alert}
+                    onSubmit={props.onSubmit}
                     handlerToggle={props.handlerToggle}
+                    warningType={props.warningType}
                     alertMessage={props.alertMessage}
                     isSuccess={isSuccess}
                 />
@@ -54,10 +56,12 @@ const Modal = (props) => {
 Modal.propTypes = {
     type: PropTypes.string,
     handlerToggle: PropTypes.func,
+    onSubmit: PropTypes.func,
     onSubmitLogin: PropTypes.func,
     onSubmitRegister: PropTypes.func,
     alertMessage: PropTypes.string,
     isSuccess: PropTypes.bool,
+    warningType: PropTypes.bool,
 };
 
 Modal.defaultProps = {
@@ -67,6 +71,8 @@ Modal.defaultProps = {
     onSubmitRegister: () => {},
     alertMessage: '',
     isSuccess: false,
+    warningType: false,
+    onSubmit: () => {},
 };
 const mapDispatchToProps = (dispatch) => {
     return {

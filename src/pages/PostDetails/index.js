@@ -27,6 +27,7 @@ import {
     LocalGasStation,
 } from '@material-ui/icons';
 import { Carousel } from 'components/common';
+import { ReviewsLayout } from 'components';
 import action from 'redux/actions/Action.Post';
 import variant from 'config/constants/Variant';
 import component from 'config/constants/Components';
@@ -196,6 +197,17 @@ const PostDetails = (props) => {
                                         </TableBody>
                                     </Table>
                                 </TableContainer>
+                            </Box>
+                            <Box
+                                className={`${classes.specificationTitle} ${classes.wrapper}`}
+                            >
+                                Reviews
+                            </Box>
+                            <Box
+                                component={component.div}
+                                className={classes.specificationDetails}
+                            >
+                                <ReviewsLayout id={id} />
                             </Box>
                         </Box>
                     </Box>

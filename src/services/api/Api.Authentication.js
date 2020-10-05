@@ -11,7 +11,7 @@ const register = async (fields) => {
         const result = await axios.post(api.user.register, fields);
         return result.data;
     } catch (error) {
-        apiUtil.apiErrorHandler(error);
+        apiUtil.authApiErrorHandler(error);
     }
 };
 
@@ -27,7 +27,7 @@ const login = async (fields) => {
         cookies.set(utilsConstants.token, token, { path: '/' });
         return { status, message };
     } catch (error) {
-        apiUtil.apiErrorHandler(error);
+        apiUtil.authApiErrorHandler(error);
     }
 };
 

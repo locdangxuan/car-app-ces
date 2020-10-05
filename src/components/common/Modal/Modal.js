@@ -17,7 +17,7 @@ import { Wrapper, Content, Header, Footer, Body } from './styles';
 const ModalBase = (props) => {
     let alertMessage = '';
     const onSubmitHandler = () => {
-        let payload = {};
+        const { onSubmit } = props;
         switch (props.type) {
             case modal.type.register:
                 {
@@ -29,7 +29,7 @@ const ModalBase = (props) => {
                         password,
                         verification,
                     } = props;
-                    payload = {
+                    const payload = {
                         username: username.toLowerCase(),
                         phone: phonenumber,
                         displayName: displayname,
@@ -37,25 +37,29 @@ const ModalBase = (props) => {
                         password,
                         verification,
                     };
+                    onSubmit(payload);
                 }
                 break;
             case modal.type.login:
                 {
                     const { username, password } = props;
-                    payload = { username: username.toLowerCase(), password };
+                    const payload = {
+                        username: username.toLowerCase(),
+                        password,
+                    };
+                    onSubmit(payload);
                 }
                 break;
             default:
+                onSubmit(true);
                 break;
         }
-        const { onSubmit } = props;
-        onSubmit(payload);
     };
     const onCancelHandler = () => {
         props.handlerToggle();
         props.onCancel();
     };
-    const { message, isValid, pending, type } = props;
+    const { message, isValid, pending, type, warningType } = props;
     if (type === modal.type.alert) {
         alertMessage = props.alertMessage;
     }
@@ -67,14 +71,28 @@ const ModalBase = (props) => {
                     <Body>
                         <Span isValid={props.isSuccess}>{alertMessage}</Span>
                     </Body>
-                    <Footer type="single">
-                        <Button
-                            onClick={onCancelHandler}
-                            isSuccess={props.isSuccess}
-                        >
-                            OK
-                        </Button>
-                    </Footer>
+                    {warningType === true ? (
+                        <Footer type="dual">
+                            <Button onClick={onCancelHandler} isSuccess>
+                                Cancel
+                            </Button>
+                            <Button
+                                onClick={onSubmitHandler}
+                                isSuccess={props.isSuccess}
+                            >
+                                OK
+                            </Button>
+                        </Footer>
+                    ) : (
+                        <Footer type="single">
+                            <Button
+                                onClick={onCancelHandler}
+                                isSuccess={props.isSuccess}
+                            >
+                                OK
+                            </Button>
+                        </Footer>
+                    )}
                 </Content>
             ) : (
                 <Content>
@@ -123,6 +141,7 @@ ModalBase.propTypes = {
     onCancel: PropTypes.func,
     alertMessage: PropTypes.string,
     isSuccess: PropTypes.bool,
+    warningType: PropTypes.bool,
 };
 
 ModalBase.defaultProps = {
@@ -141,6 +160,7 @@ ModalBase.defaultProps = {
     onCancel: () => {},
     alertMessage: '',
     isSuccess: false,
+    warningType: false,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ModalBase);

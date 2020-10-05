@@ -5,6 +5,7 @@ import SearchBar from './SearchBar';
 import SearchResults from './SearchResults';
 import PaginationBar from './PaginationBar';
 import ContactPanel from './ContactPanel';
+import ReviewsLayout from './ReviewsLayout';
 
 export {
     Header,
@@ -14,4 +15,5 @@ export {
     SearchResults,
     PaginationBar,
     ContactPanel,
+    ReviewsLayout,
 };

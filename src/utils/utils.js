@@ -85,6 +85,10 @@ const getProfile = () => {
     }
 };
 
+const timestampZToDate = (timestamp) => {
+    return new Date(timestamp).toLocaleDateString('en-US');
+};
+
 const getLocationString = (location) => JSON.parse(location).place;
 
 const mapInit = (defaultLatLng, zoomRatio = 6) => {
@@ -114,4 +118,5 @@ export default {
     getLocationString,
     mapInit,
     marketInit,
+    timestampZToDate,
 };

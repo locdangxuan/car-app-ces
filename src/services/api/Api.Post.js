@@ -75,4 +75,66 @@ const fetch = async (id, token) => {
         apiUtils.apiErrorHandler(error);
     }
 };
-export default { loadBrands, loadModel, create, fetch, update };
+
+const loadReviews = async (id, page, token) => {
+    try {
+        const result = await axios({
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            method: 'GET',
+            url: `${api.reviews.get}${id}`,
+            params: {
+                page,
+                limit: 5,
+            },
+        });
+        return result.data;
+    } catch (error) {
+        apiUtils.apiErrorHandler(error);
+    }
+};
+
+const createReview = async (id, content, token) => {
+    try {
+        const result = await axios({
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            method: api.reviews.create.method,
+            url: api.reviews.create.url,
+            data: {
+                idPost: id,
+                content,
+            },
+        });
+        return result.data;
+    } catch (error) {
+        apiUtils.apiErrorHandler(error);
+    }
+};
+
+const deleteReview = async (id, token) => {
+    try {
+        const result = await axios({
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            method: api.reviews.delete.method,
+            url: `${api.reviews.delete.url}${id}`,
+        });
+        return result.data;
+    } catch (error) {
+        apiUtils.apiErrorHandler(error);
+    }
+};
+export default {
+    loadBrands,
+    loadModel,
+    create,
+    fetch,
+    update,
+    loadReviews,
+    createReview,
+    deleteReview,
+};

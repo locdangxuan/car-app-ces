@@ -9,10 +9,73 @@ const initState = {
     images: [],
     data: undefined,
     location: undefined,
+    reviews: {
+        reviewsList: [],
+        pagination: 0,
+    },
 };
 
 const postReducer = (state = initState, action) => {
     switch (action.type) {
+        case POSTS.REVIEWS.REQUEST:
+            return {
+                ...state,
+                pending: true,
+            };
+        case POSTS.REVIEWS.FETCH_REQUEST:
+            return {
+                ...state,
+                pending: true,
+                reviews: {},
+            };
+        case POSTS.REVIEWS.LOAD_REVIEWS_SUCCEED:
+            return {
+                ...state,
+                pending: false,
+                reviews: {
+                    reviewList: action.reviewList,
+                    pagination: action.pagination,
+                },
+            };
+        case POSTS.REVIEWS.LOAD_REVIEWS_FAILED:
+            return {
+                ...state,
+                pending: false,
+                message: action.message,
+                isSuccess: false,
+                reviews: {
+                    reviewList: [],
+                    pagination: 0,
+                },
+            };
+        case POSTS.REVIEWS.CREATE_REVIEW_SUCCEED:
+            return {
+                ...state,
+                pending: false,
+                message: action.message,
+                isSuccess: true,
+            };
+        case POSTS.REVIEWS.CREATE_REVIEW_FAILED:
+            return {
+                ...state,
+                pending: false,
+                message: action.message,
+                isSuccess: false,
+            };
+        case POSTS.REVIEWS.DELETE_REVIEW_SUCCEED:
+            return {
+                ...state,
+                pending: false,
+                message: action.message,
+                isSuccess: true,
+            };
+        case POSTS.REVIEWS.DELETE_REVIEW_FAILED:
+            return {
+                ...state,
+                pending: false,
+                isSuccess: false,
+                message: action.message,
+            };
         case POSTS.REQUEST:
             return {
                 ...state,

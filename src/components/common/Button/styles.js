@@ -1,17 +1,17 @@
 import styled from 'styled-components';
 
 const Button = styled.button`
-    border: 1.8px solid
-        ${(props) => {
-            switch (props.isSuccess) {
-                case true:
-                    return props.theme.color.success;
-                case false:
-                    return props.theme.color.danger;
-                default:
-                    return props.theme.color.white;
-            }
-        }};
+    border: ${(props) => {
+        if (props.theme.button.border === 'none') return 'none';
+        switch (props.isSuccess) {
+            case true:
+                return `1.8px solid ${props.theme.color.success}`;
+            case false:
+                return `1.8px solid ${props.theme.color.danger}`;
+            default:
+                return `1.8px solid ${props.theme.color.white}`;
+        }
+    }};
     width: ${(props) => props.theme.button.width};
     height: ${(props) => props.theme.button.height};
     border-radius: ${(props) => props.theme.button.borderRadius};
@@ -19,6 +19,9 @@ const Button = styled.button`
     color: ${(props) => props.theme.button.color};
     background-color: ${(props) => props.theme.button.backgroundColor};
     --onActiveBorderColor: ${(props) => {
+        if (props.theme.button.borderColor) {
+            return props.theme.button.borderColor;
+        }
         switch (props.isSuccess) {
             case true:
                 return props.theme.color.success;

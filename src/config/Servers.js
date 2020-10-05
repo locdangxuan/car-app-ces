@@ -1,7 +1,6 @@
 import 'dotenv/config';
 
-const server =
-    process.env.REACT_APP_API_SERVER || 'https://car-app-ces.tk/api/';
+const server = process.env.REACT_APP_API_SERVER || 'http://localhost:3002/api/';
 const geocodeServer =
     'https://api.bigdatacloud.net/data/reverse-geocode-client';
 
@@ -29,6 +28,17 @@ const api = {
     },
     geocode: {
         get: geocodeServer,
+    },
+    reviews: {
+        get: `${server}reviews/post/`,
+        create: {
+            url: `${server}reviews/`,
+            method: 'POST',
+        },
+        delete: {
+            url: `${server}reviews/`,
+            method: 'DELETE',
+        },
     },
 };
 

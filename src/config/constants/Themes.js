@@ -26,7 +26,7 @@ const input = {
 };
 
 const span = {
-    text_align: 'center',
+    textAlign: 'center',
 };
 
 const image = {
