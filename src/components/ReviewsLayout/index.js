@@ -5,9 +5,10 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Review, TextEditor, Loader, Modal } from 'components/common';
 import action from 'redux/actions/Action.Post';
+import { withStyles } from '@material-ui/core';
 import Pagination from '@material-ui/lab/Pagination';
 import { modal } from 'config/constants/Utils';
-import { Wrapper, PaginattionWrapper } from './styles';
+import { Wrapper, PaginattionWrapper, styles } from './styles';
 
 const ReviewsLayout = (props) => {
     const {
@@ -20,10 +21,13 @@ const ReviewsLayout = (props) => {
         message,
         isSuccess,
         onDismissModal,
+        classes,
     } = props;
     const [alertState, setAlertState] = useState(false);
     const { reviewList, pagination } = reviews;
-    const onChangeHandler = () => {};
+    const onChangeHandler = (event, value) => {
+        fetchReviews(id, value);
+    };
     useEffect(() => {
         if (id) fetchReviews(id);
     }, []);
@@ -36,7 +40,7 @@ const ReviewsLayout = (props) => {
     const onAlertToggle = () => {
         onDismissModal();
         setAlertState(false);
-        fetchReviews(id);
+        if (isSuccess) fetchReviews(id);
     };
     const onDeleteHandler = (reviewId) => {
         deleteReView(reviewId);
@@ -66,7 +70,8 @@ const ReviewsLayout = (props) => {
                 ))}
             <PaginattionWrapper>
                 <Pagination
-                    count={pagination}
+                    className={classes.root}
+                    count={pagination && pagination.lastPage}
                     defaultPage={1}
                     color="primary"
                     onChange={onChangeHandler}
@@ -85,4 +90,7 @@ const mapDispatchToProps = (dispatch) => ({
     deleteReView: (id) => dispatch(action.deleteReview(id)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ReviewsLayout);
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(withStyles(styles)(ReviewsLayout));

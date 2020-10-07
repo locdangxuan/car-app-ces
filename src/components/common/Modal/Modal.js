@@ -67,7 +67,7 @@ const ModalBase = (props) => {
         <Wrapper>
             {type === modal.type.alert ? (
                 <Content>
-                    <Header>{type}</Header>
+                    <Header>{!props.isSuccess ? 'Error' : 'Message'}</Header>
                     <Body>
                         <Span isValid={props.isSuccess}>{alertMessage}</Span>
                     </Body>
