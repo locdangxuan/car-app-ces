@@ -36,6 +36,7 @@ const Review = (props) => {
                                 </Span>
                             </TitleWrapper>
                             <Textarea
+                                value={content}
                                 disabled
                                 heightToggle={showmore ? '100px' : '60'}
                             >

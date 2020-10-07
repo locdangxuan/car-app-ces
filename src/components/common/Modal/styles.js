@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { fontHeader } from 'config/mixins/Fonts';
+import globalTheme from 'config/constants/Themes';
 
 const Body = styled.section`
     margin: 30px;
@@ -49,17 +50,27 @@ const Footer = styled.section`
     }};
     margin: 2vw 0 1vw;
 `;
+const Dismiss = styled.section`
+    margin-top: 11px;
+    margin-right: 11px;
+    float: right;
+`;
+const Cover = styled.section`
+    display: block;
+    background-color: ${(props) => props.theme.color.white};
+    border-radius: 10px;
+    max-width: 450px;
+`;
 const Content = styled.section`
-    padding: 25px;
+    padding: 0 25px 25px;
     z-index: 1000;
     opacity: 1;
-    border-radius: 10px;
     display: flex;
-    align-items: center;
     width: 400px;
+    align-items: center;
     text-align: center;
     text-transform: uppercase;
-    background-color: ${(props) => props.theme.color.white};
+    background-color: ${(props) => props.theme.color.transparent};
     flex-direction: column;
     animation: popup linear 0.2s;
 
@@ -74,4 +85,10 @@ const Content = styled.section`
         }
     }
 `;
-export { Content, Wrapper, Body, Header, Footer };
+const theme = {
+    button: {
+        ...globalTheme.button,
+        width: '30px',
+    },
+};
+export { Content, Wrapper, Body, Header, Footer, Dismiss, Cover, theme };

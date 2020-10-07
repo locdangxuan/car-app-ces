@@ -17,6 +17,7 @@ const defaultColor = 'default';
 const backgroundModal = 'rgba(0, 0, 0, 0.7)';
 const backgroundImage = 'rgba(255,255,255,0.7)';
 const tableBorderColor = 'rgba(224, 224, 224, 1)';
+const hoverColorNavigationDetails = '#00a5ff';
 
 export default {
     white,
@@ -38,4 +39,5 @@ export default {
     defaultColor,
     backgroundImage,
     tableBorderColor,
+    hoverColorNavigationDetails,
 };

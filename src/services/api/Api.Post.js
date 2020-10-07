@@ -86,7 +86,7 @@ const loadReviews = async (id, page, token) => {
             url: `${api.reviews.get}${id}`,
             params: {
                 page,
-                limit: 5,
+                limit: 4,
             },
         });
         return result.data;

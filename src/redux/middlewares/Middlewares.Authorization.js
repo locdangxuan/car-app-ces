@@ -24,7 +24,4 @@ const verifyToken = rad.denylist(
     ],
     checkToken
 );
-const logger = (store) => (next) => (action) => {
-    next(action);
-};
-export { verifyToken, logger };
+export { verifyToken };

@@ -12,6 +12,9 @@ const Button = styled.button`
                 return `1.8px solid ${props.theme.color.white}`;
         }
     }};
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: ${(props) => props.theme.button.width};
     height: ${(props) => props.theme.button.height};
     border-radius: ${(props) => props.theme.button.borderRadius};
