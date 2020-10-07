@@ -25,8 +25,10 @@ const handleError = (errorRes) => {
             return { message };
         case statusCode.BAD_REQUEST:
             return { message, invalidFields };
-        default:
+        case statusCode.NOT_FOUND:
             return { message: MESSAGE_ERROR.SERVER_DOWN };
+        default:
+            return { message };
     }
 };
 const loginFailure = (errorRes) => {
