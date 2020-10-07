@@ -12,7 +12,8 @@ import { Wrapper, PaginattionWrapper, styles } from './styles';
 
 const ReviewsLayout = (props) => {
     const {
-        reviews,
+        reviewList,
+        pagination,
         fetchReviews,
         id,
         createReview,
@@ -24,7 +25,6 @@ const ReviewsLayout = (props) => {
         classes,
     } = props;
     const [alertState, setAlertState] = useState(false);
-    const { reviewList, pagination } = reviews;
     const onChangeHandler = (event, value) => {
         fetchReviews(id, value);
     };

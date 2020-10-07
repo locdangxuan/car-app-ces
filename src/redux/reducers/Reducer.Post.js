@@ -9,10 +9,8 @@ const initState = {
     images: [],
     data: undefined,
     location: undefined,
-    reviews: {
-        reviewsList: [],
-        pagination: 0,
-    },
+    reviewsList: [],
+    pagination: 0,
 };
 
 const postReducer = (state = initState, action) => {
@@ -26,16 +24,14 @@ const postReducer = (state = initState, action) => {
             return {
                 ...state,
                 pending: true,
-                reviews: {},
+                reviewsList: [],
             };
         case POSTS.REVIEWS.LOAD_REVIEWS_SUCCEED:
             return {
                 ...state,
                 pending: false,
-                reviews: {
-                    reviewList: action.reviewList,
-                    pagination: action.pagination,
-                },
+                reviewList: action.reviewList,
+                pagination: action.pagination,
             };
         case POSTS.REVIEWS.LOAD_REVIEWS_FAILED:
             return {
@@ -43,10 +39,8 @@ const postReducer = (state = initState, action) => {
                 pending: false,
                 message: action.message,
                 isSuccess: false,
-                reviews: {
-                    reviewList: [],
-                    pagination: 0,
-                },
+                reviewList: [],
+                pagination: action.pagination,
             };
         case POSTS.REVIEWS.CREATE_REVIEW_SUCCEED:
             return {
