@@ -3,7 +3,7 @@
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable react/prop-types */
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Grid,
     Box,
@@ -26,6 +26,7 @@ import {
     Room,
     LocalGasStation,
 } from '@material-ui/icons';
+import { ToggleButtonGroup } from '@material-ui/lab';
 import { Carousel } from 'components/common';
 import { ReviewsLayout } from 'components';
 import action from 'redux/actions/Action.Post';
@@ -33,9 +34,19 @@ import variant from 'config/constants/Variant';
 import component from 'config/constants/Components';
 import Color from 'config/constants/Colors';
 import utils from 'utils/utils';
-import { StyledLink, useStyles } from './styles';
+import { StyledLink, useStyles, StyledToggleButton } from './styles';
+
+const listNavigationDetails = ['specifications', 'reviews'];
 
 const PostDetails = (props) => {
+    const [alignment, setAlignment] = useState('specifications');
+    const [title, setTitle] = useState('specifications');
+    const onClickCategory = (event, value) => {
+        setTitle(value);
+    };
+    const onChangeNavigation = (event, newAlignment) => {
+        setAlignment(newAlignment);
+    };
     const { id } = props.match.params;
     useEffect(() => {
         props.fetchPostData(id);
@@ -135,80 +146,116 @@ const PostDetails = (props) => {
                                 </Box>
                             </Box>
                         </Box>
+
                         <Box
                             component={component.div}
-                            className={`${classes.specifications} ${classes.wrapper}`}
+                            className={`${classes.wrapper}`}
                         >
                             <Box
-                                className={`${classes.specificationTitle} ${classes.wrapper}`}
-                            >
-                                Specifications
-                            </Box>
-                            <Box
                                 component={component.div}
-                                className={classes.specificationDetails}
+                                className={classes.navigations}
                             >
-                                <TableContainer>
-                                    <Table className={classes.table}>
-                                        <TableHead>
-                                            <TableRow>
-                                                <TableCell
-                                                    className={`${classes.tableColor} ${classes.tableHead}`}
-                                                    align="center"
-                                                >
-                                                    Specs
-                                                </TableCell>
-                                                <TableCell
-                                                    className={`${classes.tableColor} ${classes.tableHead}`}
-                                                    align="center"
-                                                >
-                                                    Value
-                                                </TableCell>
-                                            </TableRow>
-                                        </TableHead>
-                                        <TableBody>
-                                            {specifications.map((item) => {
-                                                return (
-                                                    <TableRow key={item}>
+                                <ToggleButtonGroup
+                                    value={alignment}
+                                    exclusive
+                                    onChange={onChangeNavigation}
+                                >
+                                    {listNavigationDetails.map((item) => (
+                                        <StyledToggleButton
+                                            key={item}
+                                            className={`${classes.navigationButton}`}
+                                            value={item}
+                                            onClick={onClickCategory}
+                                        >
+                                            {item}
+                                        </StyledToggleButton>
+                                    ))}
+                                </ToggleButtonGroup>
+                            </Box>
+                            {title === 'specifications' && (
+                                <Box>
+                                    <Box
+                                        className={`${classes.title} ${classes.wrapper}`}
+                                    >
+                                        Specifications
+                                    </Box>
+                                    <Box
+                                        component={component.div}
+                                        className={classes.specificationDetails}
+                                    >
+                                        <TableContainer>
+                                            <Table className={classes.table}>
+                                                <TableHead>
+                                                    <TableRow>
                                                         <TableCell
-                                                            className={
-                                                                classes.tableColor
-                                                            }
-                                                            component="th"
-                                                            scope="row"
+                                                            className={`${classes.tableColor} ${classes.tableHead}`}
                                                             align="center"
                                                         >
-                                                            {item[0].replace(
-                                                                /:/,
-                                                                ''
-                                                            )}
+                                                            Specs
                                                         </TableCell>
                                                         <TableCell
+                                                            className={`${classes.tableColor} ${classes.tableHead}`}
                                                             align="center"
-                                                            className={
-                                                                classes.tableColor
-                                                            }
                                                         >
-                                                            {item[1]}
+                                                            Value
                                                         </TableCell>
                                                     </TableRow>
-                                                );
-                                            })}
-                                        </TableBody>
-                                    </Table>
-                                </TableContainer>
-                            </Box>
-                            <Box
-                                className={`${classes.specificationTitle} ${classes.wrapper}`}
-                            >
-                                Reviews
-                            </Box>
-                            <Box
-                                component={component.div}
-                                className={classes.specificationDetails}
-                            >
-                                <ReviewsLayout id={id} />
-                            </Box>
+                                                </TableHead>
+                                                <TableBody>
+                                                    {specifications.map(
+                                                        (item) => {
+                                                            return (
+                                                                <TableRow
+                                                                    key={item}
+                                                                >
+                                                                    <TableCell
+                                                                        className={
+                                                                            classes.tableColor
+                                                                        }
+                                                                        component="th"
+                                                                        scope="row"
+                                                                        align="center"
+                                                                    >
+                                                                        {item[0].replace(
+                                                                            /:/,
+                                                                            ''
+                                                                        )}
+                                                                    </TableCell>
+                                                                    <TableCell
+                                                                        align="center"
+                                                                        className={
+                                                                            classes.tableColor
+                                                                        }
+                                                                    >
+                                                                        {
+                                                                            item[1]
+                                                                        }
+                                                                    </TableCell>
+                                                                </TableRow>
+                                                            );
+                                                        }
+                                                    )}
+                                                </TableBody>
+                                            </Table>
+                                        </TableContainer>
+                                    </Box>
+                                </Box>
+                            )}
+                            {title === 'reviews' && (
+                                <Box>
+                                    <Box
+                                        className={`${classes.title} ${classes.wrapper}`}
+                                    >
+                                        Reviews
+                                    </Box>
+                                    <Box
+                                        component={component.div}
+                                        className={classes.specificationDetails}
+                                    >
+                                        <ReviewsLayout id={id} />
+                                    </Box>
+                                </Box>
+                            )}
                         </Box>
                     </Box>
                 </Grid>

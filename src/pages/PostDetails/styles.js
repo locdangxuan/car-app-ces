@@ -3,11 +3,18 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { fontFamilies, fontSize } from 'config/constants/Fonts';
 import Color from 'config/constants/Colors';
+import { ToggleButton } from '@material-ui/lab';
 
 const StyledLink = styled(Link)`
     text-decoration: none;
 `;
 
+const StyledToggleButton = styled(ToggleButton)`
+    &.MuiToggleButton-root.Mui-selected {
+        color: ${Color.hoverColorNavigationDetails};
+        background: ${Color.transparent};
+    }
+`;
 const useStyles = makeStyles({
     globalContent: {
         padding: '5vh 15px',
@@ -54,11 +61,7 @@ const useStyles = makeStyles({
     left: {
         marginLeft: '20px',
     },
-    specifications: {
-        paddingBottom: '10px',
-        marginTop: '20px',
-    },
-    specificationTitle: {
+    title: {
         display: 'flex',
         justifyContent: 'center',
         fontSize: fontSize.fontMain,
@@ -70,6 +73,21 @@ const useStyles = makeStyles({
     },
     specificationContent: {
         display: 'flex',
+    },
+    navigations: {
+        marginTop: '20px',
+    },
+    navigationButton: {
+        color: Color.white,
+        borderRadius: 0,
+        border: `0.5px solid ${Color.white}`,
+        '&:hover': {
+            color: Color.hoverColorNavigationDetails,
+            background: Color.backgroundDetails,
+        },
+        '&:focus': {
+            color: Color.hoverColorNavigationDetails,
+        },
     },
     sellerInfo: {
         padding: '20px 0',
@@ -90,4 +108,4 @@ const useStyles = makeStyles({
     },
 });
 
-export { useStyles, StyledLink };
+export { useStyles, StyledLink, StyledToggleButton };
