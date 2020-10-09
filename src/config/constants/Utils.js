@@ -1,6 +1,6 @@
 export const token = 'token';
 export const profile = 'Profile';
-export const delayTime = 2000;
+export const delayTime = 1000;
 export const formUtilConstant = {
     oldImageURL: 'http',
     brand: 'brand',

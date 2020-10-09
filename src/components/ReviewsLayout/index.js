@@ -60,6 +60,7 @@ const ReviewsLayout = (props) => {
             {reviewList &&
                 reviewList.map((review) => (
                     <Review
+                        key={review.id}
                         id={review.id}
                         editable={review.editable}
                         onDelete={onDeleteHandler}
