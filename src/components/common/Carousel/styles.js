@@ -5,7 +5,6 @@ const CarouselWrapper = styled.div`
 `;
 
 const Item = styled.div`
-    background-color: ${(props) => props.backgroundColor};
     background-image: url(${(props) => props.backgroundImage});
     height: 490px;
     background-size: cover;

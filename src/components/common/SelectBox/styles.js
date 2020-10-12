@@ -1,6 +1,8 @@
 import { makeStyles } from '@material-ui/core/styles';
+import styled from 'styled-components';
 import { fontFamilies, fontSize } from 'config/constants/Fonts';
 import Color from 'config/constants/Colors';
+import { NativeSelect } from '@material-ui/core';
 
 const useStyles = makeStyles(() => ({
     formControl: {
@@ -10,22 +12,27 @@ const useStyles = makeStyles(() => ({
         marginTop: '20px',
     },
     selectEmpty: {
-        paddingLeft: '5px',
         height: '25px',
-        marginLeft: '15px',
+        marginLeft: '30px',
         width: '100%',
         border: `1px solid ${Color.white}`,
         color: Color.white,
         background: Color.backgroundInput,
     },
-    option: {
-        color: Color.black,
-    },
     name: {
         width: '100px',
         fontFamily: fontFamilies.ssfLucida,
-        fontSize: fontSize.medium,
+        fontSize: fontSize.fontMedium,
     },
 }));
 
+export const CustomNativeSelect = styled(NativeSelect)`
+    .MuiNativeSelect-root {
+        padding: 5px;
+    }
+`;
+
+export const Option = styled.option`
+    color: ${Color.black};
+`;
 export default useStyles;

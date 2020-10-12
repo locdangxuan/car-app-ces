@@ -29,10 +29,6 @@ const useStyles = makeStyles({
         width: '100%',
         paddingRight: '10%',
     },
-    styleText: {
-        marginLeft: '4px',
-        marginTop: '3px',
-    },
 });
 
 export { theme, useStyles };

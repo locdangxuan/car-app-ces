@@ -1,10 +1,10 @@
 import React from 'react';
-import { NativeSelect, Box } from '@material-ui/core';
+import { Box } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import FormControl from '@material-ui/core/FormControl';
 import component from 'config/constants/Components';
 import variant from 'config/constants/Variant';
-import useStyles from './styles';
+import useStyles, { Option, CustomNativeSelect } from './styles';
 
 const SelectBox = (props) => {
     const classes = useStyles();
@@ -19,21 +19,19 @@ const SelectBox = (props) => {
             <Box component={component.span} className={classes.name}>
                 {name}
             </Box>
-            <NativeSelect
+            <CustomNativeSelect
                 value={age}
                 onChange={handleChange}
                 name="age"
                 className={classes.selectEmpty}
                 inputProps={{ 'aria-label': 'age' }}
             >
-                <option className={classes.option} value="">
-                    All
-                </option>
-                <option className={classes.option}>Ford</option>
-                <option className={classes.option}>Audi</option>
-                <option className={classes.option}>Ferrari</option>
-                <option className={classes.option}>Acura</option>
-            </NativeSelect>
+                <Option value="">All</Option>
+                <Option>Ford</Option>
+                <Option>Audi</Option>
+                <Option>Ferrari</Option>
+                <Option>Acura</Option>
+            </CustomNativeSelect>
         </FormControl>
     );
 };
