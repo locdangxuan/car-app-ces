@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable no-shadow */
 import Cookies from 'universal-cookie';
 import * as statusCode from 'config/constants/StatusCode';
@@ -6,6 +7,9 @@ import * as utilsConstant from 'config/constants/Utils';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import locationIcon from 'assets/images/location.png';
+import postAction from 'redux/actions/Action.Post';
+import * as productAction from 'redux/actions/Action.GetCar';
+import get from 'lodash.get';
 
 const LocationIcon = L.Icon.extend({
     options: {
@@ -85,6 +89,31 @@ const getProfile = () => {
     }
 };
 
+const classifyPath = (id) => {
+    const path = get(window, 'location.pathname');
+    if (path.includes(get(utilsConstant, 'path.createPost')) === true)
+        return get(utilsConstant, 'pathKeyCode.createPost');
+    if (path.includes(get(utilsConstant, 'path.postDetail')(id)) === true)
+        return get(utilsConstant, 'pathKeyCode.postDetail');
+    if (path.includes(get(utilsConstant, 'path.homepage')) === true)
+        return get(utilsConstant, 'pathKeyCode.homepage');
+};
+
+const reloadComponents = (dispatch) => {
+    const id = get(window, 'location.pathname').split('posts/')[1];
+    switch (classifyPath(id)) {
+        case get(utilsConstant, 'pathKeyCode.postDetail'):
+            dispatch(postAction.loadReviews(id, 1));
+            dispatch(postAction.fetchPostData(id));
+            break;
+        case get(utilsConstant, 'pathKeyCode.homepage'):
+            dispatch(productAction.actRequestProducts());
+            break;
+        default:
+            break;
+    }
+};
+
 const timestampZToDate = (timestamp) => {
     return new Date(timestamp).toLocaleDateString('en-US');
 };
@@ -119,4 +148,5 @@ export default {
     mapInit,
     marketInit,
     timestampZToDate,
+    reloadComponents,
 };

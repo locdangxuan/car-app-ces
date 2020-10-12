@@ -1,6 +1,7 @@
 import api from 'config/Servers';
 import axios from 'axios';
 import apiUtils from 'utils/utils.Api';
+import get from 'lodash.get';
 
 const loadBrands = async () => {
     try {
@@ -33,8 +34,8 @@ const create = async (payload, token) => {
                 'content-type': 'multipart/form-data',
                 Authorization: `Bearer ${token}`,
             },
-            method: api.post.create.method,
-            url: api.post.create.url,
+            method: get(api, 'post.create.method'),
+            url: get(api, 'post.create.url'),
             data,
         });
         return result.data;
@@ -51,8 +52,8 @@ const update = async (payload, token) => {
                 'content-type': 'multipart/form-data',
                 Authorization: `Bearer ${token}`,
             },
-            method: api.post.update.method,
-            url: `${api.post.update.url}${payload.id}`,
+            method: get(api, 'post.update.method'),
+            url: `${get(api, 'post.update.url')}${payload.id}`,
             data,
         });
         return result.data;
@@ -101,8 +102,8 @@ const createReview = async (id, content, token) => {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
-            method: api.reviews.create.method,
-            url: api.reviews.create.url,
+            method: get(api, 'reviews.create.method'),
+            url: get(api, 'reviews.create.url'),
             data: {
                 idPost: id,
                 content,
@@ -120,8 +121,8 @@ const deleteReview = async (id, token) => {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
-            method: api.reviews.delete.method,
-            url: `${api.reviews.delete.url}${id}`,
+            method: get(api, 'reviews.delete.method'),
+            url: `${get(api, 'reviews.delete.url')}${id}`,
         });
         return result.data;
     } catch (error) {
