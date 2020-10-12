@@ -12,7 +12,18 @@ import {
 import PropTypes from 'prop-types';
 import authActions from 'redux/actions/Action.Auth';
 import { modal } from 'config/constants/Utils';
-import { Wrapper, Content, Header, Footer, Body } from './styles';
+import { ThemeProvider } from 'styled-components';
+import close from 'assets/images/close.png';
+import {
+    Wrapper,
+    Content,
+    Header,
+    Footer,
+    Body,
+    Dismiss,
+    Cover,
+    theme,
+} from './styles';
 
 const ModalBase = (props) => {
     let alertMessage = '';
@@ -63,56 +74,77 @@ const ModalBase = (props) => {
     if (type === modal.type.alert) {
         alertMessage = props.alertMessage;
     }
+    const onMouseDownHandler = (event) => {
+        if (event.target.getAttribute('name') === 'Wrapper') onCancelHandler();
+    };
     return (
-        <Wrapper>
-            {type === modal.type.alert ? (
-                <Content>
-                    <Header>{!props.isSuccess ? 'Error' : 'Message'}</Header>
-                    <Body>
-                        <Span isValid={props.isSuccess}>{alertMessage}</Span>
-                    </Body>
-                    {warningType === true ? (
+        <Wrapper name="Wrapper" onMouseDown={onMouseDownHandler} tabIndex="-1">
+            <Cover>
+                <Dismiss>
+                    <ThemeProvider theme={theme}>
+                        <Button onClick={onCancelHandler}>
+                            <img
+                                src={close}
+                                alt="X"
+                                width="20px"
+                                height="20px"
+                            />
+                        </Button>
+                    </ThemeProvider>
+                </Dismiss>
+                {type === modal.type.alert ? (
+                    <Content>
+                        <Header>
+                            {!props.isSuccess ? 'Error' : 'Message'}
+                        </Header>
+                        <Body>
+                            <Span isValid={props.isSuccess}>
+                                {alertMessage}
+                            </Span>
+                        </Body>
+                        {warningType === true ? (
+                            <Footer type="dual">
+                                <Button onClick={onCancelHandler} isSuccess>
+                                    Cancel
+                                </Button>
+                                <Button
+                                    onClick={onSubmitHandler}
+                                    isSuccess={props.isSuccess}
+                                >
+                                    OK
+                                </Button>
+                            </Footer>
+                        ) : (
+                            <Footer type="single">
+                                <Button
+                                    onClick={onCancelHandler}
+                                    isSuccess={props.isSuccess}
+                                >
+                                    OK
+                                </Button>
+                            </Footer>
+                        )}
+                    </Content>
+                ) : (
+                    <Content>
+                        <Header>{type}</Header>
+                        <Body>
+                            {type === modal.type.register && <Register />}
+                            {type === modal.type.login && <Login />}
+                        </Body>
+                        {pending && <Loader type="SPAN-STYLE" />}
+                        <ModalSpan isValid={isValid}>{message}</ModalSpan>
                         <Footer type="dual">
-                            <Button onClick={onCancelHandler} isSuccess>
-                                Cancel
+                            <Button onClick={onCancelHandler} isSuccess={false}>
+                                CANCEL
                             </Button>
-                            <Button
-                                onClick={onSubmitHandler}
-                                isSuccess={props.isSuccess}
-                            >
-                                OK
+                            <Button onClick={onSubmitHandler} isSuccess>
+                                {type}
                             </Button>
                         </Footer>
-                    ) : (
-                        <Footer type="single">
-                            <Button
-                                onClick={onCancelHandler}
-                                isSuccess={props.isSuccess}
-                            >
-                                OK
-                            </Button>
-                        </Footer>
-                    )}
-                </Content>
-            ) : (
-                <Content>
-                    <Header>{type}</Header>
-                    <Body>
-                        {type === modal.type.register && <Register />}
-                        {type === modal.type.login && <Login />}
-                    </Body>
-                    {pending && <Loader type="SPAN-STYLE" />}
-                    <ModalSpan isValid={isValid}>{message}</ModalSpan>
-                    <Footer type="dual">
-                        <Button onClick={onCancelHandler} isSuccess={false}>
-                            CANCEL
-                        </Button>
-                        <Button onClick={onSubmitHandler} isSuccess>
-                            {type}
-                        </Button>
-                    </Footer>
-                </Content>
-            )}
+                    </Content>
+                )}
+            </Cover>
         </Wrapper>
     );
 };
