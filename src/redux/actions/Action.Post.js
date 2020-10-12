@@ -87,7 +87,7 @@ const loadReviews = (id, page) => {
         token = '';
     }
     return async (dispatch, getState) => {
-        dispatch(onRequest(POSTS.REVIEWS.FETCH_REQUEST));
+        dispatch(onRequest(POSTS.REVIEWS.REQUEST));
         await setTimeout(async () => {
             try {
                 const result = await api.loadReviews(id, page, token);
@@ -104,22 +104,24 @@ const createReview = (id, content) => {
         await setTimeout(async () => {
             try {
                 const token = utils.getToken();
-                const result = await api.createReview(id, content, token);
-                dispatch(onCreateReviewsSuccess(result));
+                await api.createReview(id, content, token);
+                const result = await api.loadReviews(id, 1, token);
+                dispatch(onLoadReviewsSuccess(result.data));
             } catch (error) {
                 dispatch(onCreateReviewsFailure(JSON.parse(error.message)));
             }
         }, utilsConstants.delayTime);
     };
 };
-const deleteReview = (id) => {
+const deleteReview = (id, postId) => {
     return async (dispatch, getState) => {
         dispatch(onRequest(POSTS.REVIEWS.REQUEST));
         await setTimeout(async () => {
             try {
                 const token = utils.getToken();
-                const result = await api.deleteReview(id, token);
-                dispatch(onDeleteReviewsSuccess(result));
+                await api.deleteReview(id, token);
+                const result = await api.loadReviews(postId, 1, token);
+                dispatch(onLoadReviewsSuccess(result.data));
             } catch (error) {
                 dispatch(onDeleteReviewsFailure(JSON.parse(error.message)));
             }

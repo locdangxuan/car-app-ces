@@ -12,7 +12,7 @@ import { Wrapper, PaginattionWrapper, styles } from './styles';
 
 const ReviewsLayout = (props) => {
     const {
-        reviewList,
+        reviewsList,
         pagination,
         fetchReviews,
         id,
@@ -32,7 +32,7 @@ const ReviewsLayout = (props) => {
         if (id) fetchReviews(id);
     }, []);
     useEffect(() => {
-        if (message !== '' && alertState === false) setAlertState(true);
+        if (message !== '' && !(alertState || isSuccess)) setAlertState(true);
     });
     const onSubmitHandler = (content) => {
         createReview(id, content);
@@ -40,10 +40,9 @@ const ReviewsLayout = (props) => {
     const onAlertToggle = () => {
         onDismissModal();
         setAlertState(false);
-        if (isSuccess) fetchReviews(id);
     };
     const onDeleteHandler = (reviewId) => {
-        deleteReView(reviewId);
+        deleteReView(reviewId, id);
     };
     return (
         <Wrapper>
@@ -57,18 +56,27 @@ const ReviewsLayout = (props) => {
                 />
             )}
             <TextEditor onSubmit={onSubmitHandler} />
-            {reviewList &&
-                reviewList.map((review) => (
-                    <Review
-                        key={review.id}
-                        id={review.id}
-                        editable={review.editable}
-                        onDelete={onDeleteHandler}
-                        name={review.user}
-                        content={review.name}
-                        date={review.createdAt}
-                    />
-                ))}
+            {reviewsList &&
+                reviewsList.map((review) => {
+                    const {
+                        id: reviewId,
+                        editable,
+                        user,
+                        name,
+                        createdAt,
+                    } = review;
+                    return (
+                        <Review
+                            key={reviewId}
+                            id={reviewId}
+                            editable={editable}
+                            onDelete={onDeleteHandler}
+                            name={user}
+                            content={name}
+                            date={createdAt}
+                        />
+                    );
+                })}
             <PaginattionWrapper>
                 <Pagination
                     className={classes.root}
@@ -88,7 +96,7 @@ const mapDispatchToProps = (dispatch) => ({
     fetchReviews: (id = 5, page = 1) => dispatch(action.loadReviews(id, page)),
     createReview: (id, content) => dispatch(action.createReview(id, content)),
     onDismissModal: () => dispatch(action.dismissMessage()),
-    deleteReView: (id) => dispatch(action.deleteReview(id)),
+    deleteReView: (id, postId) => dispatch(action.deleteReview(id, postId)),
 });
 
 export default connect(

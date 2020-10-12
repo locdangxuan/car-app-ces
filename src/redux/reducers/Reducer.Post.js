@@ -19,18 +19,13 @@ const postReducer = (state = initState, action) => {
             return {
                 ...state,
                 pending: true,
-            };
-        case POSTS.REVIEWS.FETCH_REQUEST:
-            return {
-                ...state,
-                pending: true,
                 reviewsList: [],
             };
         case POSTS.REVIEWS.LOAD_REVIEWS_SUCCEED:
             return {
                 ...state,
                 pending: false,
-                reviewList: action.reviewList,
+                reviewsList: action.reviewList,
                 pagination: action.pagination,
             };
         case POSTS.REVIEWS.LOAD_REVIEWS_FAILED:
@@ -39,7 +34,7 @@ const postReducer = (state = initState, action) => {
                 pending: false,
                 message: action.message,
                 isSuccess: false,
-                reviewList: [],
+                reviewsList: [],
                 pagination: action.pagination,
             };
         case POSTS.REVIEWS.CREATE_REVIEW_SUCCEED:

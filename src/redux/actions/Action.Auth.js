@@ -84,7 +84,7 @@ const login = (fields) => {
                 validator.loginValidator(fields);
                 const payload = await authService.login(fields);
                 dispatch(loginSuccess(payload));
-                dispatch(action.actRequestProducts());
+                utils.reloadComponents(dispatch);
             } catch (errorRes) {
                 dispatch(loginFailure(JSON.parse(errorRes.message)));
             }

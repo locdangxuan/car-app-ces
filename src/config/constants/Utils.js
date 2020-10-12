@@ -20,3 +20,13 @@ export const modal = {
         alert: 'ALERT',
     },
 };
+export const path = {
+    homepage: '/',
+    postDetail: (id) => `/posts/${id}`,
+    createPost: '/posts/new',
+};
+export const pathKeyCode = {
+    homepage: 1,
+    postDetail: 2,
+    createPost: 3,
+};

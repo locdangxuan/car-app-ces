@@ -1,6 +1,7 @@
 import { GetDetailCar, GetCarByValue } from 'services/api/Api.GetDetailCar';
 import utils from 'utils/utils';
 import { PRODUCTS } from 'config/constants/Action.Types';
+import get from 'lodash.get';
 import { MESSAGE_ERROR } from 'config/messages/Messages.Post';
 
 const onRequset = (type) => ({
@@ -39,7 +40,7 @@ export const actRequestProducts = () => {
         setTimeout(async () => {
             try {
                 const result = await GetDetailCar(token);
-                return dispatch(actFetchToProducts(result.data.list));
+                return dispatch(actFetchToProducts(get(result, 'data.list')));
             } catch (error) {
                 dispatch(fetchProductsFailure(error));
             }
