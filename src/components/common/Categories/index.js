@@ -1,6 +1,11 @@
-import React from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect } from 'react';
 import { ThemeProvider } from 'styled-components';
 import { ExpandMore } from '@material-ui/icons';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import action from 'redux/actions/Action.Post';
+import utils from 'utils/utils';
 import {
     ModelCategories,
     ModelCategoryButton,
@@ -9,12 +14,15 @@ import {
     Dropdown,
     DropdownContent,
     Brand,
+    Year,
     categoryTheme,
 } from './styles';
 
-const listBrands = ['Ford', 'Ferrari', 'Audi', 'Acura'];
-
-const Categories = () => {
+const Categories = (props) => {
+    const { brands, getBrands } = props;
+    useEffect(() => {
+        getBrands();
+    }, []);
     return (
         <ThemeProvider theme={categoryTheme}>
             <ModelCategories>
@@ -26,14 +34,14 @@ const Categories = () => {
                         BRAND
                         <ExpandMore />
                         <DropdownContent>
-                            {listBrands &&
-                                listBrands.map((brand) => {
+                            {brands &&
+                                brands.map((brand) => {
                                     return (
-                                        <Brand key={brand}>
+                                        <Brand key={brand.id}>
                                             <StyledLink
-                                                to={`${brand.toLowerCase()}`}
+                                                to={`${brand.name.toLowerCase()}`}
                                             >
-                                                {brand}
+                                                {brand.name}
                                             </StyledLink>
                                         </Brand>
                                     );
@@ -41,10 +49,24 @@ const Categories = () => {
                         </DropdownContent>
                     </DropdownButton>
                 </Dropdown>
-                <ModelCategoryButton>
-                    YEAR
-                    <ExpandMore />
-                </ModelCategoryButton>
+                <Dropdown>
+                    <DropdownButton>
+                        YEAR
+                        <ExpandMore />
+                        <DropdownContent>
+                            {utils.getYears() &&
+                                utils.getYears().map((year) => {
+                                    return (
+                                        <Year key={year}>
+                                            <StyledLink to={`${year}`}>
+                                                {year}
+                                            </StyledLink>
+                                        </Year>
+                                    );
+                                })}
+                        </DropdownContent>
+                    </DropdownButton>
+                </Dropdown>
                 <StyledLink to="/contacts">
                     <ModelCategoryButton>CONTACT</ModelCategoryButton>
                 </StyledLink>
@@ -53,4 +75,19 @@ const Categories = () => {
     );
 };
 
-export default Categories;
+Categories.propTypes = {
+    brands: PropTypes.arrayOf(PropTypes.object),
+    getBrands: PropTypes.func,
+};
+
+Categories.defaultProps = {
+    brands: [],
+    getBrands: () => {},
+};
+
+const mapStateToProps = (state) => ({ brands: state.postReducer.brands });
+
+const mapDispatchToProps = (dispatch) => ({
+    getBrands: () => dispatch(action.loadBrands()),
+});
+export default connect(mapStateToProps, mapDispatchToProps)(Categories);

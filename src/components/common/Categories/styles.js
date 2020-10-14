@@ -40,26 +40,6 @@ const Dropdown = styled.div`
     display: inline-block;
 `;
 
-const DropdownContent = styled.div`
-    display: none;
-    position: absolute;
-    width: 100%;
-    z-index: 1;
-    color: ${(props) => props.theme.dropdownContent.color};
-    top: 100%;
-    background: ${Color.backgroundHeader};
-`;
-
-const DropdownButton = styled(ModelCategoryButton)`
-    &:hover ${DropdownContent} {
-        display: block;
-    }
-
-    &:focus ${DropdownContent} {
-        display: block;
-    }
-`;
-
 const Brand = styled.div`
     display: flex;
     padding-left: 10px;
@@ -74,6 +54,35 @@ const Brand = styled.div`
             color: ${(props) => props.theme.brand.color};
             opacity: 1;
         }
+    }
+`;
+
+const Year = styled(Brand)``;
+
+const DropdownContent = styled.div`
+    display: none;
+    position: absolute;
+    width: 150px;
+    z-index: 1;
+    color: ${(props) => props.theme.dropdownContent.color};
+    top: 100%;
+    background: ${Color.backgroundHeader};
+    ${Year} {
+        justify-content: center;
+    }
+`;
+
+const DropdownButton = styled(ModelCategoryButton)`
+    &:hover ${DropdownContent} {
+        display: block;
+        overflow-y: scroll;
+        height: 350px;
+    }
+
+    &:focus ${DropdownContent} {
+        display: block;
+        overflow-y: scroll;
+        height: 350px;
     }
 `;
 
@@ -99,5 +108,6 @@ export {
     Dropdown,
     DropdownButton,
     Brand,
+    Year,
     categoryTheme,
 };
