@@ -19,12 +19,20 @@ const logoutSuccess = () => {
 };
 
 const handleError = (errorRes) => {
-    const { status, message, invalidFields } = errorRes;
+    const { status, message } = errorRes;
+    let { invalidFields } = errorRes;
+    if (!invalidFields) {
+        invalidFields = [];
+        invalidFields.push({
+            name: 'username',
+            message,
+        });
+    }
     switch (status) {
         case statusCode.UNAUTHORIZED:
             return { message };
         case statusCode.BAD_REQUEST:
-            return { message, invalidFields };
+            return { message: MESSAGE_ERROR.INVALID_FIELD, invalidFields };
         case statusCode.NOT_FOUND:
             return { message: MESSAGE_ERROR.SERVER_DOWN };
         default:
@@ -70,6 +78,7 @@ const register = (fields) => {
                 const payload = await authService.register(fields);
                 dispatch(registerSuccess(payload));
             } catch (errorRes) {
+                console.log(errorRes);
                 dispatch(registerFailure(JSON.parse(errorRes.message)));
             }
         }, 1000);
