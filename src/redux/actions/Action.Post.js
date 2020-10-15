@@ -66,6 +66,7 @@ const onLoadReviewFailure = () => ({
 const onCreateReviewsSuccess = (payload) => ({
     type: POSTS.REVIEWS.CREATE_REVIEW_SUCCEED,
     message: payload.message,
+    data: payload.data,
 });
 const onCreateReviewsFailure = (error) => ({
     type: POSTS.REVIEWS.CREATE_REVIEW_FAILED,
@@ -74,6 +75,7 @@ const onCreateReviewsFailure = (error) => ({
 const onDeleteReviewsSuccess = (payload) => ({
     type: POSTS.REVIEWS.DELETE_REVIEW_SUCCEED,
     message: payload.message,
+    data: payload.data,
 });
 const onDeleteReviewsFailure = (error) => ({
     type: POSTS.REVIEWS.DELETE_REVIEW_FAILED,
@@ -100,13 +102,27 @@ const loadReviews = (id, page) => {
 };
 const createReview = (id, content) => {
     return async (dispatch, getState) => {
+        const currentReviewsList = getState().postReducer.reviewsList;
         dispatch(onRequest(POSTS.REVIEWS.REQUEST));
         await setTimeout(async () => {
             try {
                 const token = utils.getToken();
-                await api.createReview(id, content, token);
-                const result = await api.loadReviews(id, 1, token);
-                dispatch(onLoadReviewsSuccess(result.data));
+                const response = await api.createReview(id, content, token);
+                const result = response.data[0];
+                currentReviewsList.unshift({
+                    createdAt: result.createdAt,
+                    name: result.content,
+                    user: result.displayName,
+                    id: result.id,
+                    editable: true,
+                });
+                currentReviewsList.pop();
+                dispatch(
+                    onCreateReviewsSuccess({
+                        message: response.message,
+                        data: currentReviewsList,
+                    })
+                );
             } catch (error) {
                 dispatch(onCreateReviewsFailure(JSON.parse(error.message)));
             }
@@ -120,8 +136,8 @@ const deleteReview = (id, postId) => {
             try {
                 const token = utils.getToken();
                 await api.deleteReview(id, token);
-                const result = await api.loadReviews(postId, 1, token);
-                dispatch(onLoadReviewsSuccess(result.data));
+                const response = await api.loadReviews(postId, 1, token);
+                dispatch(onDeleteReviewsSuccess(response));
             } catch (error) {
                 dispatch(onDeleteReviewsFailure(JSON.parse(error.message)));
             }
