@@ -103,6 +103,7 @@ const authReducer = (state = initState, action) => {
                 password,
                 isValid: true,
                 message: REGISTER.SUCCESS,
+                isLogginSucceed: true,
             };
         }
         case REGISTER.ERROR: {
