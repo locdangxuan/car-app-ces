@@ -69,6 +69,7 @@ const postReducer = (state = initState, action) => {
             return {
                 ...state,
                 pending: true,
+                data: [],
             };
         case POSTS.UPLOAD_SUCCEED:
             return {
