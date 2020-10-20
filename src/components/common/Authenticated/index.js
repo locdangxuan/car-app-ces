@@ -1,9 +1,17 @@
+/* eslint-disable no-useless-return */
 /* eslint-disable react/require-default-props */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Box, Button, ListItemIcon, ListItemText } from '@material-ui/core';
+import {
+    Box,
+    Button,
+    ListItemIcon,
+    ListItemText,
+    SwipeableDrawer,
+    List,
+} from '@material-ui/core';
 import { connect } from 'react-redux';
 import authActions from 'redux/actions/Action.Auth';
 import * as action from 'redux/actions/Action.GetCar';
@@ -19,22 +27,24 @@ import utils from 'utils/utils';
 import Color from 'config/constants/Colors';
 import component from 'config/constants/Components';
 import variant from 'config/constants/Variant';
-import { useStyles, StyledMenu, StyledMenuItem } from './styles';
+import { useStyles, StyledMenuItem } from './styles';
 
 const Authenticated = (props) => {
-    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [openMenu, setOpenMenu] = useState(false);
     const { displayName, id } = utils.getProfile();
+
+    const toggleMenuHeaderDrawer = (status) => (event) => {
+        if (
+            event &&
+            event.type === 'keydown' &&
+            (event.key === 'Tab' || event.key === 'Shift')
+        )
+            return;
+        setOpenMenu(status);
+    };
 
     const onSubmitLogout = () => {
         props.onSubmitLogout();
-    };
-
-    const handleClick = (event) => {
-        setAnchorEl(event.currentTarget);
-    };
-
-    const handleClose = () => {
-        setAnchorEl(null);
     };
 
     const getPostsByUser = () => {
@@ -57,47 +67,61 @@ const Authenticated = (props) => {
                     Sell my car
                 </Button>
             </Link>
-            <Button
-                aria-controls="customized-menu"
-                aria-haspopup="true"
-                variant={variant.contained}
-                color={Color.defaultColor}
-                onClick={handleClick}
-                className={classes.navbarButton}
-            >
-                <Settings />
-            </Button>
-            <StyledMenu
-                id="customized-menu"
-                anchorEl={anchorEl}
-                keepMounted
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
-            >
-                <StyledMenuItem>
-                    <ListItemIcon className={classes.designIcon}>
-                        <Person />
-                    </ListItemIcon>
-                    <ListItemText primary="My Profile" />
-                </StyledMenuItem>
-                <Link to="/" className={classes.link}>
-                    <StyledMenuItem onClick={getPostsByUser}>
-                        <ListItemIcon className={classes.designIcon}>
-                            <Drafts />
-                        </ListItemIcon>
-                        <ListItemText primary="My post" />
-                    </StyledMenuItem>
-                </Link>
+            <React.Fragment key="right">
+                <Button
+                    aria-controls="customized-menu"
+                    aria-haspopup="true"
+                    variant={variant.contained}
+                    color={Color.defaultColor}
+                    onClick={toggleMenuHeaderDrawer(true)}
+                    className={classes.navbarButton}
+                >
+                    <Settings />
+                </Button>
+                <SwipeableDrawer
+                    anchor="right"
+                    open={openMenu}
+                    onClose={toggleMenuHeaderDrawer(false)}
+                    onOpen={toggleMenuHeaderDrawer(true)}
+                >
+                    <Box
+                        component={component.div}
+                        role="presentation"
+                        onClick={toggleMenuHeaderDrawer(false)}
+                        onkeydown={toggleMenuHeaderDrawer(false)}
+                    >
+                        <List>
+                            <StyledMenuItem>
+                                <ListItemIcon className={classes.designIcon}>
+                                    <Person />
+                                </ListItemIcon>
+                                <ListItemText primary="My Profile" />
+                            </StyledMenuItem>
+                            <Link to="/" className={classes.link}>
+                                <StyledMenuItem onClick={getPostsByUser}>
+                                    <ListItemIcon
+                                        className={classes.designIcon}
+                                    >
+                                        <Drafts />
+                                    </ListItemIcon>
+                                    <ListItemText primary="My post" />
+                                </StyledMenuItem>
+                            </Link>
 
-                <Link to="/" className={classes.link}>
-                    <StyledMenuItem onClick={onSubmitLogout}>
-                        <ListItemIcon className={classes.designIcon}>
-                            <ExitToApp />
-                        </ListItemIcon>
-                        <ListItemText primary="Log out" />
-                    </StyledMenuItem>
-                </Link>
-            </StyledMenu>
+                            <Link to="/" className={classes.link}>
+                                <StyledMenuItem onClick={onSubmitLogout}>
+                                    <ListItemIcon
+                                        className={classes.designIcon}
+                                    >
+                                        <ExitToApp />
+                                    </ListItemIcon>
+                                    <ListItemText primary="Log out" />
+                                </StyledMenuItem>
+                            </Link>
+                        </List>
+                    </Box>
+                </SwipeableDrawer>
+            </React.Fragment>
         </Box>
     );
 };

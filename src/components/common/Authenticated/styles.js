@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react';
-import { Menu, MenuItem, makeStyles, withStyles } from '@material-ui/core';
+import { MenuItem, makeStyles, withStyles } from '@material-ui/core';
 import Color from 'config/constants/Colors';
+import { fontSize } from 'config/constants/Fonts';
 
 const useStyles = makeStyles({
     authenticated: {
@@ -19,8 +19,9 @@ const useStyles = makeStyles({
     name: {
         display: 'flex',
         alignItems: 'center',
-        fontSize: '20px',
+        fontSize: fontSize.fontMedium,
         fontWeight: 'bold',
+        cursor: 'default',
     },
     link: {
         textDecoration: 'none',
@@ -30,26 +31,6 @@ const useStyles = makeStyles({
         minWidth: '40px',
     },
 });
-
-const StyledMenu = withStyles({
-    paper: {
-        border: `1px solid ${Color.borderStyledMenu}`,
-    },
-})((props) => (
-    <Menu
-        elevation={0}
-        getContentAnchorEl={null}
-        anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'center',
-        }}
-        transformOrigin={{
-            vertical: 'top',
-            horizontal: 'center',
-        }}
-        {...props}
-    />
-));
 
 const StyledMenuItem = withStyles((theme) => ({
     root: {
@@ -62,4 +43,4 @@ const StyledMenuItem = withStyles((theme) => ({
     },
 }))(MenuItem);
 
-export { useStyles, StyledMenu, StyledMenuItem };
+export { useStyles, StyledMenuItem };

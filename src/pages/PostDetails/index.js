@@ -212,7 +212,9 @@ const PostDetails = (props) => {
                                                                         className={
                                                                             classes.tableColor
                                                                         }
-                                                                        component="th"
+                                                                        component={
+                                                                            component.th
+                                                                        }
                                                                         scope="row"
                                                                         align="center"
                                                                     >
