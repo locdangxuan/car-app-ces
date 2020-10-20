@@ -214,9 +214,8 @@ const upload = (payload) => {
             try {
                 const validateResult = await validateFields(payload, getState);
                 const newInformation = {};
-                newInformation[
-                    formUtilConstant.otherFeatures
-                ] = payload.information.split(',');
+                newInformation[formUtilConstant.otherFeatures] =
+                    payload.information;
                 const token = utils.getToken();
                 const { brandId, modelId } = validateResult;
                 const result = await api.create(
@@ -243,9 +242,8 @@ const update = (payload) => {
             try {
                 const validateResult = await validateFields(payload, getState);
                 const newInformation = {};
-                newInformation[
-                    formUtilConstant.otherFeatures
-                ] = payload.information.split(',');
+                newInformation[formUtilConstant.otherFeatures] =
+                    payload.information;
                 Object.values(
                     newInformation[formUtilConstant.otherFeatures]
                 ).forEach((value) => {

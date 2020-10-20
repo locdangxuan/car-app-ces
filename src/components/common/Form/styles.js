@@ -1,8 +1,7 @@
 import styled from 'styled-components';
+import { TextField } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
-import globalTheme from 'config/constants/Themes';
-import color from 'config/constants/Colors';
 
 const Wrapper = styled.div`
     margin: auto;
@@ -27,33 +26,50 @@ const Submit = styled.section`
     justify-content: space-between;
 `;
 
+const DisableTextField = styled(TextField)`
+    .MuiInputBase-input {
+        cursor: default;
+    }
+    &.MuiFormControl-root .MuiInput-underline:before {
+        border-bottom: none;
+    }
+    &.MuiFormControl-root .MuiInput-underline:after {
+        border-bottom: none;
+    }
+    &.MuiFormControl-root .MuiInput-underline:hover {
+        border-bottom: none;
+    }
+    &.MuiFormControl-root .MuiInput-underline:hover:not(.Mui-disabled):before {
+        border-bottom: none;
+    }
+`;
+
+const ImageTextField = styled(DisableTextField)`
+    .MuiInputLabel-formControl {
+        transform: translate(0, 1.5px) scale(0.75);
+        transform-origin: top left;
+    }
+`;
+
 const useStyle = makeStyles(() => ({
-    dualLine: {
-        display: 'flex',
-        justifyContent: 'space-between',
-    },
     selector: {
         margin: '0 7% 0',
-        width: '44%',
         height: '40px',
+    },
+    selectedBox: {
+        marginTop: 0,
+    },
+    autoComplete: {
+        width: '100%',
+    },
+    customTextField: {
+        marginTop: 12,
     },
 }));
 
 const theme = {
-    span: {
-        margin: '11px 4px 0 0',
-        width: '30%',
-        color: color.black,
-    },
-    input: {
-        ...globalTheme.input,
-        inputWidth: '100%',
-        fontColor: color.black,
-        margin: '11px 0 0',
-        height: '30px',
-    },
     field: {
-        width: '600px',
+        width: '75%',
         margin: '16px 0 0',
     },
     imageCard: {
@@ -61,4 +77,13 @@ const theme = {
         height: '100px',
     },
 };
-export { Wrapper, Submit, useStyle, theme, StyledLink };
+
+export {
+    Wrapper,
+    Submit,
+    useStyle,
+    theme,
+    StyledLink,
+    DisableTextField,
+    ImageTextField,
+};

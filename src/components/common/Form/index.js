@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-shadow */
 /* eslint-disable react/forbid-prop-types */
 /* eslint-disable react/require-default-props */
@@ -6,10 +7,7 @@ import React, { useState, useEffect } from 'react';
 import {
     Button,
     Field,
-    Span,
-    Input,
     ImageCard,
-    Textarea,
     Loader,
     Modal,
     LocationPicker,
@@ -19,10 +17,25 @@ import { ThemeProvider } from 'styled-components';
 import action from 'redux/actions/Action.Post';
 import utils from 'utils/utils';
 import { connect } from 'react-redux';
-import { Select, MenuItem, Grid } from '@material-ui/core';
+import {
+    FormControl,
+    InputLabel,
+    Select,
+    Grid,
+    TextField,
+} from '@material-ui/core';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import * as utilsConstants from 'config/constants/Utils';
 import { modal } from 'config/constants/Utils';
-import { Wrapper, Submit, useStyle, theme, StyledLink } from './styles';
+import {
+    Wrapper,
+    Submit,
+    useStyle,
+    theme,
+    StyledLink,
+    DisableTextField,
+    ImageTextField,
+} from './styles';
 
 const formConstant = utilsConstants.formUtilConstant;
 const { imageFormat } = utilsConstants;
@@ -30,13 +43,13 @@ const { imageFormat } = utilsConstants;
 const Form = (props) => {
     const formState = {
         name: '',
-        year: '2020',
-        fuelType: 'Gasoline',
+        year: '',
+        fuelType: '',
         distanceTraveled: 0,
         images: [],
         previews: [],
         model: '',
-        otherFeatures: '',
+        otherFeatures: [],
         brand: '',
         count: 0,
         price: 0,
@@ -62,6 +75,7 @@ const Form = (props) => {
     const [modalState, setModalState] = useState(false);
     const [state, setState] = useState(formState);
     const [oldImageMap, setOldImageMap] = useState('');
+    const [features, setFeatures] = useState([]);
     const classes = useStyle();
     const {
         name,
@@ -94,13 +108,6 @@ const Form = (props) => {
                 previews,
             });
         }
-    };
-    const onBrandChangeHandler = (target) => {
-        onBrandChange({ brands, value: target.value });
-        setState({
-            ...state,
-            brand: target.value,
-        });
     };
     const onChangeHandler = (target) => {
         setState({
@@ -170,9 +177,6 @@ const Form = (props) => {
             case formConstant.imageUrl:
                 onImageChangeHandler(event.target);
                 break;
-            case formConstant.brand:
-                onBrandChangeHandler(event.target);
-                break;
             default:
                 onChangeHandler(event.target);
                 break;
@@ -197,10 +201,10 @@ const Form = (props) => {
                 information,
                 images,
             } = data;
-            let otherFeatures = '';
+            const otherFeatures = [];
             Object.values(information[formConstant.otherFeatures]).forEach(
                 (value) => {
-                    otherFeatures += `${value},`;
+                    otherFeatures.push(value);
                 }
             );
             const newPreviews = [];
@@ -225,6 +229,7 @@ const Form = (props) => {
                 count: 1,
                 oldImages,
             });
+            setFeatures(otherFeatures);
             onBrandChange({ brands, value: brand });
         }
         if (data && state.count === 1 && type === formConstant.type.update) {
@@ -233,150 +238,224 @@ const Form = (props) => {
         }
         if (message !== '' && modalState === false) setModalState(true);
     });
+
+    const brandsFlatProps = {
+        options: brands.map((option) => (option.name ? option.name : '')),
+    };
+
+    const modelsFlatProps = {
+        options: models.map((option) => (option.name ? option.name : '')),
+    };
+
+    const onBrandChangeHandler = (event, value) => {
+        onBrandChange({ brands, value });
+        setState({
+            ...state,
+            brand: value,
+        });
+    };
+
+    const onModelChangeHandler = (event, value) => {
+        setState({
+            ...state,
+            model: value,
+        });
+    };
+
+    const handleInputOtherFeatures = (event) => {
+        if (event.keyCode === 13 && event.target.value) {
+            setFeatures(features.concat(event.target.value));
+        }
+        setState({
+            ...state,
+            otherFeatures: features,
+        });
+    };
+
     return (
         <ThemeProvider theme={theme}>
             <Wrapper>
                 <Field>
-                    <Grid container spacing={3}>
+                    <Grid container className={classes.selectedBox} spacing={3}>
                         <Grid item xs={6} className={classes.dualLine}>
-                            <Span>Brand</Span>
-                            <Select
+                            <Autocomplete
+                                className={classes.autoComplete}
                                 name="brand"
-                                className={classes.selector}
-                                onChange={onChange}
+                                disableClearable
+                                {...brandsFlatProps}
+                                onChange={onBrandChangeHandler}
                                 value={brand}
-                            >
-                                {brands &&
-                                    brands.map((brand) => (
-                                        <MenuItem
-                                            key={brand.id}
-                                            value={brand.name}
-                                        >
-                                            {brand.name}
-                                        </MenuItem>
-                                    ))}
-                            </Select>
+                                renderInput={(params) => (
+                                    <TextField
+                                        {...params}
+                                        label="Brands"
+                                        margin="normal"
+                                        value={brand}
+                                    />
+                                )}
+                            />
                         </Grid>
                         <Grid item xs={6} className={classes.dualLine}>
-                            <Span item xs={5}>
-                                Model
-                            </Span>
-                            <Select
+                            <Autocomplete
+                                className={classes.autoComplete}
                                 name="model"
-                                className={classes.selector}
-                                onChange={onChange}
+                                disableClearable
+                                {...modelsFlatProps}
+                                onChange={onModelChangeHandler}
                                 value={model}
-                            >
-                                {models &&
-                                    models.map((model) => (
-                                        <MenuItem
-                                            key={model.id}
-                                            value={model.name}
-                                        >
-                                            {model.name}
-                                        </MenuItem>
-                                    ))}
-                            </Select>
+                                renderInput={(params) => (
+                                    <TextField
+                                        {...params}
+                                        label="Models"
+                                        margin="normal"
+                                    />
+                                )}
+                            />
                         </Grid>
                     </Grid>
                 </Field>
+
                 <Field>
-                    <Span>Name</Span>
-                    <Input
+                    <TextField
                         name="name"
                         type="text"
+                        label="Name"
+                        className={classes.autoComplete}
                         onChange={onChange}
                         value={name}
                     />
                 </Field>
                 <Field>
-                    <Grid container spacing={3}>
-                        <Grid item xs={6} className={classes.dualLine}>
-                            <Span>Year</Span>
-                            <Select
-                                name="year"
-                                className={classes.selector}
-                                onChange={onChange}
-                                value={year}
-                            >
-                                {utils.getYears().map((year) => (
-                                    <MenuItem key={`year ${year}`} value={year}>
-                                        {year}
-                                    </MenuItem>
-                                ))}
-                            </Select>
+                    <Grid container className={classes.selectedBox} spacing={3}>
+                        <Grid item xs={6}>
+                            <FormControl className={classes.autoComplete}>
+                                <InputLabel>Age</InputLabel>
+                                <Select
+                                    native
+                                    name="year"
+                                    onChange={onChange}
+                                    value={year}
+                                >
+                                    <option aria-label="None" value="" />
+                                    {utils
+                                        .getYears()
+                                        .reverse()
+                                        .map((year) => (
+                                            <option
+                                                key={`year ${year}`}
+                                                value={year}
+                                            >
+                                                {year}
+                                            </option>
+                                        ))}
+                                </Select>
+                            </FormControl>
                         </Grid>
-                        <Grid item xs={6} className={classes.dualLine}>
-                            <Span item xs={5}>
-                                Fuel Type
-                            </Span>
-                            <Select
-                                name="fuelType"
-                                className={classes.selector}
-                                onChange={onChange}
-                                value={fuelType}
-                            >
-                                {fuelTypes.map((type) => (
-                                    <MenuItem key={`type ${type}`} value={type}>
-                                        {type}
-                                    </MenuItem>
-                                ))}
-                            </Select>
+                        <Grid item xs={6}>
+                            <FormControl className={classes.autoComplete}>
+                                <InputLabel>Fuel Type</InputLabel>
+                                <Select
+                                    native
+                                    name="fuelType"
+                                    onChange={onChange}
+                                    value={fuelType}
+                                >
+                                    <option aria-label="None" value="" />
+                                    {fuelTypes.map((type) => (
+                                        <option
+                                            key={`type ${type}`}
+                                            value={type}
+                                        >
+                                            {type}
+                                        </option>
+                                    ))}
+                                </Select>
+                            </FormControl>
                         </Grid>
                     </Grid>
                 </Field>
                 <Field>
-                    <Span>Location</Span>
-                    <Input readOnly value={utils.getLocationString(location)} />
+                    <DisableTextField
+                        className={`${classes.autoComplete} ${classes.customTextField}`}
+                        label="Location"
+                        onChange={onChange}
+                        InputProps={{
+                            readOnly: true,
+                        }}
+                        value={utils.getLocationString(location)}
+                    />
                 </Field>
                 <LocationPicker defaultLocation={location} />
                 <Field>
-                    <Span>Price (USD)</Span>
-                    <Input
+                    <TextField
                         name="price"
+                        className={`${classes.autoComplete} ${classes.customTextField}`}
+                        label="Price (USD)"
                         type="number"
                         onChange={onChange}
-                        min="1"
+                        InputProps={{
+                            inputProps: {
+                                min: 0,
+                            },
+                        }}
                         value={price}
                     />
                 </Field>
                 <Field>
-                    <Span>Distance Traveled (km)</Span>
-                    <Input
+                    <TextField
                         name="distanceTraveled"
                         type="number"
+                        label="Distance Traveled (km)"
+                        className={`${classes.autoComplete} ${classes.customTextField}`}
                         onChange={onChange}
-                        min="1"
+                        InputProps={{
+                            inputProps: {
+                                min: 0,
+                            },
+                        }}
                         value={distanceTraveled}
                     />
                 </Field>
                 <Field>
-                    <Span>Other Information</Span>
-                    <Textarea
-                        name="otherFeatures"
-                        rows="6"
-                        cols="70"
-                        onChange={onChange}
-                        value={otherFeatures}
-                        placeholder="Feature1,Feature2,Feature3,..."
+                    <Autocomplete
+                        multiple
+                        freeSolo
+                        value={features}
+                        onChange={(event, newVal) => {
+                            setFeatures(newVal);
+                        }}
+                        options={[]}
+                        className={`${classes.autoComplete} ${classes.customTextField}`}
+                        renderInput={(params) => (
+                            <TextField
+                                {...params}
+                                variant="outlined"
+                                label="Other Features"
+                                placeholder="Type each feature and enter"
+                                onKeyUp={handleInputOtherFeatures}
+                            />
+                        )}
                     />
                 </Field>
                 <Field>
-                    <Span>Upload Image</Span>
-                    <Input
+                    <ImageTextField
                         name="imageUrl"
+                        className={`${classes.customTextField}`}
                         type="file"
+                        label="Images"
                         onChange={onChange}
+                        InputProps={{
+                            readOnly: true,
+                        }}
                         accept={imageFormat}
                     />
                 </Field>
                 <Field>
-                    <Span>Images</Span>
                     <Grid container spacing={3}>
                         {previews &&
                             previews.map((image, index) => {
                                 return (
-                                    <Grid item xs={5} key={`key${image}`}>
+                                    <Grid xs={4} key={`key${image}`}>
                                         <ImageCard
                                             xs={4}
                                             key={`key${image}`}
