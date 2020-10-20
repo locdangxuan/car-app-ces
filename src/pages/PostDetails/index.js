@@ -35,12 +35,13 @@ import component from 'config/constants/Components';
 import Color from 'config/constants/Colors';
 import utils from 'utils/utils';
 import { StyledLink, useStyles, StyledToggleButton } from './styles';
-
+import {Loader} from 'components/common'
 const listNavigationDetails = ['specifications', 'reviews'];
 
 const PostDetails = (props) => {
     const [alignment, setAlignment] = useState('specifications');
     const [title, setTitle] = useState('specifications');
+    const { details, pending } = props;
     const onClickCategory = (event, value) => {
         setTitle(value);
     };
@@ -51,7 +52,6 @@ const PostDetails = (props) => {
     useEffect(() => {
         props.fetchPostData(id);
     }, []);
-    const { details } = props;
     const classes = useStyles();
     const { length } = Object.keys(details);
     if (length > 0) {
@@ -76,6 +76,7 @@ const PostDetails = (props) => {
         ]);
         return (
             <Grid container className={classes.globalContent}>
+                {pending && <Loader type="FULL-PAGE"></Loader>}
                 <Grid item xs={9} className={`${classes.column}`}>
                     <Box
                         component={component.div}
@@ -302,6 +303,7 @@ const PostDetails = (props) => {
 const mapStateToProps = (state) => {
     return {
         details: state.postReducer.data,
+        pending: state.postReducer.pending,
     };
 };
 
