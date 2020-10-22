@@ -18,6 +18,13 @@ const postReducer = (state = initState, action) => {
         case POSTS.REVIEWS.REQUEST:
             return {
                 ...state,
+                isSuccess: false,
+                pending: true,
+                reviewsList: [],
+            };
+        case POSTS.REVIEWS.FETCH_REQUEST:
+            return {
+                ...state,
                 pending: true,
                 reviewsList: [],
             };
@@ -34,7 +41,6 @@ const postReducer = (state = initState, action) => {
                 pending: false,
                 message: action.message,
                 isSuccess: false,
-                reviewsList: [],
                 pagination: action.pagination,
             };
         case POSTS.REVIEWS.CREATE_REVIEW_SUCCEED:
@@ -43,6 +49,7 @@ const postReducer = (state = initState, action) => {
                 pending: false,
                 message: action.message,
                 isSuccess: true,
+                reviewsList: action.data,
             };
         case POSTS.REVIEWS.CREATE_REVIEW_FAILED:
             return {
@@ -57,6 +64,8 @@ const postReducer = (state = initState, action) => {
                 pending: false,
                 message: action.message,
                 isSuccess: true,
+                reviewsList: action.data.list,
+                pagination: action.data.pagination,
             };
         case POSTS.REVIEWS.DELETE_REVIEW_FAILED:
             return {

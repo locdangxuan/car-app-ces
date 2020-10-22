@@ -10,11 +10,15 @@ const TextEditor = (props) => {
     const onChangeHandler = (event) => {
         setContent(event.target.value);
     };
+    const onSubmitHandler = () => {
+        onSubmit(content);
+        setContent('');
+    };
     return (
         <ThemeProvider theme={theme}>
             <Wrapper>
                 <Textarea onChange={onChangeHandler} value={content} />
-                <Button onClick={() => onSubmit(content)}>Submit</Button>
+                <Button onClick={onSubmitHandler}>Submit</Button>
             </Wrapper>
         </ThemeProvider>
     );
