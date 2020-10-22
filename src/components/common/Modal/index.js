@@ -76,7 +76,9 @@ Modal.defaultProps = {
 };
 const mapDispatchToProps = (dispatch) => {
     return {
-        onSubmitRegister: (payload) => dispatch(authActions.register(payload)),
+        onSubmitRegister: (payload) =>{
+            dispatch(authActions.register(payload))
+        },
         onSubmitLogin: (payload) => dispatch(authActions.login(payload)),
     };
 };
