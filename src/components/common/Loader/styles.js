@@ -21,6 +21,20 @@ const FullpageWrapper = styled.section`
     opacity: 0.6;
 `;
 
+const SingleComponentWrapper = styled.section`
+    position: absolute;
+    display: flex;
+    top: 0;
+    left: 0;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background: white;
+    opacity: 0.6;
+    z-index: 500;
+`;
+
 const Circle = styled.div`
     --size: ${(props) => props.theme.loader.fontSize};
     width: ${(props) =>
@@ -89,4 +103,4 @@ const MiniCircle = styled.div`
     }
 `;
 
-export { Wrapper, Circle, MiniCircle, FullpageWrapper };
+export { Wrapper, Circle, MiniCircle, FullpageWrapper, SingleComponentWrapper };

@@ -6,7 +6,7 @@ const passwordVerification = (password, verification) => {
 };
 
 const lengthValidator = (value) => {
-    return value.length > 7;
+    return value.length > 7 && value.length < 31;
 };
 
 const phonenumberValidator = (value) => {

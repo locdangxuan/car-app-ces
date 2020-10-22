@@ -40,6 +40,7 @@ const useStyles = makeStyles({
     },
     wrapper: {
         background: Color.backgroundDetails,
+        position: 'relative',
     },
     info: {
         display: 'flex',

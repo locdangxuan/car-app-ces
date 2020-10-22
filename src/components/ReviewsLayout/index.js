@@ -48,7 +48,7 @@ const ReviewsLayout = (props) => {
     };
     return (
         <Wrapper>
-            {pending && <Loader type="FULL-PAGE" />}
+            {pending && <Loader type="SingleComp" />}
             {alertState && (
                 <Modal
                     type={modal.type.alert}
