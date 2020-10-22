@@ -1,6 +1,7 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import { ThemeProvider } from 'styled-components';
+import variant from 'config/constants/Variant';
 import { Wrapper, Body, StyledLink, StyledSpan, theme } from './styles';
 
 const NotFound = () => {
@@ -8,7 +9,7 @@ const NotFound = () => {
         <ThemeProvider theme={theme}>
             <Wrapper>
                 <Body>
-                    <Typography variant="h2">404 Not Found</Typography>
+                    <Typography variant={variant.h2}>404 Not Found</Typography>
                     <StyledSpan>
                         Sorry! The page you are looking for cannot be found.
                         Click on our top navigational menu or{' '}
