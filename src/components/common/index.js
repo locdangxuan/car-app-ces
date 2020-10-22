@@ -5,7 +5,6 @@ import Modal from './Modal';
 import Image from './Image';
 import Loader from './Loader';
 import RangeSlider from './RangeSlider';
-import SelectBox from './SelectBox';
 import UnAuthenticated from './UnAuthenticated';
 import Authenticated from './Authenticated';
 import Carousel from './Carousel';
@@ -36,7 +35,6 @@ export {
     Loader,
     Image,
     RangeSlider,
-    SelectBox,
     UnAuthenticated,
     Authenticated,
     Carousel,

@@ -78,7 +78,6 @@ const register = (fields) => {
                 const payload = await authService.register(fields);
                 dispatch(registerSuccess(payload));
             } catch (errorRes) {
-                console.log(errorRes);
                 dispatch(registerFailure(JSON.parse(errorRes.message)));
             }
         }, 1000);
