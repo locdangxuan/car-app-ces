@@ -4,7 +4,13 @@ import { ThemeProvider } from 'styled-components';
 import PropTypes from 'prop-types';
 import globalTheme from 'config/constants/Themes';
 import Color from 'config/constants/Colors';
-import { Circle, MiniCircle, Wrapper, FullpageWrapper } from './styles';
+import {
+    Circle,
+    MiniCircle,
+    Wrapper,
+    FullpageWrapper,
+    SingleComponentWrapper,
+} from './styles';
 
 const Loader = (props) => {
     const content = (theme = {}) => (
@@ -52,7 +58,17 @@ const Loader = (props) => {
             return <FullpageWrapper>{content(theme)}</FullpageWrapper>;
         }
         default:
-            return <Wrapper>{content()}</Wrapper>;
+            theme = {
+                loader: {
+                    width: '50px',
+                    height: '50px',
+                },
+            };
+            return (
+                <SingleComponentWrapper>
+                    {content(theme)}
+                </SingleComponentWrapper>
+            );
     }
 };
 Loader.propTypes = {
