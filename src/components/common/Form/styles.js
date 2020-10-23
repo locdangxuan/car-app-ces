@@ -13,6 +13,15 @@ const Wrapper = styled.div`
     opacity: 0.95;
 `;
 
+const CustomTextField = styled(TextField)`
+    ${(props) => {
+        if (props.isError === true)
+            return `&.MuiFormControl-root .MuiInput-underline {
+                border-bottom: 2px solid ${props.theme.color.danger}
+            }`;
+    }}
+`;
+
 const StyledLink = styled(Link)`
     text-decoration: none;
 `;
@@ -86,4 +95,5 @@ export {
     StyledLink,
     DisableTextField,
     ImageTextField,
+    CustomTextField,
 };

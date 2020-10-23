@@ -1,7 +1,6 @@
 import 'dotenv/config';
 
-const server =
-    process.env.REACT_APP_API_SERVER || 'https://car-app-ces.tk/api/';
+const server = process.env.REACT_APP_API_SERVER || 'http://localhost:3002/api/';
 const geocodeServer =
     'https://api.bigdatacloud.net/data/reverse-geocode-client';
 

@@ -1,5 +1,6 @@
 import { MESSAGE_ERROR, MESSAGE_SUCCESS } from 'config/messages/Messages.Auth';
 import * as statusCode from 'config/constants/StatusCode';
+import * as POST_MESSAGE from 'config/messages/Messages.Post';
 
 const passwordVerification = (password, verification) => {
     return password === verification;
@@ -9,8 +10,8 @@ const lengthValidator = (value) => {
     return value.length > 7 && value.length < 31;
 };
 
-const phonenumberValidator = (value) => {
-    const expression = new RegExp(/^(?=.*\d)(?=.*[0-9])[0-9]{10}$/);
+const numberValidator = (value) => {
+    const expression = new RegExp(/^(?=.*\d)(?=.*[0-9])[0-9]/);
     return expression.test(value);
 };
 
@@ -19,6 +20,11 @@ const emailValidator = (value) => {
         /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
     );
     return expression.test(value);
+};
+
+const characterValidator = (value) => {
+    const expression = new RegExp(/[`~!@#$%^&*,.<>;':"/[\]|{}()=_+-]/);
+    return !expression.test(value);
 };
 
 const checkBlankFields = (payload) => {
@@ -90,7 +96,10 @@ const registerValidator = (payload) => {
                 message: MESSAGE_ERROR.INVALID_USERNAME,
             });
         }
-        if (phonenumberValidator(payload.phone) === false) {
+        if (
+            numberValidator(payload.phone) === false ||
+            payload.phone.length < 10
+        ) {
             isValid = false;
             invalidFields.push({
                 name: 'phone',
@@ -141,11 +150,95 @@ const registerValidator = (payload) => {
 };
 
 const postValidator = (payload) => {
-    if (checkBlankFields(payload).result === false) {
+    let isValid = true;
+    const invalidFields = [];
+    if (payload.distanceTraveled <= 0) {
+        isValid = false;
+        invalidFields.push({
+            name: 'distanceTraveled',
+            message: POST_MESSAGE.MESSAGE_ERROR.NEGATIVE_DISTANCE_TRAVELED,
+        });
+    } else if (numberValidator(payload.distanceTraveled) === false) {
+        isValid = false;
+        invalidFields.push({
+            name: 'distanceTraveled',
+            message: POST_MESSAGE.MESSAGE_ERROR.INVALID_DISTANCE_TRAVELED,
+        });
+    }
+    if (payload.price <= 0) {
+        isValid = false;
+        invalidFields.push({
+            name: 'price',
+            message: POST_MESSAGE.MESSAGE_ERROR.NEGATIVE_PRICE,
+        });
+    } else if (numberValidator(payload.price) === false) {
+        isValid = false;
+        invalidFields.push({
+            name: 'price',
+            message: POST_MESSAGE.MESSAGE_ERROR.INVALID_PRICE,
+        });
+    }
+    if (payload.name === '') {
+        isValid = false;
+        invalidFields.push({
+            name: 'name',
+            message: POST_MESSAGE.MESSAGE_ERROR.EMPTY_FIELD,
+        });
+    } else if (characterValidator(payload.name) === false) {
+        isValid = false;
+        invalidFields.push({
+            name: 'name',
+            message: POST_MESSAGE.MESSAGE_ERROR.INVALID_NAME,
+        });
+    }
+    if (payload.brand === '') {
+        isValid = false;
+        invalidFields.push({
+            name: 'brand',
+            message: POST_MESSAGE.MESSAGE_ERROR.INVALID_BRAND,
+        });
+    }
+    if (payload.model === '') {
+        isValid = false;
+        invalidFields.push({
+            name: 'model',
+            message: POST_MESSAGE.MESSAGE_ERROR.INVALID_MODEL,
+        });
+    }
+    if (payload.year === '') {
+        isValid = false;
+        invalidFields.push({
+            name: 'year',
+            message: POST_MESSAGE.MESSAGE_ERROR.INVALID_YEAR,
+        });
+    }
+    if (payload.fuelType === '') {
+        isValid = false;
+        invalidFields.push({
+            name: 'fuelType',
+            message: POST_MESSAGE.MESSAGE_ERROR.INVALID_FUEL_TYPE,
+        });
+    }
+    if (payload.information.length === 0) {
+        isValid = false;
+        invalidFields.push({
+            name: 'information',
+            message: POST_MESSAGE.MESSAGE_ERROR.EMPTY_INFORMATION,
+        });
+    }
+    if (payload.images.length === 0) {
+        isValid = false;
+        invalidFields.push({
+            name: 'images',
+            message: POST_MESSAGE.MESSAGE_ERROR.EMPTY_IMAGES,
+        });
+    }
+    if (isValid === false) {
         throw new Error(
             JSON.stringify({
                 status: statusCode.BAD_REQUEST,
-                message: MESSAGE_ERROR.BLANK_FIELD,
+                message: MESSAGE_ERROR.INVALID_FIELD,
+                invalidFields,
             })
         );
     }
@@ -155,4 +248,9 @@ const postValidator = (payload) => {
     };
 };
 
-export default { registerValidator, loginValidator, postValidator };
+export default {
+    registerValidator,
+    loginValidator,
+    postValidator,
+    characterValidator,
+};
