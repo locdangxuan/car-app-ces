@@ -79,6 +79,14 @@ const postReducer = (state = initState, action) => {
                 ...state,
                 pending: true,
                 data: [],
+                fieldsValidity: {
+                    name: true,
+                    distanceTraveled: true,
+                    price: true,
+                    brand: true,
+                    model: true,
+                    information: true,
+                },
             };
         case POSTS.UPLOAD_SUCCEED:
             return {
@@ -93,6 +101,8 @@ const postReducer = (state = initState, action) => {
                 pending: false,
                 message: action.message,
                 isSuccess: false,
+                fieldsValidity: action.invalidFields.fieldsValidity,
+                fieldsErrorMessage: action.invalidFields.fieldsErrorMessage,
             };
         case BRANDS.REQUEST:
             return {
@@ -152,6 +162,7 @@ const postReducer = (state = initState, action) => {
                 ...state,
                 pending: false,
                 message: action.message,
+                invalidFields: action.invalidFields,
             };
         case POSTS.UPDATE_SUCCEED:
             return {

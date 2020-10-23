@@ -18,7 +18,7 @@ const Input = styled.input`
     border-bottom: ${(props) => {
         if (props.theme.input.borderBottom)
             return props.theme.input.borderBottom;
-        return props.isError === 'true'
+        return props.isError === true
             ? `2px solid ${props.theme.color.danger}`
             : `1px solid ${props.theme.color.darkGrey}`;
     }};

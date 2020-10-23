@@ -8,6 +8,31 @@ import validator from 'services/validator/FieldsValidator';
 import * as utilsConstants from 'config/constants/Utils';
 import { MESSAGE_ERROR } from 'config/messages/Messages.Post';
 
+const handleFieldsValidity = (invalidFields) => {
+    const fieldsValidity = {
+        name: true,
+        distanceTraveled: true,
+        price: true,
+        brand: true,
+        model: true,
+        information: true,
+    };
+    const fieldsErrorMessage = {
+        name: '',
+        distanceTraveled: '',
+        price: '',
+        brand: '',
+        model: '',
+        information: '',
+    };
+    Object.values(invalidFields).forEach((value) => {
+        const { name, message } = value;
+        fieldsValidity[name] = false;
+        fieldsErrorMessage[name] = message;
+    });
+    return { fieldsValidity, fieldsErrorMessage };
+};
+
 const onUploadSuccess = (payload) => ({
     type: POSTS.UPLOAD_SUCCEED,
     message: payload.message,
@@ -15,6 +40,7 @@ const onUploadSuccess = (payload) => ({
 const onUploadFailure = (payload) => ({
     type: POSTS.UPLOAD_FAILED,
     message: payload.message,
+    invalidFields: handleFieldsValidity(payload.invalidFields),
 });
 const onUpdateSuccess = (payload) => ({
     type: POSTS.UPDATE_SUCCEED,
@@ -23,6 +49,7 @@ const onUpdateSuccess = (payload) => ({
 const onUpdateFailure = (payload) => ({
     type: POSTS.UPLOAD_FAILED,
     message: payload.message,
+    invalidFields: handleFieldsValidity(payload.invalidFields),
 });
 const onRequest = (type) => ({
     type,
@@ -196,6 +223,7 @@ const validateFields = async (payload, getState) => {
             name,
             price,
             year,
+            images,
         } = payload;
         const brandId = await utils.getIdFromArray(
             getState().postReducer.brands,
@@ -215,6 +243,7 @@ const validateFields = async (payload, getState) => {
             name,
             price,
             year,
+            images,
         });
         return { brandId, modelId };
     } catch (error) {

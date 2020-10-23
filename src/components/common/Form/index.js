@@ -11,6 +11,7 @@ import {
     Loader,
     Modal,
     LocationPicker,
+    ModalSpan,
 } from 'components/common';
 import PropTypes from 'prop-types';
 import { ThemeProvider } from 'styled-components';
@@ -27,6 +28,7 @@ import {
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import * as utilsConstants from 'config/constants/Utils';
 import { modal } from 'config/constants/Utils';
+import validator from 'services/validator/FieldsValidator';
 import {
     Wrapper,
     Submit,
@@ -35,6 +37,7 @@ import {
     StyledLink,
     DisableTextField,
     ImageTextField,
+    CustomTextField,
 } from './styles';
 
 const formConstant = utilsConstants.formUtilConstant;
@@ -71,11 +74,14 @@ const Form = (props) => {
         id,
         onDismissModal,
         location,
+        fieldsValidity,
+        fieldsErrorMessage,
     } = props;
     const [modalState, setModalState] = useState(false);
     const [state, setState] = useState(formState);
     const [oldImageMap, setOldImageMap] = useState('');
     const [features, setFeatures] = useState([]);
+    const [isFeatureValid, setIsFeatureValid] = useState('true');
     const classes = useStyle();
     const {
         name,
@@ -139,6 +145,7 @@ const Form = (props) => {
         });
     };
     const onSubmitHandler = async () => {
+        setIsFeatureValid(true);
         switch (props.type) {
             case formConstant.type.update:
                 onSubmit({
@@ -265,11 +272,20 @@ const Form = (props) => {
     const handleInputOtherFeatures = (event) => {
         if (event.keyCode === 13 && event.target.value) {
             setFeatures(features.concat(event.target.value));
+            setState({
+                ...state,
+                otherFeatures: features,
+            });
         }
-        setState({
-            ...state,
-            otherFeatures: features,
-        });
+    };
+
+    const onFeatureSubmitHandler = (event, newVal) => {
+        if (validator.characterValidator(newVal[newVal.length - 1]) === false) {
+            setIsFeatureValid(false);
+        } else {
+            setIsFeatureValid(true);
+            setFeatures(newVal);
+        }
     };
 
     return (
@@ -294,6 +310,11 @@ const Form = (props) => {
                                     />
                                 )}
                             />
+                            {fieldsValidity['brand'] === false && (
+                                <ModalSpan isValid={false}>
+                                    {fieldsErrorMessage['brand']}
+                                </ModalSpan>
+                            )}
                         </Grid>
                         <Grid item xs={6} className={classes.dualLine}>
                             <Autocomplete
@@ -311,19 +332,29 @@ const Form = (props) => {
                                     />
                                 )}
                             />
+                            {fieldsValidity['model'] === false && (
+                                <ModalSpan isValid={false}>
+                                    {fieldsErrorMessage['model']}
+                                </ModalSpan>
+                            )}
                         </Grid>
                     </Grid>
                 </Field>
-
                 <Field>
-                    <TextField
+                    <CustomTextField
                         name="name"
                         type="text"
                         label="Name"
                         className={classes.autoComplete}
                         onChange={onChange}
                         value={name}
+                        isError={!fieldsValidity['name']}
                     />
+                    {fieldsValidity['name'] === false && (
+                        <ModalSpan isValid={false}>
+                            {fieldsErrorMessage['name']}
+                        </ModalSpan>
+                    )}
                 </Field>
                 <Field>
                     <Grid container className={classes.selectedBox} spacing={3}>
@@ -350,6 +381,11 @@ const Form = (props) => {
                                         ))}
                                 </Select>
                             </FormControl>
+                            {fieldsValidity['year'] === false && (
+                                <ModalSpan isValid={false}>
+                                    {fieldsErrorMessage['year']}
+                                </ModalSpan>
+                            )}
                         </Grid>
                         <Grid item xs={6}>
                             <FormControl className={classes.autoComplete}>
@@ -371,6 +407,11 @@ const Form = (props) => {
                                     ))}
                                 </Select>
                             </FormControl>
+                            {fieldsValidity['fuelType'] === false && (
+                                <ModalSpan isValid={false}>
+                                    {fieldsErrorMessage['fuelType']}
+                                </ModalSpan>
+                            )}
                         </Grid>
                     </Grid>
                 </Field>
@@ -387,7 +428,7 @@ const Form = (props) => {
                 </Field>
                 <LocationPicker defaultLocation={location} />
                 <Field>
-                    <TextField
+                    <CustomTextField
                         name="price"
                         className={`${classes.autoComplete} ${classes.customTextField}`}
                         label="Price (USD)"
@@ -399,10 +440,16 @@ const Form = (props) => {
                             },
                         }}
                         value={price}
+                        isError={!fieldsValidity['price']}
                     />
+                    {fieldsValidity['price'] === false && (
+                        <ModalSpan isValid={false}>
+                            {fieldsErrorMessage['price']}
+                        </ModalSpan>
+                    )}
                 </Field>
                 <Field>
-                    <TextField
+                    <CustomTextField
                         name="distanceTraveled"
                         type="number"
                         label="Distance Traveled (km)"
@@ -414,16 +461,20 @@ const Form = (props) => {
                             },
                         }}
                         value={distanceTraveled}
+                        isError={!fieldsValidity['distanceTraveled']}
                     />
+                    {fieldsValidity['distanceTraveled'] === false && (
+                        <ModalSpan isValid={false}>
+                            {fieldsErrorMessage['distanceTraveled']}
+                        </ModalSpan>
+                    )}
                 </Field>
                 <Field>
                     <Autocomplete
                         multiple
                         freeSolo
                         value={features}
-                        onChange={(event, newVal) => {
-                            setFeatures(newVal);
-                        }}
+                        onChange={onFeatureSubmitHandler}
                         options={[]}
                         className={`${classes.autoComplete} ${classes.customTextField}`}
                         renderInput={(params) => (
@@ -436,19 +487,16 @@ const Form = (props) => {
                             />
                         )}
                     />
-                </Field>
-                <Field>
-                    <ImageTextField
-                        name="imageUrl"
-                        className={`${classes.customTextField}`}
-                        type="file"
-                        label="Images"
-                        onChange={onChange}
-                        InputProps={{
-                            readOnly: true,
-                        }}
-                        accept={imageFormat}
-                    />
+                    {fieldsValidity['information'] === false && (
+                        <ModalSpan isValid={false}>
+                            {fieldsErrorMessage['information']}
+                        </ModalSpan>
+                    )}
+                    {isFeatureValid === false && (
+                        <ModalSpan isValid={false}>
+                            Feature can not contain special characters
+                        </ModalSpan>
+                    )}
                 </Field>
                 <Field>
                     <Grid container spacing={3}>
@@ -467,6 +515,24 @@ const Form = (props) => {
                                 );
                             })}
                     </Grid>
+                </Field>
+                <Field>
+                    <ImageTextField
+                        name="imageUrl"
+                        className={`${classes.customTextField}`}
+                        type="file"
+                        label="Images"
+                        onChange={onChange}
+                        InputProps={{
+                            readOnly: true,
+                        }}
+                        accept={imageFormat}
+                    />
+                    {fieldsValidity['images'] === false && (
+                        <ModalSpan isValid={false}>
+                            {fieldsErrorMessage['images']}
+                        </ModalSpan>
+                    )}
                 </Field>
                 <Submit>
                     <Button onClick={onSubmitHandler} isSuccess>
@@ -511,6 +577,8 @@ Form.propTypes = {
     id: PropTypes.string,
     onDismissModal: PropTypes.func,
     getLocation: PropTypes.func,
+    fieldsValidity: PropTypes.objectOf(PropTypes.bool),
+    fieldsErrorMessage: PropTypes.objectOf(PropTypes.string),
 };
 
 Form.defaultProps = {
@@ -530,6 +598,8 @@ Form.defaultProps = {
     data: undefined,
     onDismissModal: () => {},
     getLocation: () => {},
+    fieldsValidity: {},
+    fieldsErrorMessage: {},
 };
 
 const mapStateToProps = (state) => ({ ...state.postReducer });
