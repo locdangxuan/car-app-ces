@@ -18,13 +18,7 @@ import { ThemeProvider } from 'styled-components';
 import action from 'redux/actions/Action.Post';
 import utils from 'utils/utils';
 import { connect } from 'react-redux';
-import {
-    FormControl,
-    InputLabel,
-    Select,
-    Grid,
-    TextField,
-} from '@material-ui/core';
+import { Grid, TextField } from '@material-ui/core';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import * as utilsConstants from 'config/constants/Utils';
 import { modal } from 'config/constants/Utils';
@@ -80,7 +74,6 @@ const Form = (props) => {
     const [modalState, setModalState] = useState(false);
     const [state, setState] = useState(formState);
     const [oldImageMap, setOldImageMap] = useState('');
-    const [features, setFeatures] = useState([]);
     const [isFeatureValid, setIsFeatureValid] = useState('true');
     const classes = useStyle();
     const {
@@ -236,7 +229,6 @@ const Form = (props) => {
                 count: 1,
                 oldImages,
             });
-            setFeatures(otherFeatures);
             onBrandChange({ brands, value: brand });
         }
         if (data && state.count === 1 && type === formConstant.type.update) {
@@ -254,6 +246,17 @@ const Form = (props) => {
         options: models.map((option) => (option.name ? option.name : '')),
     };
 
+    const ageFlatProps = {
+        options: utils
+            .getYears()
+            .reverse()
+            .map((year) => year.toString()),
+    };
+
+    const fuelTypesFlatProps = {
+        options: fuelTypes.map((option) => option),
+    };
+
     const onBrandChangeHandler = (event, value) => {
         onBrandChange({ brands, value });
         setState({
@@ -269,12 +272,25 @@ const Form = (props) => {
         });
     };
 
+    const onYearChangeHandler = (event, value) => {
+        setState({
+            ...state,
+            year: parseInt(value, 10),
+        });
+    };
+
+    const onFuelTypeChangeHandler = (event, value) => {
+        setState({
+            ...state,
+            fuelType: value,
+        });
+    };
+
     const handleInputOtherFeatures = (event) => {
         if (event.keyCode === 13 && event.target.value) {
-            setFeatures(features.concat(event.target.value));
             setState({
                 ...state,
-                otherFeatures: features,
+                otherFeatures: state.otherFeatures.concat(event.target.value),
             });
         }
     };
@@ -284,7 +300,10 @@ const Form = (props) => {
             setIsFeatureValid(false);
         } else {
             setIsFeatureValid(true);
-            setFeatures(newVal);
+            setState({
+                ...state,
+                otherFeatures: newVal,
+            });
         }
     };
 
@@ -358,55 +377,45 @@ const Form = (props) => {
                 </Field>
                 <Field>
                     <Grid container className={classes.selectedBox} spacing={3}>
-                        <Grid item xs={6}>
-                            <FormControl className={classes.autoComplete}>
-                                <InputLabel>Age</InputLabel>
-                                <Select
-                                    native
-                                    name="year"
-                                    onChange={onChange}
-                                    value={year}
-                                >
-                                    <option aria-label="None" value="" />
-                                    {utils
-                                        .getYears()
-                                        .reverse()
-                                        .map((year) => (
-                                            <option
-                                                key={`year ${year}`}
-                                                value={year}
-                                            >
-                                                {year}
-                                            </option>
-                                        ))}
-                                </Select>
-                            </FormControl>
+                        <Grid item xs={6} className={classes.dualLine}>
+                            <Autocomplete
+                                className={classes.autoComplete}
+                                name="year"
+                                disableClearable
+                                {...ageFlatProps}
+                                onChange={onYearChangeHandler}
+                                value={year}
+                                renderInput={(params) => (
+                                    <TextField
+                                        {...params}
+                                        label="Age"
+                                        margin="normal"
+                                        value={year}
+                                    />
+                                )}
+                            />
                             {fieldsValidity['year'] === false && (
                                 <ModalSpan isValid={false}>
                                     {fieldsErrorMessage['year']}
                                 </ModalSpan>
                             )}
                         </Grid>
-                        <Grid item xs={6}>
-                            <FormControl className={classes.autoComplete}>
-                                <InputLabel>Fuel Type</InputLabel>
-                                <Select
-                                    native
-                                    name="fuelType"
-                                    onChange={onChange}
-                                    value={fuelType}
-                                >
-                                    <option aria-label="None" value="" />
-                                    {fuelTypes.map((type) => (
-                                        <option
-                                            key={`type ${type}`}
-                                            value={type}
-                                        >
-                                            {type}
-                                        </option>
-                                    ))}
-                                </Select>
-                            </FormControl>
+                        <Grid item xs={6} className={classes.dualLine}>
+                            <Autocomplete
+                                className={classes.autoComplete}
+                                name="fueltype"
+                                disableClearable
+                                {...fuelTypesFlatProps}
+                                onChange={onFuelTypeChangeHandler}
+                                value={fuelType}
+                                renderInput={(params) => (
+                                    <TextField
+                                        {...params}
+                                        label="Fuel Type"
+                                        margin="normal"
+                                    />
+                                )}
+                            />
                             {fieldsValidity['fuelType'] === false && (
                                 <ModalSpan isValid={false}>
                                     {fieldsErrorMessage['fuelType']}
@@ -473,7 +482,7 @@ const Form = (props) => {
                     <Autocomplete
                         multiple
                         freeSolo
-                        value={features}
+                        value={otherFeatures}
                         onChange={onFeatureSubmitHandler}
                         options={[]}
                         className={`${classes.autoComplete} ${classes.customTextField}`}
