@@ -25,23 +25,27 @@ import {
     AttachMoney,
     Room,
     LocalGasStation,
+    Person,
+    Email,
+    ContactPhone,
 } from '@material-ui/icons';
 import { ToggleButtonGroup } from '@material-ui/lab';
-import { Carousel, Loader } from 'components/common';
+import { Carousel } from 'components/common';
 import { ReviewsLayout } from 'components';
 import action from 'redux/actions/Action.Post';
 import variant from 'config/constants/Variant';
 import component from 'config/constants/Components';
 import Color from 'config/constants/Colors';
 import utils from 'utils/utils';
+import { formUtilConstant } from 'config/constants/Utils';
 import { StyledLink, useStyles, StyledToggleButton } from './styles';
 
-const listNavigationDetails = ['specifications', 'reviews'];
+const listNavigationDetails = ['specifications', 'reviews', 'other feature'];
 
 const PostDetails = (props) => {
     const [alignment, setAlignment] = useState('specifications');
     const [title, setTitle] = useState('specifications');
-    const { details, pending } = props;
+    const { details } = props;
     const onClickCategory = (event, value) => {
         setTitle(value);
     };
@@ -69,6 +73,7 @@ const PostDetails = (props) => {
             specs,
             location,
             editable,
+            information,
         } = details;
         const specifications = Object.keys(specs).map((element) => [
             element,
@@ -76,7 +81,6 @@ const PostDetails = (props) => {
         ]);
         return (
             <Grid container className={classes.globalContent}>
-                {pending && <Loader type="FULL-PAGE" />}
                 <Grid item xs={9} className={`${classes.column}`}>
                     <Box
                         component={component.div}
@@ -100,7 +104,7 @@ const PostDetails = (props) => {
                                     component={component.div}
                                     className={classes.textCenter}
                                 >
-                                    <LocalTaxi />
+                                    <LocalTaxi className={classes.first} />
                                     {model}
                                 </Box>
                                 <Box
@@ -127,7 +131,7 @@ const PostDetails = (props) => {
                                     component={component.div}
                                     className={classes.textCenter}
                                 >
-                                    <AttachMoney />
+                                    <AttachMoney className={classes.first} />
                                     {price}
                                 </Box>
 
@@ -259,6 +263,18 @@ const PostDetails = (props) => {
                                     </Box>
                                 </Box>
                             )}
+                            {title === 'other feature' && (
+                                <Box className={classes.otherFeatures}>
+                                    {information[
+                                        formUtilConstant.otherFeatures
+                                    ].map((feature) => (
+                                        <Box className={classes.feature}>
+                                            {' '}
+                                            {feature}{' '}
+                                        </Box>
+                                    ))}
+                                </Box>
+                            )}
                         </Box>
                     </Box>
                 </Grid>
@@ -271,19 +287,28 @@ const PostDetails = (props) => {
                             variant={variant.subtitle1}
                             className={classes.specificationValue}
                         >
-                            Seller: {seller}
+                            <Person classNmae={classes.iconPersonInfo} />
+                            <Typography className={classes.infoSeller}>
+                                {seller}
+                            </Typography>
                         </Typography>
                         <Typography
                             variant={variant.subtitle1}
                             className={classes.specificationValue}
                         >
-                            Email: {email}
+                            <Email classNmae={classes.iconPersonInfo} />
+                            <Typography className={classes.infoSeller}>
+                                {email}
+                            </Typography>
                         </Typography>
                         <Typography
                             variant={variant.subtitle1}
                             className={classes.specificationValue}
                         >
-                            Phone Number: {phone}
+                            <ContactPhone classNmae={classes.iconPersonInfo} />
+                            <Typography className={classes.infoSeller}>
+                                {phone}
+                            </Typography>
                         </Typography>
                         {editable && (
                             <StyledLink to={`/posts/update/${id}`}>

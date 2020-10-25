@@ -61,6 +61,10 @@ const useStyles = makeStyles({
     },
     left: {
         marginLeft: '20px',
+        marginRight: '5px',
+    },
+    first: {
+        marginRight: '5px',
     },
     title: {
         display: 'flex',
@@ -92,10 +96,18 @@ const useStyles = makeStyles({
     },
     sellerInfo: {
         padding: '20px 0',
-        textAlign: 'center',
     },
     specificationValue: {
-        margin: '0 0 10px 10px',
+        display: 'flex',
+        paddingLeft: 10,
+    },
+    infoSeller: {
+        marginLeft: 10,
+        marginTop: 2,
+    },
+    iconPersonInfo: {
+        marginLeft: 10,
+        marginTop: 2,
     },
     table: {
         minWidth: 650,
@@ -105,7 +117,14 @@ const useStyles = makeStyles({
         border: `1px solid ${Color.tableBorderColor}`,
     },
     tableHead: {
-        fontSize: '30px',
+        fontSize: fontSize.fontLarge,
+    },
+    otherFeatures: {
+        marginTop: 20,
+        marginLeft: '5%',
+    },
+    feature: {
+        marginBottom: 10,
     },
 });
 

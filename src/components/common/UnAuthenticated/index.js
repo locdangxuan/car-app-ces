@@ -34,14 +34,16 @@ const UnAuthenticated = () => {
                         onClick={toggleLogin}
                     >
                         <PersonIcon />
-                        <Typography>Login</Typography>
+                        <Typography className={classes.login}>Login</Typography>
                     </Button>
                     <Button
                         className={classes.styleAuthButton}
                         onClick={toggleRegister}
                     >
                         <PersonAddIcon />
-                        <Typography>Signup</Typography>
+                        <Typography className={classes.signup}>
+                            Signup
+                        </Typography>
                     </Button>
                 </Box>
             </ThemeProvider>

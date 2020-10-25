@@ -150,7 +150,7 @@ const registerValidator = (payload) => {
     );
 };
 
-const postValidator = (payload) => {
+const postValidator = (payload, type) => {
     let isValid = true;
     const invalidFields = [];
     if (payload.distanceTraveled <= 0) {
@@ -227,12 +227,14 @@ const postValidator = (payload) => {
             message: POST_MESSAGE.MESSAGE_ERROR.EMPTY_INFORMATION,
         });
     }
-    if (payload.images.length === 0) {
-        isValid = false;
-        invalidFields.push({
-            name: 'images',
-            message: POST_MESSAGE.MESSAGE_ERROR.EMPTY_IMAGES,
-        });
+    if (type !== 'update') {
+        if (payload.images.length === 0) {
+            isValid = false;
+            invalidFields.push({
+                name: 'images',
+                message: POST_MESSAGE.MESSAGE_ERROR.EMPTY_IMAGES,
+            });
+        }
     }
     if (isValid === false) {
         throw new Error(

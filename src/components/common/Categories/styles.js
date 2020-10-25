@@ -35,57 +35,6 @@ const StyledLink = styled(Link)`
     text-decoration: none;
 `;
 
-const Dropdown = styled.div`
-    position: relative;
-    display: inline-block;
-`;
-
-const Brand = styled.div`
-    display: flex;
-    padding-left: 10px;
-    align-items: center;
-    color: ${(props) => props.theme.brand.color};
-    ${StyledLink} {
-        color: ${(props) => props.theme.brand.color};
-        opacity: 0.8;
-    }
-    &:hover {
-        ${StyledLink} {
-            color: ${(props) => props.theme.brand.color};
-            opacity: 1;
-        }
-    }
-`;
-
-const Year = styled(Brand)``;
-
-const DropdownContent = styled.div`
-    display: none;
-    position: absolute;
-    width: 150px;
-    z-index: 1;
-    color: ${(props) => props.theme.dropdownContent.color};
-    top: 100%;
-    background: ${Color.backgroundHeader};
-    ${Year} {
-        justify-content: center;
-    }
-`;
-
-const DropdownButton = styled(ModelCategoryButton)`
-    &:hover ${DropdownContent} {
-        display: block;
-        overflow-y: scroll;
-        height: 350px;
-    }
-
-    &:focus ${DropdownContent} {
-        display: block;
-        overflow-y: scroll;
-        height: 350px;
-    }
-`;
-
 const categoryTheme = () => ({
     modelCategoryButton: {
         color: `${Color.white} !important`,
@@ -100,14 +49,4 @@ const categoryTheme = () => ({
     },
 });
 
-export {
-    ModelCategories,
-    ModelCategoryButton,
-    StyledLink,
-    DropdownContent,
-    Dropdown,
-    DropdownButton,
-    Brand,
-    Year,
-    categoryTheme,
-};
+export { ModelCategories, ModelCategoryButton, StyledLink, categoryTheme };
