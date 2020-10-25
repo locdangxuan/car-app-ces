@@ -78,7 +78,7 @@ const postReducer = (state = initState, action) => {
             return {
                 ...state,
                 pending: true,
-                data: [],
+                data: undefined,
                 fieldsValidity: {
                     name: true,
                     distanceTraveled: true,

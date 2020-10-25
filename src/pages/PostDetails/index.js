@@ -27,7 +27,7 @@ import {
     LocalGasStation,
 } from '@material-ui/icons';
 import { ToggleButtonGroup } from '@material-ui/lab';
-import { Carousel } from 'components/common';
+import { Carousel, Loader } from 'components/common';
 import { ReviewsLayout } from 'components';
 import action from 'redux/actions/Action.Post';
 import variant from 'config/constants/Variant';
@@ -35,7 +35,7 @@ import component from 'config/constants/Components';
 import Color from 'config/constants/Colors';
 import utils from 'utils/utils';
 import { StyledLink, useStyles, StyledToggleButton } from './styles';
-import {Loader} from 'components/common'
+
 const listNavigationDetails = ['specifications', 'reviews'];
 
 const PostDetails = (props) => {
@@ -76,7 +76,7 @@ const PostDetails = (props) => {
         ]);
         return (
             <Grid container className={classes.globalContent}>
-                {pending && <Loader type="FULL-PAGE"></Loader>}
+                {pending && <Loader type="FULL-PAGE" />}
                 <Grid item xs={9} className={`${classes.column}`}>
                     <Box
                         component={component.div}

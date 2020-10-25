@@ -35,8 +35,8 @@ const ReviewsLayout = (props) => {
         if (message !== '' && !(alertState || isSuccess)) setAlertState(true);
     });
     const onSubmitHandler = (content) => {
-        if(content !==''){
-         createReview(id, content);
+        if (content !== '') {
+            createReview(id, content);
         }
     };
     const onAlertToggle = () => {

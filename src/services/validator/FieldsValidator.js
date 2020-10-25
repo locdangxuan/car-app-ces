@@ -98,7 +98,8 @@ const registerValidator = (payload) => {
         }
         if (
             numberValidator(payload.phone) === false ||
-            payload.phone.length < 10
+            payload.phone.length < 10 ||
+            characterValidator(payload.phone) === false
         ) {
             isValid = false;
             invalidFields.push({
