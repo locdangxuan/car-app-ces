@@ -211,7 +211,7 @@ const onLocationChange = (coordinates) => {
     };
 };
 
-const validateFields = async (payload, getState) => {
+const validateFields = async (payload, getState, type = 'upload') => {
     try {
         const {
             brand,
@@ -233,18 +233,21 @@ const validateFields = async (payload, getState) => {
             getState().postReducer.models,
             model
         );
-        validator.postValidator({
-            brand: brandId,
-            distanceTraveled,
-            location,
-            fuelType,
-            information,
-            model: modelId,
-            name,
-            price,
-            year,
-            images,
-        });
+        validator.postValidator(
+            {
+                brand: brandId,
+                distanceTraveled,
+                location,
+                fuelType,
+                information,
+                model: modelId,
+                name,
+                price,
+                year,
+                images,
+            },
+            type
+        );
         return { brandId, modelId };
     } catch (error) {
         const { message } = error;
@@ -285,7 +288,11 @@ const update = (payload) => {
         dispatch(onRequest(POSTS.REQUEST));
         setTimeout(async () => {
             try {
-                const validateResult = await validateFields(payload, getState);
+                const validateResult = await validateFields(
+                    payload,
+                    getState,
+                    'update'
+                );
                 const newInformation = {};
                 newInformation[formUtilConstant.otherFeatures] =
                     payload.information;

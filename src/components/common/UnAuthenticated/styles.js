@@ -29,6 +29,14 @@ const useStyles = makeStyles({
         width: '100%',
         paddingRight: '10%',
     },
+    login: {
+        marginLeft: 3,
+        marginTop: 2,
+    },
+    signup: {
+        marginLeft: 5,
+        marginTop: 2,
+    },
 });
 
 export { theme, useStyles };
