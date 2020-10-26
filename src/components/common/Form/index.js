@@ -384,7 +384,7 @@ const Form = (props) => {
                                 disableClearable
                                 {...ageFlatProps}
                                 onChange={onYearChangeHandler}
-                                value={year}
+                                value={year.toString()}
                                 renderInput={(params) => (
                                     <TextField
                                         {...params}
