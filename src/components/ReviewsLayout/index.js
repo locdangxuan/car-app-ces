@@ -5,6 +5,8 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Review, TextEditor, Loader, Modal } from 'components/common';
 import action from 'redux/actions/Action.Post';
+import authAction from 'redux/actions/Action.Auth';
+import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core';
 import Pagination from '@material-ui/lab/Pagination';
 import { modal } from 'config/constants/Utils';
@@ -23,12 +25,15 @@ const ReviewsLayout = (props) => {
         isSuccess,
         onDismissModal,
         classes,
+        isLogginSucceed,
+        verifyAuthenticationStatus,
     } = props;
     const [alertState, setAlertState] = useState(false);
     const onChangeHandler = (event, value) => {
         fetchReviews(id, value);
     };
     useEffect(() => {
+        verifyAuthenticationStatus();
         if (id) fetchReviews(id);
     }, []);
     useEffect(() => {
@@ -57,7 +62,11 @@ const ReviewsLayout = (props) => {
                     handlerToggle={onAlertToggle}
                 />
             )}
-            <TextEditor onSubmit={onSubmitHandler} />
+            {isLogginSucceed === true ? (
+                <TextEditor onSubmit={onSubmitHandler} />
+            ) : (
+                'Please login to review this car'
+            )}
             {reviewsList &&
                 reviewsList.map((review) => {
                     const {
@@ -91,14 +100,27 @@ const ReviewsLayout = (props) => {
         </Wrapper>
     );
 };
+
+ReviewsLayout.propTypes = {
+    isLogginSucceed: PropTypes.bool,
+    verifyAuthenticationStatus: PropTypes.func,
+};
+
+ReviewsLayout.defaultProps = {
+    isLogginSucceed: false,
+    verifyAuthenticationStatus: () => {},
+};
 const mapStateToProps = (state) => ({
     ...state.postReducer,
+    isLogginSucceed: state.authReducer.isLogginSucceed,
 });
 const mapDispatchToProps = (dispatch) => ({
     fetchReviews: (id = 5, page = 1) => dispatch(action.loadReviews(id, page)),
     createReview: (id, content) => dispatch(action.createReview(id, content)),
     onDismissModal: () => dispatch(action.dismissMessage()),
     deleteReView: (id, postId) => dispatch(action.deleteReview(id, postId)),
+    verifyAuthenticationStatus: () =>
+        dispatch(authAction.verifyAuthenticationStatus()),
 });
 
 export default connect(

@@ -12,7 +12,8 @@ import dataHeaderDefault from 'config/sampleData/header';
 import { Box } from '@material-ui/core';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import action from 'redux/actions/Action.Auth';
+import authAction from 'redux/actions/Action.Auth';
+import * as carAction from 'redux/actions/Action.GetCar';
 import component from 'config/constants/Components';
 import { HeaderWrapper, GridHeader, useStyles } from './styles';
 
@@ -28,6 +29,9 @@ const Header = (props) => {
     useEffect(() => {
         verifyAuthenticationStatus();
     }, []);
+    const getListCarInHomePage = () => {
+        props.actRequestProducts();
+    };
     return (
         <Box component={component.div}>
             <HeaderWrapper>
@@ -38,7 +42,11 @@ const Header = (props) => {
                 >
                     <GridHeader item xs={2}>
                         <Link to="/">
-                            <Image src={src.LogoHeader} alt="logo-header" />
+                            <Image
+                                src={src.LogoHeader}
+                                alt="logo-header"
+                                onClick={getListCarInHomePage}
+                            />
                         </Link>
                     </GridHeader>
                     <GridHeader item xs={6}>
@@ -60,16 +68,21 @@ const Header = (props) => {
 Header.propTypes = {
     isLogginSucceed: PropTypes.bool,
     verifyAuthenticationStatus: PropTypes.func,
+    actRequestProducts: PropTypes.func,
 };
 Header.defaultProps = {
     isLogginSucceed: false,
     verifyAuthenticationStatus: () => {},
+    actRequestProducts: () => {},
 };
 
 const mapStateToProps = (state) => ({ ...state.authReducer });
 const mapDispatchToProps = (dispatch) => ({
     verifyAuthenticationStatus: () =>
-        dispatch(action.verifyAuthenticationStatus()),
+        dispatch(authAction.verifyAuthenticationStatus()),
+    actRequestProducts: () => {
+        dispatch(carAction.actRequestProducts());
+    },
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);
