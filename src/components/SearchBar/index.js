@@ -14,9 +14,14 @@ import component from 'config/constants/Components';
 import { theme, useStyles, ListBrandsTextField } from './styles';
 
 const SearchBar = (props) => {
+    const defaultState = {
+        price: [],
+        year: [],
+    };
     const { brands, getBrands } = props;
     const [valueSearch, setvalueSearch] = useState('');
     const [brand, setBrand] = useState('');
+    const [state, setState] = useState(defaultState);
     useEffect(() => {
         getBrands();
     }, []);
@@ -24,7 +29,12 @@ const SearchBar = (props) => {
         setvalueSearch(e.target.value);
     }
     function submitSearch() {
-        props.actRequestProductsSearch('search', valueSearch);
+        props.actRequestProductsSearch('search', {
+            valueSearch,
+            price: state.price,
+            year: state.year,
+            brand,
+        });
     }
     const classes = useStyles();
 
@@ -34,6 +44,12 @@ const SearchBar = (props) => {
 
     const onBrandChangeHandler = (event, value) => {
         setBrand(value);
+    };
+    const onSliderChangeHandler = (name, newValue) => {
+        setState({
+            ...state,
+            [name]: newValue,
+        });
     };
 
     return (
@@ -74,10 +90,22 @@ const SearchBar = (props) => {
                         />
                     </Grid>
                     <Grid item xs={3} className={classes.searchBarComponent}>
-                        <RangeSlider name="Year" min="1900" max="2020" />
+                        <RangeSlider
+                            name="year"
+                            display="Year"
+                            min="1900"
+                            max="2020"
+                            onChange={onSliderChangeHandler}
+                        />
                     </Grid>
                     <Grid item xs={3} className={classes.searchBarComponent}>
-                        <RangeSlider name="Price (USD)" min="0" max="69500" />
+                        <RangeSlider
+                            name="price"
+                            display="Price (USD)"
+                            min="0"
+                            max="69500"
+                            onChange={onSliderChangeHandler}
+                        />
                     </Grid>
                     <Grid item xs={3} className={classes.searchBarComponent}>
                         <Button type="submit" onClick={submitSearch}>

@@ -18,6 +18,7 @@ const GetDetailCar = async (token) => {
 };
 
 const GetCarByValue = async (token, orderBy, value, page) => {
+    const keyword = `${value.brand} ${value.valueSearch}`;
     try {
         const results = await axios({
             headers: {
@@ -27,9 +28,17 @@ const GetCarByValue = async (token, orderBy, value, page) => {
             url: `${api.post.get}`,
             params: {
                 order_by: orderBy,
-                value,
+                value: keyword,
                 page,
                 limit: '6',
+                year:
+                    value.year[0] && value.year[1]
+                        ? `${value.year[0]},${value.year[1]}`
+                        : '',
+                price:
+                    value.price[0] && value.price[1]
+                        ? `${value.price[0]},${value.price[1]}`
+                        : '',
             },
         });
         return results.data;

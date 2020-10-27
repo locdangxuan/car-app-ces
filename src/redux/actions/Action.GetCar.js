@@ -48,7 +48,7 @@ export const actRequestProducts = () => {
     };
 };
 
-export const actRequestProductsSearch = (orderBy, value, page) => {
+export const actRequestProductsSearch = (orderBy, value, page = 1) => {
     let token = '';
     try {
         token = utils.getToken();
