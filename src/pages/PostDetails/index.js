@@ -40,7 +40,7 @@ import utils from 'utils/utils';
 import { formUtilConstant } from 'config/constants/Utils';
 import { StyledLink, useStyles, StyledToggleButton } from './styles';
 
-const listNavigationDetails = ['specifications', 'reviews', 'other feature'];
+const listNavigationDetails = ['specifications', 'reviews', 'other features'];
 
 const PostDetails = (props) => {
     const [alignment, setAlignment] = useState('specifications');
@@ -120,7 +120,10 @@ const PostDetails = (props) => {
                                     className={classes.textCenter}
                                 >
                                     <Explore className={classes.left} />
-                                    {distanceTraveled}
+                                    {parseInt(
+                                        distanceTraveled,
+                                        10
+                                    ).toLocaleString()}
                                 </Box>
                             </Box>
                             <Box
@@ -132,7 +135,7 @@ const PostDetails = (props) => {
                                     className={classes.textCenter}
                                 >
                                     <AttachMoney className={classes.first} />
-                                    {price}
+                                    {parseInt(price, 10).toLocaleString()}
                                 </Box>
 
                                 <Box
@@ -263,7 +266,7 @@ const PostDetails = (props) => {
                                     </Box>
                                 </Box>
                             )}
-                            {title === 'other feature' && (
+                            {title === 'other features' && (
                                 <Box className={classes.otherFeatures}>
                                     {information[
                                         formUtilConstant.otherFeatures
@@ -310,16 +313,21 @@ const PostDetails = (props) => {
                                 {phone}
                             </Typography>
                         </Typography>
-                        {editable && (
-                            <StyledLink to={`/posts/update/${id}`}>
-                                <Button
-                                    variant={variant.contained}
-                                    color={Color.primary}
-                                >
-                                    Update post
-                                </Button>
-                            </StyledLink>
-                        )}
+                        <Box
+                            component={component.div}
+                            className={classes.updateButton}
+                        >
+                            {editable && (
+                                <StyledLink to={`/posts/update/${id}`}>
+                                    <Button
+                                        variant={variant.contained}
+                                        color={Color.primary}
+                                    >
+                                        Update post
+                                    </Button>
+                                </StyledLink>
+                            )}
+                        </Box>
                     </Box>
                 </Grid>
             </Grid>

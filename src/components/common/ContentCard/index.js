@@ -101,7 +101,11 @@ const ContentCard = (props) => {
                                         className={icon}
                                     />
                                     <Typography>
-                                        {distanceTraveled} Km
+                                        {parseInt(
+                                            distanceTraveled,
+                                            10
+                                        ).toLocaleString()}{' '}
+                                        Km
                                     </Typography>
                                 </MenuItem>
                             </Grid>
@@ -111,7 +115,9 @@ const ContentCard = (props) => {
                 <CardActions className={cardActionsWrapper}>
                     <Grid container>
                         <Grid item xs={6} className={priceOfCar}>
-                            <Typography>{price} USD</Typography>
+                            <Typography>
+                                {parseInt(price.toLocaleString(), 10)} USD
+                            </Typography>
                         </Grid>
                         <Grid item xs={6} className={viewDetails}>
                             <Button color={Color.primary} className={btnView}>

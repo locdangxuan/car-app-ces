@@ -88,7 +88,7 @@ const Authenticated = (props) => {
                         component={component.div}
                         role="presentation"
                         onClick={toggleMenuHeaderDrawer(false)}
-                        onkeydown={toggleMenuHeaderDrawer(false)}
+                        onKeyDown={toggleMenuHeaderDrawer(false)}
                     >
                         <List>
                             <StyledMenuItem>
@@ -97,7 +97,7 @@ const Authenticated = (props) => {
                                 </ListItemIcon>
                                 <ListItemText primary="My Profile" />
                             </StyledMenuItem>
-                            <Link to="/" className={classes.link}>
+                            <Link to="/my-post" className={classes.link}>
                                 <StyledMenuItem onClick={getPostsByUser}>
                                     <ListItemIcon
                                         className={classes.designIcon}
@@ -107,17 +107,12 @@ const Authenticated = (props) => {
                                     <ListItemText primary="My post" />
                                 </StyledMenuItem>
                             </Link>
-
-                            <Link to="/" className={classes.link}>
-                                <StyledMenuItem onClick={onSubmitLogout}>
-                                    <ListItemIcon
-                                        className={classes.designIcon}
-                                    >
-                                        <ExitToApp />
-                                    </ListItemIcon>
-                                    <ListItemText primary="Log out" />
-                                </StyledMenuItem>
-                            </Link>
+                            <StyledMenuItem onClick={onSubmitLogout}>
+                                <ListItemIcon className={classes.designIcon}>
+                                    <ExitToApp />
+                                </ListItemIcon>
+                                <ListItemText primary="Log out" />
+                            </StyledMenuItem>
                         </List>
                     </Box>
                 </SwipeableDrawer>

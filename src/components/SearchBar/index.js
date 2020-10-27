@@ -66,12 +66,12 @@ const SearchBar = (props) => {
                                 aria-label="menu"
                             >
                                 <SearchIcon />
-                                <InputBase
-                                    className={classes.input}
-                                    placeholder="Search Car"
-                                    onChange={handleChangeValueSearch}
-                                />
                             </IconButton>
+                            <InputBase
+                                className={classes.input}
+                                placeholder="Search Car"
+                                onChange={handleChangeValueSearch}
+                            />
                         </Paper>
                         <Autocomplete
                             name="brand"
@@ -91,23 +91,22 @@ const SearchBar = (props) => {
                     </Grid>
                     <Grid item xs={3} className={classes.searchBarComponent}>
                         <RangeSlider
-                            name="year"
                             display="Year"
                             min="1900"
                             max="2020"
                             onChange={onSliderChangeHandler}
                         />
                     </Grid>
-                    <Grid item xs={3} className={classes.searchBarComponent}>
+                    <Grid item xs={4} className={classes.searchBarComponent}>
                         <RangeSlider
-                            name="price"
                             display="Price (USD)"
-                            min="0"
-                            max="69500"
+                            min="1000"
+                            max="100000"
+                            step={100}
                             onChange={onSliderChangeHandler}
                         />
                     </Grid>
-                    <Grid item xs={3} className={classes.searchBarComponent}>
+                    <Grid item xs={2} className={classes.searchBarComponent}>
                         <Button type="submit" onClick={submitSearch}>
                             Search
                         </Button>
