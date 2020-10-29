@@ -54,6 +54,7 @@ const DisableTextField = styled(TextField)`
 `;
 
 const ImageTextField = styled(DisableTextField)`
+    width: 35%;
     .MuiInputLabel-formControl {
         transform: translate(0, 1.5px) scale(0.75);
         transform-origin: top left;

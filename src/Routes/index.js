@@ -17,7 +17,10 @@ const Routes = () => {
             <Route exact path="/posts/:id(\d+)" component={PostDetails} />
             <Route exact path="/contacts" component={Contact} />
             <Route exact path="/">
-                <Home />
+                <Home orderBy="homePage" />
+            </Route>
+            <Route exact path="/my-post">
+                <Home orderBy="user" />
             </Route>
             <Route component={NotFound} />
         </Switch>

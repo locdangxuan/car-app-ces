@@ -322,12 +322,16 @@ const Form = (props) => {
                                 value={brand}
                                 renderInput={(params) => (
                                     <TextField
+                                        required
                                         {...params}
                                         label="Brands"
                                         margin="normal"
                                         value={brand}
                                     />
                                 )}
+                                rules={{
+                                    required: true,
+                                }}
                             />
                             {fieldsValidity['brand'] === false && (
                                 <ModalSpan isValid={false}>
@@ -345,6 +349,7 @@ const Form = (props) => {
                                 value={model}
                                 renderInput={(params) => (
                                     <TextField
+                                        required
                                         {...params}
                                         label="Models"
                                         margin="normal"
@@ -364,6 +369,7 @@ const Form = (props) => {
                         name="name"
                         type="text"
                         label="Name"
+                        required
                         className={classes.autoComplete}
                         onChange={onChange}
                         value={name}
@@ -387,8 +393,9 @@ const Form = (props) => {
                                 value={year.toString()}
                                 renderInput={(params) => (
                                     <TextField
+                                        required
                                         {...params}
-                                        label="Age"
+                                        label="Year"
                                         margin="normal"
                                         value={year}
                                     />
@@ -413,6 +420,7 @@ const Form = (props) => {
                                         {...params}
                                         label="Fuel Type"
                                         margin="normal"
+                                        required
                                     />
                                 )}
                             />
@@ -438,10 +446,15 @@ const Form = (props) => {
                 <LocationPicker defaultLocation={location} />
                 <Field>
                     <CustomTextField
+                        id="filled-number"
+                        type="number"
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
                         name="price"
                         className={`${classes.autoComplete} ${classes.customTextField}`}
                         label="Price (USD)"
-                        type="number"
+                        required
                         onChange={onChange}
                         InputProps={{
                             inputProps: {
@@ -459,9 +472,14 @@ const Form = (props) => {
                 </Field>
                 <Field>
                     <CustomTextField
-                        name="distanceTraveled"
+                        id="filled-number"
                         type="number"
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                        name="distanceTraveled"
                         label="Distance Traveled (km)"
+                        required
                         className={`${classes.autoComplete} ${classes.customTextField}`}
                         onChange={onChange}
                         InputProps={{
@@ -490,8 +508,9 @@ const Form = (props) => {
                             <TextField
                                 {...params}
                                 variant="outlined"
+                                required
                                 label="Other Features"
-                                placeholder="Type each feature and enter"
+                                placeholder="Type one feature at a time and then hit enter"
                                 onKeyUp={handleInputOtherFeatures}
                             />
                         )}
@@ -531,10 +550,12 @@ const Form = (props) => {
                         className={`${classes.customTextField}`}
                         type="file"
                         label="Images"
+                        required
                         onChange={onChange}
                         InputProps={{
                             readOnly: true,
                         }}
+                        multiple
                         accept={imageFormat}
                     />
                     {fieldsValidity['images'] === false && (
@@ -557,7 +578,7 @@ const Form = (props) => {
                 </Submit>
             </Wrapper>
             {pending && <Loader type="FULL-PAGE" />}
-            {modalState && (
+            {modalState && isSuccess && (
                 <Modal
                     type={modal.type.alert}
                     alertMessage={message}

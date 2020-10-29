@@ -100,6 +100,7 @@ const useStyles = makeStyles({
     specificationValue: {
         display: 'flex',
         paddingLeft: 10,
+        marginBottom: 15,
     },
     infoSeller: {
         marginLeft: 10,
@@ -125,6 +126,12 @@ const useStyles = makeStyles({
     },
     feature: {
         marginBottom: 10,
+    },
+    updateButton: {
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 });
 

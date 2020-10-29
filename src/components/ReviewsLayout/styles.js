@@ -36,4 +36,15 @@ export const styles = (theme) => ({
             },
         },
     },
+    unAuthenticated: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        color: Color.hoverColorNavigationDetails,
+    },
+    emptyReview: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
 });

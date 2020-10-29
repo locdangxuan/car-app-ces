@@ -34,20 +34,20 @@ const useStyles = makeStyles(() => ({
     searchKeywordWrapper: {
         height: 30,
         background: Color.transparent,
+        borderBottom: `1px solid ${Color.white}`,
     },
     input: {
         flex: 1,
         color: Color.white,
         marginLeft: 5,
+        width: '80%',
     },
     iconButton: {
-        width: '100%',
         height: '100%',
         borderRadius: 0,
-        padding: 5,
-        marginRight: 5,
+        padding: 2,
+        marginRight: 0,
         color: Color.white,
-        borderBottom: `1px solid ${Color.white}`,
     },
     searchBarWrapper: {
         padding: '0 51px',

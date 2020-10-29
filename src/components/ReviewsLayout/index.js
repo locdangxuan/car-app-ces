@@ -7,9 +7,12 @@ import { Review, TextEditor, Loader, Modal } from 'components/common';
 import action from 'redux/actions/Action.Post';
 import authAction from 'redux/actions/Action.Auth';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core';
+import { Typography, withStyles } from '@material-ui/core';
 import Pagination from '@material-ui/lab/Pagination';
 import { modal } from 'config/constants/Utils';
+import component from 'config/constants/Components';
+import variant from 'config/constants/Variant';
+import Color from 'config/constants/Colors';
 import { Wrapper, PaginattionWrapper, styles } from './styles';
 
 const ReviewsLayout = (props) => {
@@ -65,7 +68,13 @@ const ReviewsLayout = (props) => {
             {isLogginSucceed === true ? (
                 <TextEditor onSubmit={onSubmitHandler} />
             ) : (
-                'Please login to review this car'
+                <Typography
+                    component={component.h4}
+                    variant={variant.h4}
+                    className={classes.unAuthenticated}
+                >
+                    Please login to review this car
+                </Typography>
             )}
             {reviewsList &&
                 reviewsList.map((review) => {
@@ -88,15 +97,25 @@ const ReviewsLayout = (props) => {
                         />
                     );
                 })}
-            <PaginattionWrapper>
-                <Pagination
-                    className={classes.root}
-                    count={pagination && pagination.lastPage}
-                    defaultPage={1}
-                    color="primary"
-                    onChange={onChangeHandler}
-                />
-            </PaginattionWrapper>
+            {pagination.total !== 0 ? (
+                <PaginattionWrapper>
+                    <Pagination
+                        className={classes.root}
+                        count={pagination && pagination.lastPage}
+                        defaultPage={1}
+                        color={Color.primary}
+                        onChange={onChangeHandler}
+                    />
+                </PaginattionWrapper>
+            ) : (
+                <Typography
+                    component={component.h6}
+                    variant={variant.h6}
+                    className={classes.emptyReview}
+                >
+                    No Review for this car
+                </Typography>
+            )}
         </Wrapper>
     );
 };
