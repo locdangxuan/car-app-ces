@@ -7,6 +7,7 @@ import {
     PostDetails,
     Home,
     Contact,
+    Profile,
 } from 'pages';
 
 const Routes = () => {
@@ -16,6 +17,7 @@ const Routes = () => {
             <Route exact path="/posts/update/:id(\d+)" component={UpdatePost} />
             <Route exact path="/posts/:id(\d+)" component={PostDetails} />
             <Route exact path="/contacts" component={Contact} />
+            <Route exact path="/user/profile" component={Profile} />
             <Route exact path="/">
                 <Home orderBy="homePage" />
             </Route>

@@ -1,6 +1,7 @@
 import { MESSAGE_ERROR, MESSAGE_SUCCESS } from 'config/messages/Messages.Auth';
 import * as statusCode from 'config/constants/StatusCode';
 import * as POST_MESSAGE from 'config/messages/Messages.Post';
+import * as USER_MESSAGE from 'config/messages/Messages.User';
 
 const passwordVerification = (password, verification) => {
     return password === verification;
@@ -44,14 +45,14 @@ const loginValidator = (payload) => {
     let invalidFields = [];
     const blankValidator = checkBlankFields(payload);
     if (blankValidator.result !== false) {
-        if (lengthValidator(payload.username.toLowerCase()) === false) {
+        if (!lengthValidator(payload.username.toLowerCase())) {
             isValid = false;
             invalidFields.push({
                 name: 'username',
                 message: MESSAGE_ERROR.INVALID_USERNAME,
             });
         }
-        if (lengthValidator(payload.password) === false) {
+        if (!lengthValidator(payload.password)) {
             isValid = false;
             invalidFields.push({
                 name: 'password',
@@ -81,15 +82,15 @@ const registerValidator = (payload) => {
     let isValid = true;
     let invalidFields = [];
     const blankValidator = checkBlankFields(payload);
-    if (blankValidator.result !== false) {
-        if (lengthValidator(payload.username.toLowerCase()) === false) {
+    if (blankValidator.result) {
+        if (!lengthValidator(payload.username.toLowerCase())) {
             isValid = false;
             invalidFields.push({
                 name: 'username',
                 message: MESSAGE_ERROR.INVALID_USERNAME,
             });
         }
-        if (lengthValidator(payload.displayName) === false) {
+        if (!lengthValidator(payload.displayName)) {
             isValid = false;
             invalidFields.push({
                 name: 'displayName',
@@ -97,9 +98,9 @@ const registerValidator = (payload) => {
             });
         }
         if (
-            numberValidator(payload.phone) === false ||
+            !numberValidator(payload.phone) ||
             payload.phone.length < 10 ||
-            characterValidator(payload.phone) === false
+            !characterValidator(payload.phone)
         ) {
             isValid = false;
             invalidFields.push({
@@ -107,24 +108,28 @@ const registerValidator = (payload) => {
                 message: MESSAGE_ERROR.INVALID_PHONENUMBER,
             });
         }
-        if (emailValidator(payload.email.toLowerCase()) === false) {
+        if (!emailValidator(payload.email.toLowerCase())) {
             isValid = false;
             invalidFields.push({
                 name: 'email',
                 message: MESSAGE_ERROR.INVALID_EMAIL,
             });
         }
-        if (lengthValidator(payload.password) === false) {
+        if (!lengthValidator(payload.password)) {
             isValid = false;
             invalidFields.push({
                 name: 'password',
                 message: MESSAGE_ERROR.INVALID_PASSWORD,
             });
         }
-        if (
-            passwordVerification(payload.password, payload.verification) ===
-            false
-        ) {
+        if (!lengthValidator(payload.displayName)) {
+            isValid = false;
+            invalidFields.push({
+                name: 'displayName',
+                message: MESSAGE_ERROR.INVALID_DISPLAYNAME,
+            });
+        }
+        if (!passwordVerification(payload.password, payload.verification)) {
             isValid = false;
             invalidFields.push({
                 name: 'verification',
@@ -251,9 +256,95 @@ const postValidator = (payload, type) => {
     };
 };
 
+const profileValidator = (payload, oldPayload) => {
+    let isUpdatable = true;
+    let isValid = true;
+    const invalidFields = [];
+    const { password, verification } = payload;
+    if (
+        payload.phoneNumber === oldPayload.phone &&
+        payload.email === oldPayload.email &&
+        payload.displayName === oldPayload.displayName
+    ) {
+        isValid = true;
+        isUpdatable = false;
+    } else {
+        if (
+            !numberValidator(payload.phoneNumber) ||
+            payload.phoneNumber.length < 10 ||
+            !characterValidator(payload.phoneNumber)
+        ) {
+            isValid = false;
+            invalidFields.push({
+                name: 'phone',
+                message: MESSAGE_ERROR.INVALID_PHONENUMBER,
+            });
+        }
+        if (!emailValidator(payload.email.toLowerCase())) {
+            isValid = false;
+            invalidFields.push({
+                name: 'email',
+                message: MESSAGE_ERROR.INVALID_EMAIL,
+            });
+        }
+        if (payload.newPassword) {
+            if (!lengthValidator(payload.newPassword)) {
+                isValid = false;
+                invalidFields.push({
+                    name: 'newPassword',
+                    message: MESSAGE_ERROR.INVALID_PASSWORD,
+                });
+            }
+        }
+    }
+    if (!password) {
+        isValid = false;
+        invalidFields.push({
+            name: 'password',
+            message: USER_MESSAGE.MESSAGE_ERROR.EMPTY_PASSWORD,
+        });
+    } else if (!lengthValidator(password)) {
+        isValid = false;
+        invalidFields.push({
+            name: 'password',
+            message: MESSAGE_ERROR.INVALID_PASSWORD,
+        });
+    }
+    if (!verification) {
+        isValid = false;
+        invalidFields.push({
+            name: 'verification',
+            message: USER_MESSAGE.MESSAGE_ERROR.EMPTY_VERIFICATION,
+        });
+    } else if (!lengthValidator(verification)) {
+        isValid = false;
+        invalidFields.push({
+            name: 'verification',
+            message: MESSAGE_ERROR.INVALID_PHONENUMBER,
+        });
+    } else if (!passwordVerification(payload.password, payload.verification)) {
+        isValid = false;
+        invalidFields.push({
+            name: 'verification',
+            message: MESSAGE_ERROR.INVALID_VERIFICATION,
+        });
+    }
+    if (isValid) {
+        return isUpdatable;
+    }
+    throw new Error(
+        JSON.stringify({
+            status: statusCode.BAD_REQUEST,
+            message: MESSAGE_ERROR.INVALID_FIELD,
+            invalidFields,
+        })
+    );
+};
+
 export default {
     registerValidator,
     loginValidator,
     postValidator,
     characterValidator,
+    profileValidator,
 };

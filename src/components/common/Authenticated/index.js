@@ -91,13 +91,17 @@ const Authenticated = (props) => {
                         onKeyDown={toggleMenuHeaderDrawer(false)}
                     >
                         <List>
-                            <StyledMenuItem>
-                                <ListItemIcon className={classes.designIcon}>
-                                    <Person />
-                                </ListItemIcon>
-                                <ListItemText primary="My Profile" />
-                            </StyledMenuItem>
-                            <Link to="/my-post" className={classes.link}>
+                            <Link to="/user/profile" className={classes.link}>
+                                <StyledMenuItem>
+                                    <ListItemIcon
+                                        className={classes.designIcon}
+                                    >
+                                        <Person />
+                                    </ListItemIcon>
+                                    <ListItemText primary="My Profile" />
+                                </StyledMenuItem>
+                            </Link>
+                            <Link to="/" className={classes.link}>
                                 <StyledMenuItem onClick={getPostsByUser}>
                                     <ListItemIcon
                                         className={classes.designIcon}
