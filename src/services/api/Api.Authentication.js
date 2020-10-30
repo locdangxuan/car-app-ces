@@ -27,10 +27,18 @@ const login = async (fields) => {
     try {
         const response = await axios.post(api.user.login, fields);
         const { data, status } = response;
-        const { displayName, email, id, phone, token, message } = data.data;
+        const {
+            displayName,
+            email,
+            id,
+            phone,
+            token,
+            message,
+            username,
+        } = data.data;
         localStorage.setItem(
             utilsConstants.profile,
-            JSON.stringify({ id, phone, email, displayName })
+            JSON.stringify({ id, phone, email, displayName, username })
         );
         cookies.set(utilsConstants.token, token, { path: '/' });
         return { status, message };

@@ -3,7 +3,7 @@
 import Cookies from 'universal-cookie';
 import * as statusCode from 'config/constants/StatusCode';
 import { MESSAGE_ERROR } from 'config/messages/Messages.Auth';
-import * as utilsConstant from 'config/constants/Utils';
+import * as utilsConstants from 'config/constants/Utils';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import locationIcon from 'assets/images/location.png';
@@ -65,7 +65,7 @@ const getNameListFromArray = (array) => {
 const getToken = () => {
     try {
         const cookie = new Cookies();
-        const token = cookie.get(utilsConstant.token);
+        const token = cookie.get(utilsConstants.token);
         if (!token) throw new Error('error');
         return token;
     } catch (error) {
@@ -77,11 +77,31 @@ const getToken = () => {
         );
     }
 };
+const reloadProfile = (newProfile) => {
+    try {
+        const profile = localStorage.getItem(utilsConstants.profile)
+            ? JSON.parse(localStorage.getItem(utilsConstants.profile))
+            : '';
+        const { id } = profile;
+        localStorage.setItem(
+            utilsConstants.profile,
+            JSON.stringify({
+                id,
+                phone: newProfile.phoneNumber,
+                email: newProfile.email,
+                displayName: newProfile.displayName,
+                username: newProfile.name,
+            })
+        );
+    } catch (error) {
+        throw new Error(error);
+    }
+};
 
 const getProfile = () => {
     try {
-        const profile = localStorage.getItem(utilsConstant.profile)
-            ? JSON.parse(localStorage.getItem(utilsConstant.profile))
+        const profile = localStorage.getItem(utilsConstants.profile)
+            ? JSON.parse(localStorage.getItem(utilsConstants.profile))
             : '';
         return profile;
     } catch (error) {
@@ -91,22 +111,22 @@ const getProfile = () => {
 
 const classifyPath = (id) => {
     const path = get(window, 'location.pathname');
-    if (path.includes(get(utilsConstant, 'path.createPost')) === true)
-        return get(utilsConstant, 'pathKeyCode.createPost');
-    if (path.includes(get(utilsConstant, 'path.postDetail')(id)) === true)
-        return get(utilsConstant, 'pathKeyCode.postDetail');
-    if (path.includes(get(utilsConstant, 'path.homepage')) === true)
-        return get(utilsConstant, 'pathKeyCode.homepage');
+    if (path.includes(get(utilsConstants, 'path.createPost')) === true)
+        return get(utilsConstants, 'pathKeyCode.createPost');
+    if (path.includes(get(utilsConstants, 'path.postDetail')(id)) === true)
+        return get(utilsConstants, 'pathKeyCode.postDetail');
+    if (path.includes(get(utilsConstants, 'path.homepage')) === true)
+        return get(utilsConstants, 'pathKeyCode.homepage');
 };
 
 const reloadComponents = (dispatch) => {
     const id = get(window, 'location.pathname').split('posts/')[1];
     switch (classifyPath(id)) {
-        case get(utilsConstant, 'pathKeyCode.postDetail'):
+        case get(utilsConstants, 'pathKeyCode.postDetail'):
             dispatch(postAction.loadReviews(id, 1));
             dispatch(postAction.fetchPostData(id));
             break;
-        case get(utilsConstant, 'pathKeyCode.homepage'):
+        case get(utilsConstants, 'pathKeyCode.homepage'):
             dispatch(productAction.actRequestProducts());
             break;
         default:
@@ -149,4 +169,5 @@ export default {
     marketInit,
     timestampZToDate,
     reloadComponents,
+    reloadProfile,
 };

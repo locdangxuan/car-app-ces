@@ -8,6 +8,14 @@ const api = {
     user: {
         register: `${server}users/register`,
         login: `${server}users/login`,
+        fetch: {
+            url: `${server}users/`,
+            method: 'GET',
+        },
+        update: {
+            url: `${server}users/`,
+            method: 'PUT',
+        },
     },
     post: {
         get: `${server}posts/`,

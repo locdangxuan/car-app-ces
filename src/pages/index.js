@@ -4,5 +4,14 @@ import NotFound from 'pages/NotFound';
 import PostDetails from 'pages/PostDetails';
 import Home from 'pages/Home';
 import Contact from 'pages/Contact';
+import Profile from 'pages/Profile';
 
-export { CreatePost, UpdatePost, NotFound, PostDetails, Home, Contact };
+export {
+    CreatePost,
+    UpdatePost,
+    NotFound,
+    PostDetails,
+    Home,
+    Contact,
+    Profile,
+};
