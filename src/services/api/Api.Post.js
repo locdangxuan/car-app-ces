@@ -77,6 +77,21 @@ const fetch = async (id, token) => {
     }
 };
 
+const deletePost = async (id, token) => {
+    try {
+        const result = await axios({
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            method: get(api, 'post.delete.method'),
+            url: `${get(api, 'post.delete.url')}${id}`,
+        });
+        return result.data;
+    } catch (error) {
+        apiUtils.apiErrorHandler(error);
+    }
+};
+
 const loadReviews = async (id, page, token) => {
     try {
         const result = await axios({
@@ -134,6 +149,7 @@ export default {
     loadModel,
     create,
     fetch,
+    deletePost,
     update,
     loadReviews,
     createReview,

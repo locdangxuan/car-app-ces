@@ -128,9 +128,11 @@ const ContentCard = (props) => {
                 </CardActions>
             </StyledLink>
             {editable && (
-                <Box component={Component.div} className={classes.edit}>
-                    <StyledLink to={`/posts/update/${id}`}>Edit</StyledLink>
-                </Box>
+                <StyledLink to={`/posts/update/${id}`}>
+                    <Box component={Component.div} className={classes.edit}>
+                        Edit
+                    </Box>
+                </StyledLink>
             )}
         </Card>
     );

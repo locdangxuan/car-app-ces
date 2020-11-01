@@ -4,6 +4,7 @@
 /* eslint-disable react/require-default-props */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import {
     Button,
     Field,
@@ -28,7 +29,6 @@ import {
     Submit,
     useStyle,
     theme,
-    StyledLink,
     DisableTextField,
     ImageTextField,
     CustomTextField,
@@ -38,6 +38,7 @@ const formConstant = utilsConstants.formUtilConstant;
 const { imageFormat } = utilsConstants;
 
 const Form = (props) => {
+    const history = useHistory();
     const formState = {
         name: '',
         year: '',
@@ -118,18 +119,20 @@ const Form = (props) => {
         const { images, previews } = state;
         images.splice(index, 1);
         const deletedImage = previews.splice(index, 1);
-        if (
-            type === formConstant.type.update &&
-            deletedImage[0].startsWith(formConstant.oldImageURL)
-        ) {
-            let newImageMap = oldImageMap;
-            Object.entries(oldImages).forEach((entry) => {
-                const [key, value] = entry;
-                if (deletedImage[0] === value) {
-                    newImageMap += `,${key.replace('image_', '')}`;
-                }
-            });
-            setOldImageMap(newImageMap);
+        if (deletedImage[0] !== undefined && deletedImage[0] !== null) {
+            if (
+                type === formConstant.type.update &&
+                deletedImage[0].startsWith(formConstant.oldImageURL)
+            ) {
+                let newImageMap = oldImageMap;
+                Object.entries(oldImages).forEach((entry) => {
+                    const [key, value] = entry;
+                    if (deletedImage[0] === value) {
+                        newImageMap += `,${key.replace('image_', '')}`;
+                    }
+                });
+                setOldImageMap(newImageMap);
+            }
         }
         setState({
             ...state,
@@ -284,6 +287,11 @@ const Form = (props) => {
             ...state,
             fuelType: value,
         });
+    };
+
+    const cancel = () => {
+        onCancel();
+        history.goBack();
     };
 
     const handleInputOtherFeatures = (event) => {
@@ -568,12 +576,8 @@ const Form = (props) => {
                     <Button onClick={onSubmitHandler} isSuccess>
                         Upload
                     </Button>
-                    <Button onClick={onCancel} isSuccess={false}>
-                        {type === formConstant.type.update ? (
-                            <StyledLink to={`/posts/${id}`}>Cancel</StyledLink>
-                        ) : (
-                            <StyledLink to="/">Cancel</StyledLink>
-                        )}
+                    <Button onClick={cancel} isSuccess={false}>
+                        Cancel
                     </Button>
                 </Submit>
             </Wrapper>

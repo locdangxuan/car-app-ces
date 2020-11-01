@@ -30,14 +30,15 @@ import {
     ContactPhone,
 } from '@material-ui/icons';
 import { ToggleButtonGroup } from '@material-ui/lab';
-import { Carousel } from 'components/common';
+import { Carousel, Modal } from 'components/common';
 import { ReviewsLayout } from 'components';
 import action from 'redux/actions/Action.Post';
 import variant from 'config/constants/Variant';
 import component from 'config/constants/Components';
 import Color from 'config/constants/Colors';
 import utils from 'utils/utils';
-import { formUtilConstant } from 'config/constants/Utils';
+import { formUtilConstant, modal } from 'config/constants/Utils';
+
 import { StyledLink, useStyles, StyledToggleButton } from './styles';
 
 const listNavigationDetails = ['specifications', 'reviews', 'other features'];
@@ -45,14 +46,24 @@ const listNavigationDetails = ['specifications', 'reviews', 'other features'];
 const PostDetails = (props) => {
     const [alignment, setAlignment] = useState('specifications');
     const [title, setTitle] = useState('specifications');
-    const { details } = props;
+    const { details, deletePost } = props;
+    const [alertState, setAlertState] = useState(false);
     const onClickCategory = (event, value) => {
         setTitle(value);
     };
+    const { id } = props.match.params;
     const onChangeNavigation = (event, newAlignment) => {
         setAlignment(newAlignment);
     };
-    const { id } = props.match.params;
+    const onDeletePost = () => {
+        setAlertState(true);
+    };
+    const onAlertHandler = async (signal = false) => {
+        if (signal) {
+            await deletePost(id);
+        }
+        setAlertState(false);
+    };
     useEffect(() => {
         props.fetchPostData(id);
     }, []);
@@ -271,7 +282,10 @@ const PostDetails = (props) => {
                                     {information[
                                         formUtilConstant.otherFeatures
                                     ].map((feature) => (
-                                        <Box className={classes.feature}>
+                                        <Box
+                                            className={classes.feature}
+                                            key={feature}
+                                        >
                                             {' '}
                                             {feature}{' '}
                                         </Box>
@@ -290,7 +304,7 @@ const PostDetails = (props) => {
                             variant={variant.subtitle1}
                             className={classes.specificationValue}
                         >
-                            <Person classNmae={classes.iconPersonInfo} />
+                            <Person className={classes.iconPersonInfo} />
                             <Typography className={classes.infoSeller}>
                                 {seller}
                             </Typography>
@@ -299,7 +313,7 @@ const PostDetails = (props) => {
                             variant={variant.subtitle1}
                             className={classes.specificationValue}
                         >
-                            <Email classNmae={classes.iconPersonInfo} />
+                            <Email className={classes.iconPersonInfo} />
                             <Typography className={classes.infoSeller}>
                                 {email}
                             </Typography>
@@ -308,7 +322,7 @@ const PostDetails = (props) => {
                             variant={variant.subtitle1}
                             className={classes.specificationValue}
                         >
-                            <ContactPhone classNmae={classes.iconPersonInfo} />
+                            <ContactPhone className={classes.iconPersonInfo} />
                             <Typography className={classes.infoSeller}>
                                 {phone}
                             </Typography>
@@ -318,18 +332,37 @@ const PostDetails = (props) => {
                             className={classes.updateButton}
                         >
                             {editable && (
-                                <StyledLink to={`/posts/update/${id}`}>
+                                <Box>
+                                    <StyledLink to={`/posts/update/${id}`}>
+                                        <Button
+                                            variant={variant.contained}
+                                            color={Color.primary}
+                                        >
+                                            Update post
+                                        </Button>
+                                    </StyledLink>
                                     <Button
                                         variant={variant.contained}
-                                        color={Color.primary}
+                                        className={classes.delete}
+                                        onClick={onDeletePost}
                                     >
-                                        Update post
+                                        Delete post
                                     </Button>
-                                </StyledLink>
+                                </Box>
                             )}
                         </Box>
                     </Box>
                 </Grid>
+                {alertState && (
+                    <Modal
+                        type={modal.type.alert}
+                        alertMessage="Are you sure to delete this post"
+                        warningType
+                        isSuccess={false}
+                        onSubmit={onAlertHandler}
+                        handlerToggle={onAlertHandler}
+                    />
+                )}
             </Grid>
         );
     }
@@ -338,7 +371,6 @@ const PostDetails = (props) => {
 const mapStateToProps = (state) => {
     return {
         details: state.postReducer.data,
-        pending: state.postReducer.pending,
     };
 };
 
@@ -347,17 +379,20 @@ const mapDispatchToProps = (dispatch) => {
         fetchPostData: (id) => {
             dispatch(action.fetchPostData(id));
         },
+        deletePost: (id) => dispatch(action.deletePost(id)),
     };
 };
 
 PostDetails.propTypes = {
     details: PropTypes.object,
     fetchPostData: PropTypes.func,
+    deletePost: PropTypes.func,
 };
 
 PostDetails.defaultProps = {
     details: {},
     fetchPostData: () => {},
+    deletePost: () => {},
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostDetails);

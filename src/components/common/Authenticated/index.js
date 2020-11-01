@@ -63,6 +63,7 @@ const Authenticated = (props) => {
                     variant={variant.contained}
                     color={Color.primary}
                     startIcon={<AddCircle />}
+                    className={classes.btnSell}
                 >
                     Sell my car
                 </Button>
