@@ -16,10 +16,11 @@ const SearchResults = (props) => {
     const { id } = utils.getProfile();
     const ShowContent = (Contents, classes) => {
         if (Contents) {
-            return Contents.map((Content) => {
+            return Contents.map((Content, index) => {
                 return (
                     <Grid
                         item
+                        index={index}
                         xs={4}
                         key={Content.id}
                         className={classes.content}

@@ -19,6 +19,10 @@ const api = {
             url: `${server}posts/`,
             method: 'PUT',
         },
+        delete: {
+            url: `${server}posts/`,
+            method: 'DELETE',
+        },
     },
     brands: {
         get: `${server}brands/`,

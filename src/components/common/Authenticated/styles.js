@@ -7,7 +7,7 @@ const useStyles = makeStyles({
     authenticated: {
         width: '90%',
         display: 'flex',
-        justifyContent: 'space-between',
+        justifyContent: 'flex-end',
         paddingRight: '10%',
     },
     navbarButton: {
@@ -22,6 +22,10 @@ const useStyles = makeStyles({
         fontSize: fontSize.fontMedium,
         fontWeight: 'bold',
         cursor: 'default',
+        marginRight: 15,
+    },
+    btnSell: {
+        marginRight: 15,
     },
     link: {
         textDecoration: 'none',

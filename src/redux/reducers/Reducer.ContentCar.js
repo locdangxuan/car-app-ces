@@ -12,6 +12,8 @@ const contentCarReducer = (state = initState, action) => {
             return {
                 ...state,
                 pending: true,
+                products: [],
+                pagination: {},
             };
         case PRODUCTS.FETCH_LIST_POSTS_SUCCEED:
             return {

@@ -133,6 +133,9 @@ const useStyles = makeStyles({
         justifyContent: 'center',
         alignItems: 'center',
     },
+    delete: {
+        marginLeft: 20,
+    },
 });
 
 export { useStyles, StyledLink, StyledToggleButton };

@@ -78,6 +78,15 @@ const onFetchPostFailure = () => ({
     type: POSTS.FETCH_DATA_FAILED,
     message: MESSAGE_ERROR.FETCH_DATA_FAILURE,
 });
+const onDeletePostSuccess = (payload) => ({
+    type: POSTS.DELETE_SUCCEED,
+    message: payload.message,
+    data: payload.data,
+});
+const onDeletePostFailure = (error) => ({
+    type: POSTS.DELETE_FAILED,
+    message: error.message,
+});
 const dismissMessage = () => ({
     type: POSTS.DISMISS_MESSAGE,
 });
@@ -318,7 +327,12 @@ const update = (payload) => {
                 );
                 dispatch(onUpdateSuccess(result));
             } catch (error) {
-                dispatch(onUpdateFailure(JSON.parse(error.message)));
+                const { message, invalidFields } = JSON.parse(error.message);
+                if (!invalidFields) {
+                    dispatch(onUpdateFailure({ message, invalidFields: [] }));
+                } else {
+                    dispatch(onUpdateFailure(JSON.parse(error.message)));
+                }
             }
         }, utilsConstants.delayTime);
     };
@@ -339,6 +353,22 @@ const fetchPostData = (id) => {
         } catch (error) {
             dispatch(onFetchPostFailure());
         }
+    };
+};
+
+const deletePost = (postId) => {
+    return async (dispatch, getState) => {
+        dispatch(onRequest(POSTS.REQUEST));
+        setTimeout(async () => {
+            try {
+                const token = utils.getToken();
+                const response = await api.deletePost(postId, token);
+                window.location.href = window.location.origin;
+                dispatch(onDeletePostSuccess(response));
+            } catch (error) {
+                dispatch(onDeletePostFailure(error));
+            }
+        }, utilsConstants.delayTime);
     };
 };
 
@@ -378,4 +408,5 @@ export default {
     loadReviews,
     createReview,
     deleteReview,
+    deletePost,
 };
