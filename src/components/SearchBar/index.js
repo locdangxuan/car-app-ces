@@ -26,7 +26,9 @@ const SearchBar = (props) => {
         getBrands();
     }, []);
     function handleChangeValueSearch(e) {
+        e.preventDefault();
         setvalueSearch(e.target.value);
+        return false;
     }
     function submitSearch() {
         props.actRequestProductsSearch('search', {
@@ -51,6 +53,11 @@ const SearchBar = (props) => {
             [name]: newValue,
         });
     };
+    const onEnterPressed = (event) => {
+        if (event.keyCode === 13) {
+            submitSearch();
+        }
+    };
 
     return (
         <ThemeProvider theme={theme}>
@@ -60,6 +67,9 @@ const SearchBar = (props) => {
                         <Paper
                             component={component.form}
                             className={classes.searchKeywordWrapper}
+                            onSubmit={(e) => {
+                                e.preventDefault();
+                            }}
                         >
                             <IconButton
                                 className={classes.iconButton}
@@ -71,6 +81,7 @@ const SearchBar = (props) => {
                                 className={classes.input}
                                 placeholder="Search Car"
                                 onChange={handleChangeValueSearch}
+                                onKeyDown={onEnterPressed}
                             />
                         </Paper>
                         <Autocomplete

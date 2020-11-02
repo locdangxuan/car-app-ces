@@ -77,6 +77,11 @@ const ModalBase = (props) => {
     const onMouseDownHandler = (event) => {
         if (event.target.getAttribute('name') === 'Wrapper') onCancelHandler();
     };
+    const onKeyDownHandler = (event) => {
+        if (event.keyCode === 13) {
+            onSubmitHandler();
+        }
+    };
     return (
         <Wrapper name="Wrapper" onMouseDown={onMouseDownHandler} tabIndex="-1">
             <Cover>
@@ -126,7 +131,7 @@ const ModalBase = (props) => {
                         )}
                     </Content>
                 ) : (
-                    <Content>
+                    <Content onKeyDown={onKeyDownHandler}>
                         <Header>{type}</Header>
                         <Body>
                             {type === modal.type.register && <Register />}
