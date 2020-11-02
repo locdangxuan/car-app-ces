@@ -5,6 +5,7 @@ import PostDetails from 'pages/PostDetails';
 import Home from 'pages/Home';
 import Contact from 'pages/Contact';
 import Profile from 'pages/Profile';
+import RequireLogin from 'pages/RequireLogin';
 
 export {
     CreatePost,
@@ -14,4 +15,5 @@ export {
     Home,
     Contact,
     Profile,
+    RequireLogin,
 };

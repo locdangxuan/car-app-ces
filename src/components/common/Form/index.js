@@ -24,6 +24,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import * as utilsConstants from 'config/constants/Utils';
 import { modal } from 'config/constants/Utils';
 import validator from 'services/validator/FieldsValidator';
+import { RequireLogin } from 'pages';
 import {
     Wrapper,
     Submit,
@@ -52,6 +53,7 @@ const Form = (props) => {
         count: 0,
         price: 0,
         oldImages: [],
+        isLoginRequired: false,
     };
     const {
         onSubmit,
@@ -71,6 +73,7 @@ const Form = (props) => {
         location,
         fieldsValidity,
         fieldsErrorMessage,
+        isLoggedIn,
     } = props;
     const [modalState, setModalState] = useState(false);
     const [state, setState] = useState(formState);
@@ -239,6 +242,13 @@ const Form = (props) => {
             setState({ ...state, count: 2 });
         }
         if (message !== '' && modalState === false) setModalState(true);
+        if (!isLoggedIn && !state.isLoginRequired) {
+            setState({ ...formState, isLoginRequired: true });
+        }
+        if (isLoggedIn && state.isLoginRequired) {
+            setState({ ...state, isLoginRequired: false });
+            fetchPostData(id);
+        }
     });
 
     const brandsFlatProps = {
@@ -322,270 +332,282 @@ const Form = (props) => {
 
     return (
         <ThemeProvider theme={theme}>
-            <Wrapper onKeyDown={onKeyDownHandler}>
-                <Field>
-                    <Grid container className={classes.selectedBox} spacing={3}>
-                        <Grid item xs={6} className={classes.dualLine}>
-                            <Autocomplete
-                                className={classes.autoComplete}
-                                name="brand"
-                                disableClearable
-                                {...brandsFlatProps}
-                                onChange={onBrandChangeHandler}
-                                value={brand}
-                                renderInput={(params) => (
-                                    <TextField
-                                        required
-                                        {...params}
-                                        label="Brands"
-                                        margin="normal"
-                                        value={brand}
-                                    />
-                                )}
-                                rules={{
-                                    required: true,
-                                }}
-                            />
-                            {fieldsValidity['brand'] === false && (
-                                <ModalSpan isValid={false}>
-                                    {fieldsErrorMessage['brand']}
-                                </ModalSpan>
-                            )}
-                        </Grid>
-                        <Grid item xs={6} className={classes.dualLine}>
-                            <Autocomplete
-                                className={classes.autoComplete}
-                                name="model"
-                                disableClearable
-                                {...modelsFlatProps}
-                                onChange={onModelChangeHandler}
-                                value={model}
-                                renderInput={(params) => (
-                                    <TextField
-                                        required
-                                        {...params}
-                                        label="Models"
-                                        margin="normal"
-                                    />
-                                )}
-                            />
-                            {fieldsValidity['model'] === false && (
-                                <ModalSpan isValid={false}>
-                                    {fieldsErrorMessage['model']}
-                                </ModalSpan>
-                            )}
-                        </Grid>
-                    </Grid>
-                </Field>
-                <Field>
-                    <CustomTextField
-                        name="name"
-                        type="text"
-                        label="Name"
-                        required
-                        className={classes.autoComplete}
-                        onChange={onChange}
-                        value={name}
-                        isError={!fieldsValidity['name']}
-                    />
-                    {fieldsValidity['name'] === false && (
-                        <ModalSpan isValid={false}>
-                            {fieldsErrorMessage['name']}
-                        </ModalSpan>
-                    )}
-                </Field>
-                <Field>
-                    <Grid container className={classes.selectedBox} spacing={3}>
-                        <Grid item xs={6} className={classes.dualLine}>
-                            <Autocomplete
-                                className={classes.autoComplete}
-                                name="year"
-                                disableClearable
-                                {...ageFlatProps}
-                                onChange={onYearChangeHandler}
-                                value={year.toString()}
-                                renderInput={(params) => (
-                                    <TextField
-                                        required
-                                        {...params}
-                                        label="Year"
-                                        margin="normal"
-                                        value={year}
-                                    />
-                                )}
-                            />
-                            {fieldsValidity['year'] === false && (
-                                <ModalSpan isValid={false}>
-                                    {fieldsErrorMessage['year']}
-                                </ModalSpan>
-                            )}
-                        </Grid>
-                        <Grid item xs={6} className={classes.dualLine}>
-                            <Autocomplete
-                                className={classes.autoComplete}
-                                name="fueltype"
-                                disableClearable
-                                {...fuelTypesFlatProps}
-                                onChange={onFuelTypeChangeHandler}
-                                value={fuelType}
-                                renderInput={(params) => (
-                                    <TextField
-                                        {...params}
-                                        label="Fuel Type"
-                                        margin="normal"
-                                        required
-                                    />
-                                )}
-                            />
-                            {fieldsValidity['fuelType'] === false && (
-                                <ModalSpan isValid={false}>
-                                    {fieldsErrorMessage['fuelType']}
-                                </ModalSpan>
-                            )}
-                        </Grid>
-                    </Grid>
-                </Field>
-                <Field>
-                    <DisableTextField
-                        className={`${classes.autoComplete} ${classes.customTextField}`}
-                        label="Location"
-                        onChange={onChange}
-                        InputProps={{
-                            readOnly: true,
-                        }}
-                        value={utils.getLocationString(location)}
-                    />
-                </Field>
-                <LocationPicker defaultLocation={location} />
-                <Field>
-                    <CustomTextField
-                        id="filled-number"
-                        type="number"
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                        name="price"
-                        className={`${classes.autoComplete} ${classes.customTextField}`}
-                        label="Price (USD)"
-                        required
-                        onChange={onChange}
-                        InputProps={{
-                            inputProps: {
-                                min: 0,
-                            },
-                        }}
-                        value={price}
-                        isError={!fieldsValidity['price']}
-                    />
-                    {fieldsValidity['price'] === false && (
-                        <ModalSpan isValid={false}>
-                            {fieldsErrorMessage['price']}
-                        </ModalSpan>
-                    )}
-                </Field>
-                <Field>
-                    <CustomTextField
-                        id="filled-number"
-                        type="number"
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                        name="distanceTraveled"
-                        label="Distance Traveled (km)"
-                        required
-                        className={`${classes.autoComplete} ${classes.customTextField}`}
-                        onChange={onChange}
-                        InputProps={{
-                            inputProps: {
-                                min: 0,
-                            },
-                        }}
-                        value={distanceTraveled}
-                        isError={!fieldsValidity['distanceTraveled']}
-                    />
-                    {fieldsValidity['distanceTraveled'] === false && (
-                        <ModalSpan isValid={false}>
-                            {fieldsErrorMessage['distanceTraveled']}
-                        </ModalSpan>
-                    )}
-                </Field>
-                <Field>
-                    <Autocomplete
-                        multiple
-                        freeSolo
-                        value={otherFeatures}
-                        onChange={onFeatureSubmitHandler}
-                        options={[]}
-                        className={`${classes.autoComplete} ${classes.customTextField}`}
-                        renderInput={(params) => (
-                            <TextField
-                                {...params}
-                                variant="outlined"
-                                required
-                                label="Other Features"
-                                placeholder="Type one feature at a time and then hit enter"
-                                onKeyUp={handleInputOtherFeatures}
-                            />
-                        )}
-                    />
-                    {fieldsValidity['information'] === false && (
-                        <ModalSpan isValid={false}>
-                            {fieldsErrorMessage['information']}
-                        </ModalSpan>
-                    )}
-                    {isFeatureValid === false && (
-                        <ModalSpan isValid={false}>
-                            Feature can not contain special characters
-                        </ModalSpan>
-                    )}
-                </Field>
-                <Field>
-                    <Grid container spacing={3}>
-                        {previews &&
-                            previews.map((image, index) => {
-                                return (
-                                    <Grid xs={4} key={`key${image}`}>
-                                        <ImageCard
-                                            xs={4}
-                                            key={`key${image}`}
-                                            index={index}
-                                            imgSrc={image}
-                                            removeImage={removeImage}
+            {isLoggedIn === false ? (
+                <RequireLogin />
+            ) : (
+                <Wrapper onKeyDown={onKeyDownHandler}>
+                    <Field>
+                        <Grid
+                            container
+                            className={classes.selectedBox}
+                            spacing={3}
+                        >
+                            <Grid item xs={6} className={classes.dualLine}>
+                                <Autocomplete
+                                    className={classes.autoComplete}
+                                    name="brand"
+                                    disableClearable
+                                    {...brandsFlatProps}
+                                    onChange={onBrandChangeHandler}
+                                    value={brand}
+                                    renderInput={(params) => (
+                                        <TextField
+                                            required
+                                            {...params}
+                                            label="Brands"
+                                            margin="normal"
+                                            value={brand}
                                         />
-                                    </Grid>
-                                );
-                            })}
-                    </Grid>
-                </Field>
-                <Field>
-                    <ImageTextField
-                        name="imageUrl"
-                        className={`${classes.customTextField}`}
-                        type="file"
-                        label="Images"
-                        required
-                        onChange={onChange}
-                        InputProps={{
-                            readOnly: true,
-                        }}
-                        multiple
-                        accept={imageFormat}
-                    />
-                    {fieldsValidity['images'] === false && (
-                        <ModalSpan isValid={false}>
-                            {fieldsErrorMessage['images']}
-                        </ModalSpan>
-                    )}
-                </Field>
-                <Submit>
-                    <Button onClick={onSubmitHandler} isSuccess>
-                        Upload
-                    </Button>
-                    <Button onClick={cancel} isSuccess={false}>
-                        Cancel
-                    </Button>
-                </Submit>
-            </Wrapper>
+                                    )}
+                                    rules={{
+                                        required: true,
+                                    }}
+                                />
+                                {fieldsValidity['brand'] === false && (
+                                    <ModalSpan isValid={false}>
+                                        {fieldsErrorMessage['brand']}
+                                    </ModalSpan>
+                                )}
+                            </Grid>
+                            <Grid item xs={6} className={classes.dualLine}>
+                                <Autocomplete
+                                    className={classes.autoComplete}
+                                    name="model"
+                                    disableClearable
+                                    {...modelsFlatProps}
+                                    onChange={onModelChangeHandler}
+                                    value={model}
+                                    renderInput={(params) => (
+                                        <TextField
+                                            required
+                                            {...params}
+                                            label="Models"
+                                            margin="normal"
+                                        />
+                                    )}
+                                />
+                                {fieldsValidity['model'] === false && (
+                                    <ModalSpan isValid={false}>
+                                        {fieldsErrorMessage['model']}
+                                    </ModalSpan>
+                                )}
+                            </Grid>
+                        </Grid>
+                    </Field>
+                    <Field>
+                        <CustomTextField
+                            name="name"
+                            type="text"
+                            label="Name"
+                            required
+                            className={classes.autoComplete}
+                            onChange={onChange}
+                            value={name}
+                            isError={!fieldsValidity['name']}
+                        />
+                        {fieldsValidity['name'] === false && (
+                            <ModalSpan isValid={false}>
+                                {fieldsErrorMessage['name']}
+                            </ModalSpan>
+                        )}
+                    </Field>
+                    <Field>
+                        <Grid
+                            container
+                            className={classes.selectedBox}
+                            spacing={3}
+                        >
+                            <Grid item xs={6} className={classes.dualLine}>
+                                <Autocomplete
+                                    className={classes.autoComplete}
+                                    name="year"
+                                    disableClearable
+                                    {...ageFlatProps}
+                                    onChange={onYearChangeHandler}
+                                    value={year.toString()}
+                                    renderInput={(params) => (
+                                        <TextField
+                                            required
+                                            {...params}
+                                            label="Year"
+                                            margin="normal"
+                                            value={year}
+                                        />
+                                    )}
+                                />
+                                {fieldsValidity['year'] === false && (
+                                    <ModalSpan isValid={false}>
+                                        {fieldsErrorMessage['year']}
+                                    </ModalSpan>
+                                )}
+                            </Grid>
+                            <Grid item xs={6} className={classes.dualLine}>
+                                <Autocomplete
+                                    className={classes.autoComplete}
+                                    name="fueltype"
+                                    disableClearable
+                                    {...fuelTypesFlatProps}
+                                    onChange={onFuelTypeChangeHandler}
+                                    value={fuelType}
+                                    renderInput={(params) => (
+                                        <TextField
+                                            {...params}
+                                            label="Fuel Type"
+                                            margin="normal"
+                                            required
+                                        />
+                                    )}
+                                />
+                                {fieldsValidity['fuelType'] === false && (
+                                    <ModalSpan isValid={false}>
+                                        {fieldsErrorMessage['fuelType']}
+                                    </ModalSpan>
+                                )}
+                            </Grid>
+                        </Grid>
+                    </Field>
+                    <Field>
+                        <DisableTextField
+                            className={`${classes.autoComplete} ${classes.customTextField}`}
+                            label="Location"
+                            onChange={onChange}
+                            InputProps={{
+                                readOnly: true,
+                            }}
+                            value={utils.getLocationString(location)}
+                        />
+                    </Field>
+                    <LocationPicker defaultLocation={location} />
+                    <Field>
+                        <CustomTextField
+                            id="filled-number"
+                            type="number"
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            name="price"
+                            className={`${classes.autoComplete} ${classes.customTextField}`}
+                            label="Price (USD)"
+                            required
+                            onChange={onChange}
+                            InputProps={{
+                                inputProps: {
+                                    min: 0,
+                                },
+                            }}
+                            value={price}
+                            isError={!fieldsValidity['price']}
+                        />
+                        {fieldsValidity['price'] === false && (
+                            <ModalSpan isValid={false}>
+                                {fieldsErrorMessage['price']}
+                            </ModalSpan>
+                        )}
+                    </Field>
+                    <Field>
+                        <CustomTextField
+                            id="filled-number"
+                            type="number"
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            name="distanceTraveled"
+                            label="Distance Traveled (km)"
+                            required
+                            className={`${classes.autoComplete} ${classes.customTextField}`}
+                            onChange={onChange}
+                            InputProps={{
+                                inputProps: {
+                                    min: 0,
+                                },
+                            }}
+                            value={distanceTraveled}
+                            isError={!fieldsValidity['distanceTraveled']}
+                        />
+                        {fieldsValidity['distanceTraveled'] === false && (
+                            <ModalSpan isValid={false}>
+                                {fieldsErrorMessage['distanceTraveled']}
+                            </ModalSpan>
+                        )}
+                    </Field>
+                    <Field>
+                        <Autocomplete
+                            multiple
+                            freeSolo
+                            value={otherFeatures}
+                            onChange={onFeatureSubmitHandler}
+                            options={[]}
+                            className={`${classes.autoComplete} ${classes.customTextField}`}
+                            renderInput={(params) => (
+                                <TextField
+                                    {...params}
+                                    variant="outlined"
+                                    required
+                                    label="Other Features"
+                                    placeholder="Type one feature at a time and then hit enter"
+                                    onKeyUp={handleInputOtherFeatures}
+                                />
+                            )}
+                        />
+                        {fieldsValidity['information'] === false && (
+                            <ModalSpan isValid={false}>
+                                {fieldsErrorMessage['information']}
+                            </ModalSpan>
+                        )}
+                        {isFeatureValid === false && (
+                            <ModalSpan isValid={false}>
+                                Feature can not contain special characters
+                            </ModalSpan>
+                        )}
+                    </Field>
+                    <Field>
+                        <Grid container spacing={3}>
+                            {previews &&
+                                previews.map((image, index) => {
+                                    return (
+                                        <Grid xs={4} key={`key${image}`}>
+                                            <ImageCard
+                                                xs={4}
+                                                key={`key${image}`}
+                                                index={index}
+                                                imgSrc={image}
+                                                removeImage={removeImage}
+                                            />
+                                        </Grid>
+                                    );
+                                })}
+                        </Grid>
+                    </Field>
+                    <Field>
+                        <ImageTextField
+                            name="imageUrl"
+                            className={`${classes.customTextField}`}
+                            type="file"
+                            label="Images"
+                            required
+                            onChange={onChange}
+                            InputProps={{
+                                readOnly: true,
+                            }}
+                            multiple
+                            accept={imageFormat}
+                        />
+                        {fieldsValidity['images'] === false && (
+                            <ModalSpan isValid={false}>
+                                {fieldsErrorMessage['images']}
+                            </ModalSpan>
+                        )}
+                    </Field>
+                    <Submit>
+                        <Button onClick={onSubmitHandler} isSuccess>
+                            Upload
+                        </Button>
+                        <Button onClick={cancel} isSuccess={false}>
+                            Cancel
+                        </Button>
+                    </Submit>
+                </Wrapper>
+            )}
             {pending && <Loader type="FULL-PAGE" />}
             {modalState && isSuccess && (
                 <Modal
@@ -618,6 +640,7 @@ Form.propTypes = {
     getLocation: PropTypes.func,
     fieldsValidity: PropTypes.objectOf(PropTypes.bool),
     fieldsErrorMessage: PropTypes.objectOf(PropTypes.string),
+    isLoggedIn: PropTypes.bool,
 };
 
 Form.defaultProps = {
@@ -639,9 +662,13 @@ Form.defaultProps = {
     getLocation: () => {},
     fieldsValidity: {},
     fieldsErrorMessage: {},
+    isLoggedIn: true,
 };
 
-const mapStateToProps = (state) => ({ ...state.postReducer });
+const mapStateToProps = (state) => ({
+    ...state.postReducer,
+    isLoggedIn: state.authReducer.isLogginSucceed,
+});
 const mapDispatchToProps = (dispatch) => ({
     onBrandChange: (payload) => dispatch(action.loadModels(payload)),
     getBrands: () => dispatch(action.loadBrands()),
