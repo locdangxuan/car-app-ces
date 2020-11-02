@@ -102,7 +102,7 @@ const Authenticated = (props) => {
                                     <ListItemText primary="My Profile" />
                                 </StyledMenuItem>
                             </Link>
-                            <Link to="/" className={classes.link}>
+                            <Link to="/my-post" className={classes.link}>
                                 <StyledMenuItem onClick={getPostsByUser}>
                                     <ListItemIcon
                                         className={classes.designIcon}

@@ -28,6 +28,9 @@ const ListBrandsTextField = styled(TextField)`
     .MuiIconButton-root {
         color: ${Color.white};
     }
+    .MuiInput-underline:hover:not(.Mui-disabled):before {
+        border-bottom: none;
+    }
 `;
 
 const useStyles = makeStyles(() => ({
