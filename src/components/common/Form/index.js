@@ -314,10 +314,15 @@ const Form = (props) => {
             });
         }
     };
+    const onKeyDownHandler = (event) => {
+        if (event.keyCode === 13) {
+            onSubmitHandler();
+        }
+    };
 
     return (
         <ThemeProvider theme={theme}>
-            <Wrapper>
+            <Wrapper onKeyDown={onKeyDownHandler}>
                 <Field>
                     <Grid container className={classes.selectedBox} spacing={3}>
                         <Grid item xs={6} className={classes.dualLine}>
