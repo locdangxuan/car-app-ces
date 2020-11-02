@@ -91,6 +91,7 @@ const SearchBar = (props) => {
                     </Grid>
                     <Grid item xs={3} className={classes.searchBarComponent}>
                         <RangeSlider
+                            name="year"
                             display="Year"
                             min="1900"
                             max="2020"
@@ -99,6 +100,7 @@ const SearchBar = (props) => {
                     </Grid>
                     <Grid item xs={4} className={classes.searchBarComponent}>
                         <RangeSlider
+                            name="price"
                             display="Price (USD)"
                             min="1000"
                             max="100000"
