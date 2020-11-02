@@ -203,10 +203,10 @@ const Profile = (props) => {
                 {isSuccess && <Span isValid={isSuccess}>{message}</Span>}
                 <Submit>
                     <Button onClick={onSubmitHandler} isSuccess>
-                        Upload
+                        UPDATE
                     </Button>
                     <Button onClick={onCancel} isSuccess={false}>
-                        <StyledLink to="/">Cancel</StyledLink>
+                        <StyledLink to="/">CANCEL</StyledLink>
                     </Button>
                 </Submit>
             </Wrapper>
