@@ -30,7 +30,7 @@ const SingleComponentWrapper = styled.section`
     align-items: center;
     width: 100%;
     height: 100%;
-    background: white;
+    background: rgba(0, 0, 0, 0.7);
     opacity: 0.6;
     z-index: 500;
 `;

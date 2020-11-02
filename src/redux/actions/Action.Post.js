@@ -128,6 +128,7 @@ const loadReviews = (id, page) => {
         dispatch(onRequest(POSTS.REVIEWS.REQUEST));
         await setTimeout(async () => {
             try {
+                if (!id) throw new Error('Invalid id');
                 const result = await api.loadReviews(id, page, token);
                 dispatch(onLoadReviewsSuccess(result.data));
             } catch (error) {
@@ -152,7 +153,9 @@ const createReview = (id, content) => {
                     id: result.id,
                     editable: true,
                 });
-                currentReviewsList.pop();
+                if (currentReviewsList.length > 4) {
+                    currentReviewsList.pop();
+                }
                 dispatch(
                     onCreateReviewsSuccess({
                         message: response.message,

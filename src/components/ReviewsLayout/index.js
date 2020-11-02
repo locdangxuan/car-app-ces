@@ -3,13 +3,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { Review, TextEditor, Loader, Modal } from 'components/common';
+import { Review, TextEditor, Loader } from 'components/common';
 import action from 'redux/actions/Action.Post';
 import authAction from 'redux/actions/Action.Auth';
 import PropTypes from 'prop-types';
 import { Typography, withStyles } from '@material-ui/core';
 import Pagination from '@material-ui/lab/Pagination';
-import { modal } from 'config/constants/Utils';
 import component from 'config/constants/Components';
 import variant from 'config/constants/Variant';
 import Color from 'config/constants/Colors';
@@ -26,7 +25,6 @@ const ReviewsLayout = (props) => {
         pending,
         message,
         isSuccess,
-        onDismissModal,
         classes,
         isLogginSucceed,
         verifyAuthenticationStatus,
@@ -47,24 +45,12 @@ const ReviewsLayout = (props) => {
             createReview(id, content);
         }
     };
-    const onAlertToggle = () => {
-        onDismissModal();
-        setAlertState(false);
-    };
     const onDeleteHandler = (reviewId) => {
         deleteReView(reviewId, id);
     };
     return (
         <Wrapper>
             {pending && <Loader type="SingleComp" />}
-            {alertState && (
-                <Modal
-                    type={modal.type.alert}
-                    alertMessage={message}
-                    isSuccess={isSuccess}
-                    handlerToggle={onAlertToggle}
-                />
-            )}
             {isLogginSucceed === true ? (
                 <TextEditor onSubmit={onSubmitHandler} />
             ) : (
@@ -97,7 +83,7 @@ const ReviewsLayout = (props) => {
                         />
                     );
                 })}
-            {pagination.total !== 0 ? (
+            {pagination.total > 0 ? (
                 <PaginattionWrapper>
                     <Pagination
                         className={classes.root}
@@ -134,7 +120,7 @@ const mapStateToProps = (state) => ({
     isLogginSucceed: state.authReducer.isLogginSucceed,
 });
 const mapDispatchToProps = (dispatch) => ({
-    fetchReviews: (id = 5, page = 1) => dispatch(action.loadReviews(id, page)),
+    fetchReviews: (id, page = 1) => dispatch(action.loadReviews(id, page)),
     createReview: (id, content) => dispatch(action.createReview(id, content)),
     onDismissModal: () => dispatch(action.dismissMessage()),
     deleteReView: (id, postId) => dispatch(action.deleteReview(id, postId)),

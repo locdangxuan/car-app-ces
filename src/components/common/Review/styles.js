@@ -12,6 +12,7 @@ const Wrapper = styled.div`
 `;
 
 const ContentWrapper = styled.div`
+    width: 80%;
     display: flex;
     flex-direction: column;
 `;
