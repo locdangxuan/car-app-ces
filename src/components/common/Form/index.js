@@ -600,10 +600,12 @@ const Form = (props) => {
                     </Field>
                     <Submit>
                         <Button onClick={onSubmitHandler} isSuccess>
-                            Upload
+                            {type === formConstant.type.update
+                                ? 'UPDATE'
+                                : 'CREATE'}
                         </Button>
                         <Button onClick={cancel} isSuccess={false}>
-                            Cancel
+                            CANCEL
                         </Button>
                     </Submit>
                 </Wrapper>
