@@ -8,6 +8,7 @@ const initState = {
     email: '',
     verification: '',
     pending: false,
+    isLogginSucceed: false,
 };
 
 const authReducer = (state = initState, action) => {

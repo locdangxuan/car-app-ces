@@ -48,7 +48,7 @@ const login = async (fields) => {
 };
 
 const logout = () => {
-    localStorage.clear();
+    localStorage.removeItem(utilsConstants.profile);
     cookies.remove(utilsConstants.token, { path: '/' });
 };
 
