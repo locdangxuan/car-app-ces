@@ -23,31 +23,34 @@ const ContactPanel = () => {
                             </Typography>
                             <Typography variant={variant.h6}>
                                 Facebook:{' '}
+                                <a
+                                    target="_blank"
+                                    href="https://facebook.com/Loc.3i"
+                                    rel="noopener noreferrer"
+                                >
+                                    here
+                                </a>
                             </Typography>
                             <Typography variant={variant.h6}>
-                                Email:{' '}
-                            </Typography>
-                        </StyledSpan>
-                        <StyledSpan>
-                            <Typography variant={variant.h6}>
-                                Dang Xuan Loc
-                            </Typography>
-                            <Typography variant={variant.h6}>
-                                Facebook:{' '}
-                            </Typography>
-                            <Typography variant={variant.h6}>
-                                Email:{' '}
+                                Email: xuanloc20041998@gmail.com
                             </Typography>
                         </StyledSpan>
                         <StyledSpan>
                             <Typography variant={variant.h6}>
-                                Dang Xuan Loc
+                                Nguyen Tran Hau
                             </Typography>
                             <Typography variant={variant.h6}>
                                 Facebook:{' '}
+                                <a
+                                    target="_blank"
+                                    href="https://facebook.com/haauj"
+                                    rel="noopener noreferrer"
+                                >
+                                    here
+                                </a>
                             </Typography>
                             <Typography variant={variant.h6}>
-                                Email:{' '}
+                                Email: nguyentranhau98@gmail.com
                             </Typography>
                         </StyledSpan>
                     </Box>

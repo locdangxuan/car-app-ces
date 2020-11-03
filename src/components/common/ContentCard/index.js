@@ -116,7 +116,7 @@ const ContentCard = (props) => {
                     <Grid container>
                         <Grid item xs={6} className={priceOfCar}>
                             <Typography>
-                                {parseInt(price.toLocaleString(), 10)} USD
+                                {parseInt(price, 10).toLocaleString()} USD
                             </Typography>
                         </Grid>
                         <Grid item xs={6} className={viewDetails}>
