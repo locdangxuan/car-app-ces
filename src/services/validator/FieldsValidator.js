@@ -262,17 +262,18 @@ const profileValidator = (payload, oldPayload) => {
     const invalidFields = [];
     const { password, verification } = payload;
     if (
-        payload.phoneNumber === oldPayload.phone &&
+        payload.phone === oldPayload.phone &&
         payload.email === oldPayload.email &&
-        payload.displayName === oldPayload.displayName
+        payload.displayName === oldPayload.displayName &&
+        !payload.newPassword
     ) {
         isValid = true;
         isUpdatable = false;
     } else {
         if (
-            !numberValidator(payload.phoneNumber) ||
-            payload.phoneNumber.length < 10 ||
-            !characterValidator(payload.phoneNumber)
+            !numberValidator(payload.phone) ||
+            payload.phone.length < 10 ||
+            !characterValidator(payload.phone)
         ) {
             isValid = false;
             invalidFields.push({
@@ -295,6 +296,13 @@ const profileValidator = (payload, oldPayload) => {
                     message: MESSAGE_ERROR.INVALID_PASSWORD,
                 });
             }
+        }
+        if (!lengthValidator(payload.displayName)) {
+            isValid = false;
+            invalidFields.push({
+                name: 'displayName',
+                message: MESSAGE_ERROR.INVALID_USERNAME,
+            });
         }
     }
     if (!password) {

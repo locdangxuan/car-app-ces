@@ -324,18 +324,12 @@ const Form = (props) => {
             });
         }
     };
-    const onKeyDownHandler = (event) => {
-        if (event.keyCode === 13) {
-            onSubmitHandler();
-        }
-    };
-
     return (
         <ThemeProvider theme={theme}>
             {isLoggedIn === false ? (
                 <RequireLogin />
             ) : (
-                <Wrapper onKeyDown={onKeyDownHandler}>
+                <Wrapper>
                     <Field>
                         <Grid
                             container

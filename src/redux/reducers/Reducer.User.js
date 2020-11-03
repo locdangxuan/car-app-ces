@@ -26,13 +26,14 @@ const userReducer = (state = initState, action) => {
     switch (action.type) {
         case USER.REQUEST:
             return {
+                ...state,
                 pending: true,
                 isSuccess: false,
                 message: '',
                 fieldsValidity: {
                     name: true,
                     displayName: true,
-                    phoneNumber: true,
+                    phone: true,
                     email: true,
                     newPassword: true,
                     password: true,
@@ -41,7 +42,7 @@ const userReducer = (state = initState, action) => {
                 fieldsErrorMessage: {
                     name: '',
                     displayName: '',
-                    phoneNumber: '',
+                    phone: '',
                     email: '',
                     newPassword: '',
                     password: '',
@@ -77,6 +78,7 @@ const userReducer = (state = initState, action) => {
                 pending: false,
                 isSuccess: true,
                 message: action.message,
+                data: action.profile,
             };
         default:
             return state;
