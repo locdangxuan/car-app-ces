@@ -22,14 +22,7 @@ const ContactPanel = () => {
                                 Dang Xuan Loc
                             </Typography>
                             <Typography variant={variant.h6}>
-                                Facebook:{' '}
-                                <a
-                                    target="_blank"
-                                    href="https://facebook.com/Loc.3i"
-                                    rel="noopener noreferrer"
-                                >
-                                    here
-                                </a>
+                                Facebook: https://facebook.com/Loc.3i
                             </Typography>
                             <Typography variant={variant.h6}>
                                 Email: xuanloc20041998@gmail.com
@@ -40,14 +33,7 @@ const ContactPanel = () => {
                                 Nguyen Tran Hau
                             </Typography>
                             <Typography variant={variant.h6}>
-                                Facebook:{' '}
-                                <a
-                                    target="_blank"
-                                    href="https://facebook.com/haauj"
-                                    rel="noopener noreferrer"
-                                >
-                                    here
-                                </a>
+                                Facebook: https://facebook.com/haauj
                             </Typography>
                             <Typography variant={variant.h6}>
                                 Email: nguyentranhau98@gmail.com

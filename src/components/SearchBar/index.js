@@ -86,7 +86,6 @@ const SearchBar = (props) => {
                         </Paper>
                         <Autocomplete
                             name="brand"
-                            disableClearable
                             {...brandsFlatProps}
                             onChange={onBrandChangeHandler}
                             value={brand}
@@ -114,7 +113,7 @@ const SearchBar = (props) => {
                             name="price"
                             display="Price (USD)"
                             min="1000"
-                            max="100000"
+                            max="9999999"
                             step={100}
                             onChange={onSliderChangeHandler}
                         />
