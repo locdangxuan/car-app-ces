@@ -23,13 +23,13 @@ const ListBrandsTextField = styled(TextField)`
         border-bottom: 1px solid ${Color.white};
     }
     &.MuiFormControl-root .MuiInput-underline:hover {
-        border-bottom: 1px solid ${Color.white};
+        color: ${Color.white};
     }
     .MuiIconButton-root {
         color: ${Color.white};
     }
     .MuiInput-underline:hover:not(.Mui-disabled):before {
-        border-bottom: none;
+        border-bottom: 2px solid ${Color.white};
     }
 `;
 
