@@ -59,7 +59,7 @@ const ReviewsLayout = (props) => {
                     variant={variant.h4}
                     className={classes.unAuthenticated}
                 >
-                    Please login to review this car
+                    Please login to post review
                 </Typography>
             )}
             {reviewsList &&
