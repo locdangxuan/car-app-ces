@@ -22,7 +22,7 @@ import {
 const Profile = (props) => {
     const formState = {
         name: '',
-        phoneNumber: '',
+        phone: '',
         email: '',
         displayName: '',
         password: '',
@@ -45,7 +45,7 @@ const Profile = (props) => {
     const classes = useStyle();
     const {
         name,
-        phoneNumber,
+        phone,
         email,
         displayName,
         password,
@@ -61,7 +61,7 @@ const Profile = (props) => {
     const onSubmitHandler = async () => {
         onSubmit({
             name,
-            phoneNumber,
+            phone,
             email,
             displayName,
             password,
@@ -78,7 +78,7 @@ const Profile = (props) => {
             setState({
                 ...state,
                 name: username,
-                phoneNumber: phone,
+                phone,
                 email,
                 displayName,
                 count: 1,
@@ -117,17 +117,17 @@ const Profile = (props) => {
                 </Field>
                 <Field>
                     <CustomTextField
-                        name="phoneNumber"
+                        name="phone"
                         type="number"
                         label="Contact No."
                         className={classes.autoComplete}
                         onChange={onChangeHandler}
-                        value={phoneNumber}
-                        isError={!fieldsValidity['phoneNumber']}
+                        value={phone}
+                        isError={!fieldsValidity['phone']}
                     />
-                    {fieldsValidity['phoneNumber'] === false && (
+                    {fieldsValidity['phone'] === false && (
                         <ModalSpan isValid={false}>
-                            {fieldsErrorMessage['phoneNumber']}
+                            {fieldsErrorMessage['phone']}
                         </ModalSpan>
                     )}
                 </Field>
@@ -200,7 +200,7 @@ const Profile = (props) => {
                     )}
                 </Field>
                 {pending && <Loader type="FULL-PAGE" />}
-                {isSuccess && <Span isValid={isSuccess}>{message}</Span>}
+                {message !== '' && <Span isValid={isSuccess}>{message}</Span>}
                 <Submit>
                     <Button onClick={onSubmitHandler} isSuccess>
                         UPDATE
@@ -243,6 +243,7 @@ const mapDispatchToProps = (dispatch) => ({
     onDismissModal: () => dispatch(action.dismissMessage()),
     onCancel: () => dispatch(action.cancel()),
     onSubmit: (payload) => dispatch(action.updateProfile(payload)),
+    onCleanUp: () => dispatch(action.cleanUp()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

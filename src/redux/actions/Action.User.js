@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import api from 'services/api/Api.User';
 import { USER } from 'config/constants/Action.Types';
 import * as utilsConstants from 'config/constants/Utils';
@@ -12,7 +13,7 @@ const errorHandler = (payload) => {
     const fieldsValidity = {
         name: true,
         displayName: true,
-        phoneNumber: true,
+        phone: true,
         email: true,
         newPassword: true,
         password: true,
@@ -21,7 +22,7 @@ const errorHandler = (payload) => {
     const fieldsErrorMessage = {
         name: '',
         displayName: '',
-        phoneNumber: '',
+        phone: '',
         email: '',
         newPassword: '',
         password: '',
@@ -45,9 +46,10 @@ const onFetchDataFailure = (payload) => ({
     type: USER.FETCH_DATA_FAILED,
     message: payload.message,
 });
-const onUpdateProfileSuccess = () => ({
+const onUpdateProfileSuccess = (profile) => ({
     type: USER.UPDATE_PROFILE_SUCCEED,
     message: MESSAGE_SUCCESS.UPDATE_SUCCEED,
+    profile,
 });
 const onUpdateProfileFailure = (payload) => ({
     type: USER.UPDATE_PROFILE_FAILED,
@@ -58,7 +60,7 @@ const onUpdateProfileFailure = (payload) => ({
     },
 });
 const fetchUserData = () => async (dispatch) => {
-    dispatch(onRequest);
+    dispatch(onRequest());
     setTimeout(async () => {
         try {
             const result = localStorage.getItem(utilsConstants.profile);
@@ -69,7 +71,7 @@ const fetchUserData = () => async (dispatch) => {
     }, utilsConstants.delayTime);
 };
 const updateProfile = (payload) => async (dispatch, getState) => {
-    dispatch(onRequest);
+    dispatch(onRequest());
     setTimeout(async () => {
         let { data } = getState().userReducer;
         data = JSON.parse(data);
@@ -89,8 +91,10 @@ const updateProfile = (payload) => async (dispatch, getState) => {
             if (isUpdatable) {
                 const token = utils.getToken();
                 await api.updateProfile(newProfile, token);
+                dispatch(onUpdateProfileSuccess(JSON.stringify(newProfile)));
+            } else {
+                dispatch(onUpdateProfileSuccess(JSON.stringify(data)));
             }
-            dispatch(onUpdateProfileSuccess());
         } catch (error) {
             dispatch(
                 onUpdateProfileFailure(errorHandler(JSON.parse(error.message)))

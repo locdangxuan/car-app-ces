@@ -29,7 +29,7 @@ const updateProfile = async (payload, token) => {
             data: {
                 username: payload.name,
                 email: payload.email,
-                phone: payload.phoneNumber,
+                phone: payload.phone,
                 displayName: payload.displayName,
                 password: payload.newPassword
                     ? payload.newPassword
