@@ -15,6 +15,7 @@ const Wrapper = styled.div`
     align-items: center;
     justify-content: center;
     margin-top: 5vh;
+    width: 80%;
 `;
 
 const Body = styled.div`

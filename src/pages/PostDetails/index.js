@@ -134,7 +134,8 @@ const PostDetails = (props) => {
                                     {parseInt(
                                         distanceTraveled,
                                         10
-                                    ).toLocaleString()}
+                                    ).toLocaleString()}{' '}
+                                    km
                                 </Box>
                             </Box>
                             <Box
@@ -146,7 +147,7 @@ const PostDetails = (props) => {
                                     className={classes.textCenter}
                                 >
                                     <AttachMoney className={classes.first} />
-                                    {parseInt(price, 10).toLocaleString()}
+                                    {parseInt(price, 10).toLocaleString()} USD
                                 </Box>
 
                                 <Box

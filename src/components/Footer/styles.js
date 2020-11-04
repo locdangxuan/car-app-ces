@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import Color from 'config/constants/Colors';
 import { makeStyles } from '@material-ui/core/styles';
 
 const FooterWrapper = styled.div`
@@ -8,6 +9,10 @@ const FooterWrapper = styled.div`
     width: 100%;
     margin: unset;
     height: 50px;
+`;
+
+const SocialNetworkLink = styled.a`
+    color: ${Color.white};
 `;
 
 const useStyles = makeStyles(() => ({
@@ -30,4 +35,4 @@ const useStyles = makeStyles(() => ({
     },
 }));
 
-export { FooterWrapper, useStyles };
+export { FooterWrapper, useStyles, SocialNetworkLink };
