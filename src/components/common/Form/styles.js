@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { TextField } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
+import Color from 'config/constants/Colors';
 
 const Wrapper = styled.div`
     margin: auto;
@@ -20,6 +21,16 @@ const CustomTextField = styled(TextField)`
                 border-bottom: 2px solid ${props.theme.color.danger}
             }`;
     }}
+`;
+
+const FeatureTextField = styled(TextField)`
+    .MuiChip-root {
+        background-color: ${Color.backgroundDetails};
+        color: ${Color.white};
+        .MuiChip-deleteIcon {
+            color: ${Color.white};
+        }
+    }
 `;
 
 const StyledLink = styled(Link)`
@@ -97,4 +108,5 @@ export {
     DisableTextField,
     ImageTextField,
     CustomTextField,
+    FeatureTextField,
 };

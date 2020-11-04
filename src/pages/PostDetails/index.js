@@ -339,7 +339,7 @@ const PostDetails = (props) => {
                                             variant={variant.contained}
                                             color={Color.primary}
                                         >
-                                            Update post
+                                            Edit post
                                         </Button>
                                     </StyledLink>
                                     <Button

@@ -33,6 +33,7 @@ import {
     DisableTextField,
     ImageTextField,
     CustomTextField,
+    FeatureTextField,
 } from './styles';
 
 const formConstant = utilsConstants.formUtilConstant;
@@ -340,7 +341,6 @@ const Form = (props) => {
                                 <Autocomplete
                                     className={classes.autoComplete}
                                     name="brand"
-                                    disableClearable
                                     {...brandsFlatProps}
                                     onChange={onBrandChangeHandler}
                                     value={brand}
@@ -533,7 +533,7 @@ const Form = (props) => {
                             options={[]}
                             className={`${classes.autoComplete} ${classes.customTextField}`}
                             renderInput={(params) => (
-                                <TextField
+                                <FeatureTextField
                                     {...params}
                                     variant="outlined"
                                     required

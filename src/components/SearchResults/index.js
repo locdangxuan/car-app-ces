@@ -54,6 +54,7 @@ const SearchResults = (props) => {
                     orderBy={pagination.orderBy}
                     count={pagination.lastPage}
                     valueSearch={pagination.value}
+                    currentPage={parseInt(pagination.currentPage, 10)}
                     className={classes.paginationBar}
                 />
             )}
