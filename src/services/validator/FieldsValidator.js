@@ -164,7 +164,7 @@ const postValidator = (payload, type) => {
             name: 'distanceTraveled',
             message: POST_MESSAGE.MESSAGE_ERROR.NEGATIVE_DISTANCE_TRAVELED,
         });
-    } else if (numberValidator(payload.distanceTraveled) === false) {
+    } else if (!numberValidator(payload.distanceTraveled)) {
         isValid = false;
         invalidFields.push({
             name: 'distanceTraveled',
@@ -177,7 +177,7 @@ const postValidator = (payload, type) => {
             name: 'price',
             message: POST_MESSAGE.MESSAGE_ERROR.NEGATIVE_PRICE,
         });
-    } else if (numberValidator(payload.price) === false) {
+    } else if (!numberValidator(payload.price)) {
         isValid = false;
         invalidFields.push({
             name: 'price',
@@ -190,11 +190,17 @@ const postValidator = (payload, type) => {
             name: 'name',
             message: POST_MESSAGE.MESSAGE_ERROR.EMPTY_FIELD,
         });
-    } else if (characterValidator(payload.name) === false) {
+    } else if (!characterValidator(payload.name)) {
         isValid = false;
         invalidFields.push({
             name: 'name',
             message: POST_MESSAGE.MESSAGE_ERROR.INVALID_NAME,
+        });
+    } else if (!lengthValidator(payload.name)) {
+        isValid = false;
+        invalidFields.push({
+            name: 'name',
+            message: `${POST_MESSAGE.MESSAGE_ERROR.INVALID_NAME} and must contain at least 9 characters`,
         });
     }
     if (payload.brand === '') {
@@ -241,7 +247,7 @@ const postValidator = (payload, type) => {
             });
         }
     }
-    if (isValid === false) {
+    if (!isValid) {
         throw new Error(
             JSON.stringify({
                 status: statusCode.BAD_REQUEST,

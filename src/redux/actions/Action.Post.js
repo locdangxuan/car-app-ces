@@ -8,7 +8,7 @@ import validator from 'services/validator/FieldsValidator';
 import * as utilsConstants from 'config/constants/Utils';
 import { MESSAGE_ERROR } from 'config/messages/Messages.Post';
 
-const handleFieldsValidity = (invalidFields) => {
+const handleFieldsValidity = (invalidFields = []) => {
     const fieldsValidity = {
         name: true,
         distanceTraveled: true,
