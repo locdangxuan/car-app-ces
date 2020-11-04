@@ -27,6 +27,10 @@ const characterValidator = (value) => {
     const expression = new RegExp(/[`~!@#$%^&*,<>;':"/[\]|{}=_+-]/);
     return !expression.test(value);
 };
+const nameValidator = (value) => {
+    const expression = new RegExp(/[`~!@#$%^&*,<>;.':"/[\]|{}()=_+-]/);
+    return !expression.test(value);
+};
 
 const checkBlankFields = (payload) => {
     let result = true;
@@ -190,7 +194,7 @@ const postValidator = (payload, type) => {
             name: 'name',
             message: POST_MESSAGE.MESSAGE_ERROR.EMPTY_FIELD,
         });
-    } else if (!characterValidator(payload.name)) {
+    } else if (!nameValidator(payload.name)) {
         isValid = false;
         invalidFields.push({
             name: 'name',
