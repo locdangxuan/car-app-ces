@@ -24,7 +24,7 @@ const emailValidator = (value) => {
 };
 
 const characterValidator = (value) => {
-    const expression = new RegExp(/[`~!@#$%^&*,.<>;':"/[\]|{}()=_+-]/);
+    const expression = new RegExp(/[`~!@#$%^&*,<>;':"/[\]|{}=_+-]/);
     return !expression.test(value);
 };
 
